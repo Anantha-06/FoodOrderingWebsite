@@ -24,34 +24,19 @@ function LoginPage() {
 
     try {
       const response = await axiosInstance.post("/user/login", formData);
-      console.log("Login Response:", response.data);
+      console.log(response.data);
 
-      if (response.data.token) {
-        // Store token in cookies
-        Cookies.set("token", response.data.token, { expires: 7, path: "/" });
-
-        // Verify if token is stored correctly
-        const storedToken = Cookies.get("token");
-        if (storedToken) {
-          console.log("Token stored successfully:", storedToken);
-          setShowSuccess(true);
-          setTimeout(() => {
-            setShowSuccess(false);
-            navigate("/");
-          }, 2000);
-        } else {
-          console.error("Token storage failed.");
-          setError("An error occurred while storing token.");
-        }
+      if (Cookies.get("token")) {
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/");
+        }, 2000);
       } else {
-        console.error("Token not received in response");
-        setError("Login failed. Please try again.");
+        console.error("Token not received");
       }
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
-      setError(error.response?.data?.message || "An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -82,9 +67,7 @@ function LoginPage() {
                   />
                 </Form.Group>
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">
-                    {loading ? "Logging in..." : "Submit"}
-                  </Button>
+                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">Submit</Button>
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
@@ -95,7 +78,7 @@ function LoginPage() {
             </Card>
           </motion.div>
         </Col>
-        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order- p-5">
+        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order-1">
           <motion.img 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 

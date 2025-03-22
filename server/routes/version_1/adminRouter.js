@@ -11,7 +11,7 @@ import { verifyRestaurant } from "../../controllers/adminController.js";
 
 const router = express.Router();
 
-router.post("/login",authMiddleware,login);
+router.post("/login", login);
 router.post("/signup", signUp);
 router.get("/profile", authMiddleware, getProfile);
 router.put("/update", authMiddleware, profileUpdate);

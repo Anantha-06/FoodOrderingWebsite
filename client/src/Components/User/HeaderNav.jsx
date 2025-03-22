@@ -33,13 +33,12 @@ function HeaderNav() {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="me-auto my-2 my-lg-0 gap-lg-5 gap-md-3 gap-sm-1 gap-xs-1 d-flex align-items-center"
+              className="me-auto my-2 my-lg-0 gap-lg-5 gap-md-3 gap-sm-1 gap-xs-1"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
               <Nav.Link href="/">Home</Nav.Link>
-              <Link className="text-decoration-none text-reset" to = "/user/about">About Us</Link>
-             
+              <Nav.Link href="/about">About Us</Nav.Link>
               <NavDropdown
                 title={
                   <img
@@ -49,8 +48,8 @@ function HeaderNav() {
                 }
                 id="navbarScrollingDropdown"
               >
-               <Link> <NavDropdown.Item >Your Profile</NavDropdown.Item></Link>
-                <NavDropdown.Item >Your Order</NavDropdown.Item>
+                <NavDropdown.Item href="/profile">Your Profile</NavDropdown.Item>
+                <NavDropdown.Item href="#action4">Your Order</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>Sign Out</NavDropdown.Item>
               </NavDropdown>

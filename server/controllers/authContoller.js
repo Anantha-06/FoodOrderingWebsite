@@ -23,7 +23,7 @@ export async function signUp(req, res) {
     });
     await newUser.save();
     const token = generateToken(newUser);
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, { httpOnly: false });
     res.status(201).json({ message: "Signed Up Successfully" });
   } catch (error) {
     console.log(error);
@@ -46,7 +46,7 @@ export async function login(req, res) {
       return res.status(400).json({ message: "Wrong Password" });
     }
     const token = generateToken(user);
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, { httpOnly: false });
     res.status(200).json({ message: "Logged in Successfully", token });
   } catch (error) {
     console.log(error);
