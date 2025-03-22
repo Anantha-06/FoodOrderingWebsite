@@ -24,20 +24,27 @@ function LoginPage() {
 
     try {
       const response = await axiosInstance.post("/user/login", formData);
-      console.log(response.data);
+      console.log("Login Response:", response.data);
 
-      // Check if the response contains a token
       if (response.data.token) {
         // Store token in cookies
-        Cookies.set("token", response.data.token, { expires: 7 });
+        Cookies.set("token", response.data.token, { expires: 7, path: "/" });
 
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          navigate("/");
-        }, 2000);
+        // Verify if token is stored correctly
+        const storedToken = Cookies.get("token");
+        if (storedToken) {
+          console.log("Token stored successfully:", storedToken);
+          setShowSuccess(true);
+          setTimeout(() => {
+            setShowSuccess(false);
+            navigate("/");
+          }, 2000);
+        } else {
+          console.error("Token storage failed.");
+          setError("An error occurred while storing token.");
+        }
       } else {
-        console.error("Token not received");
+        console.error("Token not received in response");
         setError("Login failed. Please try again.");
       }
     } catch (error) {
@@ -75,7 +82,7 @@ function LoginPage() {
                   />
                 </Form.Group>
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill" disabled={loading}>
+                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">
                     {loading ? "Logging in..." : "Submit"}
                   </Button>
                 </motion.div>

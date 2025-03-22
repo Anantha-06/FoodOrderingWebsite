@@ -8,7 +8,7 @@ function ProtectedRoutes() {
 
   useEffect(() => {
     const token = Cookies.get("token");
-
+ 
     if (!token) {
       navigate("/login");
     }
