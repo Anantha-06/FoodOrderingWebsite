@@ -10,8 +10,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://food-ordering-website-git-main-anantha-krishnan-ms-projects.vercel.app" // 
+  process.env.CLIENT_URI
 ];
 
 app.use(
