@@ -95,7 +95,7 @@ function LoginPage() {
             </Card>
           </motion.div>
         </Col>
-        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order-1">
+        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order- p-5">
           <motion.img 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 

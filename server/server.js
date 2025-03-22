@@ -14,6 +14,7 @@ const allowedOrigins = [
   "https://byteeats.vercel.app",
   "https://byteeats-anantha-krishnan-ms-projects.vercel.app",
   "https://byteeats-git-main-anantha-krishnan-ms-projects.vercel.app",
+  "https://foodorderingwebsiteserver.onrender.com/api/menu/all",
 ];
 
 app.use(
