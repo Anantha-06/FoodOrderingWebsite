@@ -26,7 +26,11 @@ function LoginPage() {
       const response = await axiosInstance.post("/user/login", formData);
       console.log(response.data);
 
-      if (Cookies.get("token")) {
+      // Check if the response contains a token
+      if (response.data.token) {
+        // Store token in cookies
+        Cookies.set("token", response.data.token, { expires: 7 });
+
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
@@ -34,9 +38,13 @@ function LoginPage() {
         }, 2000);
       } else {
         console.error("Token not received");
+        setError("Login failed. Please try again.");
       }
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
+      setError(error.response?.data?.message || "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,7 +75,9 @@ function LoginPage() {
                   />
                 </Form.Group>
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">Submit</Button>
+                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill" disabled={loading}>
+                    {loading ? "Logging in..." : "Submit"}
+                  </Button>
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
