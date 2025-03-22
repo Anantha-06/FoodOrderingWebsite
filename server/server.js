@@ -5,13 +5,15 @@ import cors from "cors";
 import { apiRouter } from "./routes/version_1/index.js";
 import dotenv from "dotenv";
 
-dotenv.config(); 
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://food-ordering-website-wine.vercel.app/" 
+  "http://localhost:5173",
+  "https://byteeats.vercel.app/login",
+  "https://byteeats-anantha-krishnan-ms-projects.vercel.app/login",
+  "https://byteeats-git-main-anantha-krishnan-ms-projects.vercel.app/login",
 ];
 
 app.use(
@@ -23,8 +25,8 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, 
-    methods: ["GET", "POST", "PUT", "DELETE"], 
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
