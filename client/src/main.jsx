@@ -31,11 +31,11 @@ const router = createBrowserRouter([
             element: <RestaurantPage />,
           },
           {
-            path: "/about",
+            path: "/user/about",
             element: <AboutUs />,
           },
           {
-            path: "/profile",
+            path: "/user/profile",
             element: <ProfilePage />,
           },
           {
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: "/signup",
+    path: "/user/signup/",
     element: <SignUpPage />,
   },
   {

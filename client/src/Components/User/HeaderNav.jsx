@@ -23,24 +23,23 @@ function HeaderNav() {
       <Navbar expand="lg" className="bg-warning">
         <Container fluid className="gap-lg-5 gap-md-3 gap-sm-1 gap-xs-0">
           <Link to="/">
-            <div>
-              <Navbar.Brand>
-                <img
-                  src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png"
-                  className="navBar-logimg"
-                />
-              </Navbar.Brand>
-            </div>
+            <Navbar.Brand>
+              <img
+                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png"
+                className="navBar-logimg"
+              />
+            </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="me-auto my-2 my-lg-0 gap-lg-5 gap-md-3 gap-sm-1 gap-xs-1"
+              className="me-auto my-2 my-lg-0 gap-lg-5 gap-md-3 gap-sm-1 gap-xs-1 d-flex align-items-center"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/about">About Us</Nav.Link>
+              <Link className="text-decoration-none text-reset" to = "/user/about">About Us</Link>
+             
               <NavDropdown
                 title={
                   <img

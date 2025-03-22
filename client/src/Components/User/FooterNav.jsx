@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../../App.css";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function FooterNav(){
     return(
@@ -26,11 +27,11 @@ function FooterNav(){
         <Col xs={12} sm={12} md={6} lg={4} >
         <div className="d-flex flex-column flex-nowrap">
             <p className="fs-5 fw-bold my-1">Pages</p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/about">About Us</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">News</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Contact</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Blog</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Terms & Condition</a></p>
+         <p className="m-0 p-0"><Link  className="text-decoration-none text-reset" to= "/user/about">About Us</Link></p>
+         <p className="m-0 p-0"><Link  className="text-decoration-none text-reset" to= "/">News</Link></p>
+         <p className="m-0 p-0"><Link  className="text-decoration-none text-reset" to= "/">Contact</Link></p>
+         <p className="m-0 p-0"><Link  className="text-decoration-none text-reset" to= "/">Blog</Link></p>
+         <p className="m-0 p-0"><Link  className="text-decoration-none text-reset" to= "/">Terms & Condition</Link></p>
          <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Privacy Policy</a></p>
         </div>
         </Col>

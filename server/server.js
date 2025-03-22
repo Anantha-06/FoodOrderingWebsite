@@ -19,10 +19,11 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log("Origin:", origin); 
+      console.log("Origin:", origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error("Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -33,19 +34,16 @@ app.use(
 );
 
 app.options("*", cors()); 
-
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api", apiRouter);
 
-const db = connectDb;
-db();
+connectDb();
 
-app.listen(port, () =>
-  console.log(`Server running on port: http://localhost:${port}`)
+app.listen(port, () => 
+  console.log(`🚀 Server running at http://localhost:${port}`)
 );
-
 app.all("*", (req, res) => {
   res.status(404).json({ message: "Endpoint does not exist" });
 });
