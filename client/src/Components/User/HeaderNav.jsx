@@ -49,8 +49,8 @@ function HeaderNav() {
                 }
                 id="navbarScrollingDropdown"
               >
-                <NavDropdown.Item href="/profile">Your Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">Your Order</NavDropdown.Item>
+               <Link> <NavDropdown.Item >Your Profile</NavDropdown.Item></Link>
+                <NavDropdown.Item >Your Order</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>Sign Out</NavDropdown.Item>
               </NavDropdown>
