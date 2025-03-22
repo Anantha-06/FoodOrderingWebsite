@@ -1,0 +1,275 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  min-width: 400px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;  
+}
+
+.footer-container {
+  width: 100%;
+}
+
+.restaurant-card-rating{
+width: 35px;
+height: 35px;
+}
+
+.thumbnail-image {
+    width: 25px;
+    height: 100%;
+}
+.thumbnail-image-2 {
+    width: 23px;
+    height: 100%;
+}
+.navBar-logimg {
+    width: 100%;
+    height: 40px;
+}
+.socialMedia-img {
+    width: 25px;
+    height: 25px;
+}
+.footer-logimg {
+    width: 320px;
+    height: 40px;
+}
+.footericon {
+    width: 20px;
+    height: 20px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto; /* Ensures images maintain their aspect ratio */
+    object-fit: cover; /* Ensures images cover the container */
+  }
+  
+  /* Optional: Additional customizations */
+  .carousel {
+    max-width: 100%;
+    margin: auto;
+  }
+
+.bestSellerCarosuel {
+    width: 290px;
+    height: 290px;
+}
+.restaurantCard-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+.loginImage {
+    height: 970px;
+    width: 550px;
+}
+.inputBox-width {
+    width: 350px;
+}
+.loginBackground {
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+.signup-Background {
+    background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+}
+.restaurant-image {
+    width: 250px;
+    height: 250px;
+}
+.menuItemimage {
+    width: 190px;
+    height: 190px;
+}
+.secondHEader {
+    text-shadow: 5px 2px 5px #ffc400;
+}
+.profilepage-image {
+    width: 150px;
+    height: 150px;
+}
+.tabHeight {
+    min-height: 400px;
+}
+.allPage-height{
+    min-height: 700px;
+}
+
+.rating-icon{
+    height: 18px;
+    width: 18px;
+}
+
+.image-container {
+    width: 100%;
+    overflow: hidden;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+
+.page-review{
+    height: 25px;
+    height: 25px;
+}
+
+/*Best Seller Design*/
+
+.bestseller-image-wrapper {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 250px; 
+    height: 250px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .bestseller-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .bestseller-image:hover,
+  .bestseller-image:active {
+    transform: scale(1.2);
+  }
+
+.restaurant-card-container {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .restaurant-card-container:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+  }
+  
+  
+  .restaurant-card-image-container {
+    overflow: hidden;
+    border-radius: 16px; 
+  }
+  
+  
+  .restaurant-card-image {
+    transition: transform 0.3s ease;
+  }
+  
+  .restaurant-card-container:hover .restaurant-card-image {
+    transform: scale(1.1); 
+  }
+  
+  
+  .restaurant-rating-icon {
+    width: 20px; 
+    height: 20px; 
+  }
+  
+
+  .restaurant-card-title {
+    font-size: 1.25rem; 
+  }
+
+/*Restaurant Page card*/
+
+.zoom-container {
+    transition: transform 0.3s ease; 
+  }
+  
+  .zoom-container:hover .zoom-content {
+    transform: scale(1.05); 
+    cursor: pointer; 
+  }
+
+  .zoom-container:hover .zoom-content {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+.position-relative {
+    position: relative;
+  }
+  
+  canvas {
+    z-index: 1;
+  }
+  
+  button {
+    z-index: 2;
+    position: relative;
+  }
+
+
+/*Popup*/
+
+/* App.css */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  
+  color: rgb(0, 0, 0);
+  padding: 5px;
+  border-radius: 4px;
+  z-index: 1000;
+  width: 300px;
+  height: auto;
+  animation: slideIn 0.5s ease-out;
+}
+
+.popup.error {
+  background-color: #f44336; /* Red for errors */
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-btn {
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+/*Checkout Page*/
+.checkoutCartImage {
+  width: 50px;
+  height: 50px;
+}
+.cartbutton-checkout{
+  width: 60px;
+  height: auto;
+}
+
+/*Checkout Address*/
+
+
+/*next css  */
+
+@media (max-width: 768px) {
+    .carousel-item {
+      padding: 10px;
+    }
+}
+
+
+  
