@@ -11,14 +11,15 @@ const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://byteeats.vercel.app/login",
-  "https://byteeats-anantha-krishnan-ms-projects.vercel.app/login",
-  "https://byteeats-git-main-anantha-krishnan-ms-projects.vercel.app/login",
+  "https://byteeats.vercel.app",
+  "https://byteeats-anantha-krishnan-ms-projects.vercel.app",
+  "https://byteeats-git-main-anantha-krishnan-ms-projects.vercel.app",
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("Origin:", origin); 
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -30,6 +31,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+app.options("*", cors()); 
 
 app.use(express.json());
 app.use(cookieParser());
