@@ -25,7 +25,11 @@ export async function signUp(req, res) {
     });
     await newUser.save();
     const token = generateToken(newUser);
-    res.cookie("token", token, { httpOnly: false });
+    res.cookie("token", token, {
+      httpOnly: process.env.NODE_ENV === "production", 
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none":"strict", 
+    });
     res.status(201).json({ message: "Signed Up Successfully" });
   } catch (error) {
     console.log(error);

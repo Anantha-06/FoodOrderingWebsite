@@ -2,6 +2,8 @@ import { cloudinaryInstance } from "../config/cloudinary.js";
 import { Restaurant } from "../models/restaurantModel.js";
 import bcrypt from "bcryptjs";
 import { restaurantToken } from "../utilities/token.js";
+import dotenv from "dotenv"
+dotenv.config()
 
 export const registerRestaurant = async (req, res) => {
   try {
@@ -32,21 +34,16 @@ export const registerRestaurant = async (req, res) => {
       image: imageUri.url,
       contactEmail
     });
-
-    // Save the new restaurant to the database
     await newRestaurant.save();
-
-    // Create token
     const token = restaurantToken(newRestaurant);
-
-    // Set the token in a cookie
-    res.cookie("token", token, { httpOnly: false });
-
-    // Respond with success
+    res.cookie("token", token,{
+      httpOnly: process.env.NODE_ENV === "production", 
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none":"strict", 
+    });
     res.status(201).json({ message: "Restaurant registered successfully", newRestaurant });
-
   } catch (error) {
-    console.log(error); // Log the error for debugging purposes
+    console.log(error); 
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -66,7 +63,11 @@ export const loginRestaurant = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = restaurantToken(restaurant);
-    res.cookie("token", token, { httpOnly: false });
+    res.cookie("token", token, {
+      httpOnly: process.env.NODE_ENV === "production", 
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none":"strict", 
+    });
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
