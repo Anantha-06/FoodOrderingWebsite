@@ -23,7 +23,7 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.post("/user/login", formData);
+      const response = await axiosInstance.post("/user/login", formData, { withCredentials: true });
       console.log(response.data);
 
       if (Cookies.get("token")) {
