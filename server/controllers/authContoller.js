@@ -1,6 +1,8 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utilities/token.js";
+import dotenv from "dotenv"
+dotenv.config()
 
 export async function signUp(req, res) {
   try {
@@ -47,9 +49,9 @@ export async function login(req, res) {
     }
     const token = generateToken(user);
     res.cookie("token", token, {
-      httpOnly: true, 
-      secure: true,
-      sameSite: "None", 
+      httpOnly: process.env.NODE_ENV === "production", 
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none":"strict", 
     })
     res.status(200).json({ message: "Logged in Successfully", token });
   } catch (error) {
