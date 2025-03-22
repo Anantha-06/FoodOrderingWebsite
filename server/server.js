@@ -9,22 +9,19 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-const cors = require("cors");
 app.use(
   cors({
-    origin: "https://byteeatsfoods.vercel.app", // Ensure this matches exactly
-    methods: "GET,POST,PUT,DELETE,OPTIONS",
-    allowedHeaders: "Content-Type, Authorization",
-    credentials: true, // If using cookies or auth
+    origin: process.env.CLIENT_URI, 
+    credentials: true, 
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], 
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "Accept",
+    ],
   })
 );
-
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://byteeatsfoods.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.sendStatus(200);
-});
 
 app.use(express.json());
 app.use(cookieParser());
