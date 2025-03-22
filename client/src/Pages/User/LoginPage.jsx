@@ -25,7 +25,6 @@ function LoginPage() {
     try {
       const response = await axiosInstance.post("/user/login", formData);
       console.log(response.data);
-
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
