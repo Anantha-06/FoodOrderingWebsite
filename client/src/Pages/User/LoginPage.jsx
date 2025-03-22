@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
-import Cookies from "js-cookie";
+
 import { motion } from "framer-motion";
 import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance.js";
@@ -23,18 +23,15 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.post("/user/login", formData, { withCredentials: true });
+      const response = await axiosInstance.post("/user/login", formData);
       console.log(response.data);
 
-      if (Cookies.get("token")) {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
           navigate("/");
         }, 2000);
-      } else {
-        console.error("Token not received");
-      }
+    
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
     }
