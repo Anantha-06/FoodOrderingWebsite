@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import Image from "react-bootstrap/Image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import axios from "axios";
 import "../../App.css";
+import useFetch from "../../Hooks/UseFetch.jsx";
 
 const SliderArrow = ({ className, style, onClick, position }) => {
   const arrowStyle =
@@ -16,32 +16,14 @@ const SliderArrow = ({ className, style, onClick, position }) => {
 };
 
 const BestSellerSlider = () => {
-  const [productList, setProductList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Fetch data using the useFetch hook
+  const [data, isLoading, error] = useFetch("/menu/all");
+  console.log("Fetched Data:", data); // Log the fetched data
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "https://foodorderingwebsiteserver.onrender.com/api/menu/all"
-        );
+  // Ensure productList is an array, even if data is undefined or null
+  const productList = data?.menuItems || [];
 
-        if (response.data && Array.isArray(response.data.menuItems)) {
-          setProductList(response.data.menuItems);
-        } else {
-          setProductList([]);
-        }
-      } catch (err) {
-        setError("Failed to load products. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
+  // Slider settings
   const settings = {
     dots: true,
     infinite: true,
@@ -67,8 +49,12 @@ const BestSellerSlider = () => {
     prevArrow: <SliderArrow position="prev" />,
   };
 
-  if (loading) return <p>Loading products...</p>;
-  if (error) return <p>{error}</p>;
+  // Loading and error states
+  if (isLoading) return <p>Loading products...</p>;
+  if (error) {
+    console.error("Fetch Error:", error);
+    return <p>{error.message}</p>;
+  }
 
   return (
     <div>
@@ -90,9 +76,6 @@ const BestSellerSlider = () => {
                       alt={item.name}
                       className="bestseller-image"
                     />
-                  </div>
-                  <div className="bestseller-text">
-                    <div className="bestseller-title-text">{item.title}</div>
                   </div>
                 </div>
               ))}

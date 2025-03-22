@@ -8,19 +8,23 @@ const useFetch = (url, params = {}) => {
 
   const fetchData = async () => {
     try {
+      console.log("Fetching data from:", url); 
       const response = await axiosInstance({ url, params });
+      console.log("API Response:", response);
       setData(response.data);
-      setLoading(false);
     } catch (error) {
+      console.error("Fetch Error:", error); 
       setError(error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, [url, JSON.stringify(params)]);
+
   return [data, isLoading, error, fetchData];
 };
 
-export default useFetch
+export default useFetch;

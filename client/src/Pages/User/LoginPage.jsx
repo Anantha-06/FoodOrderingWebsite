@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
-
 import { motion } from "framer-motion";
 import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance.js";
