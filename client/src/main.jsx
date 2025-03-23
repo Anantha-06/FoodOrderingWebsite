@@ -14,6 +14,7 @@ import CheckoutPage from "./Pages/User/CheckoutPage.jsx";
 import PaymentPage from "./Pages/User/PaymentPage.jsx";
 import MainPage from "./Pages/Shared/MainPage.jsx";
 import UserRoute from "./routes/userRoute.jsx";
+import AllOrderPage from "./Pages/User/AllORderPage.jsx"
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
               {
                 path: "order",
                 element: <PaymentPage />,
+              },
+              {
+                path: "all/order",
+                element: <AllOrderPage />,
               },
             ],
           },

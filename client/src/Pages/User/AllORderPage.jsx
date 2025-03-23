@@ -1,19 +1,48 @@
-import React from "react";
-import AllOrderCard from "../../Components/AllOrderCard";
-import { Container } from "react-bootstrap";
-import "../../App.css";
+import React, { useEffect, useState } from "react";
+import { Table, Container } from "react-bootstrap";
+import useFetch from "../../Hooks/UseFetch.jsx";
 
-function AllORderPage() {
+function AllOrderCard() {
+  const [data, isLoading, error] = useFetch("/order/get/all");
+  const orders = data?.orders || [];
+
+  if (isLoading) return <p className="text-center">Loading orders...</p>;
+  if (error) {
+    console.error("Fetch Error:", error);
+    return <p className="text-danger text-center">No Order Found or {error.message}</p>;
+  }
+
   return (
-    <>
-      <Container fluid className="allPage-height">
-        <div>
-          <p className="fs-2 fw-bold text-center">All Order Page</p>
-        </div>
-        <AllOrderCard />
-      </Container>
-    </>
+    <Container className="d-flex flex-column justify-content-center align-items-center" fluid>
+      <div className="fs-3 fw-bold my-5">Recent Orders</div>
+      <div className="w-75">
+        <Table striped bordered hover responsive className="text-center">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Restaurant</th>
+              <th>City</th>
+              <th>Status</th>
+              <th>Total Price</th>
+              <th>Order Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{order.restaurant.name}</td>
+                <td>{order.deliveryAddress.city}</td>
+                <td>{order.status}</td>
+                <td>₹{order.finalPrice}</td>
+                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </Container>
   );
 }
 
-export default AllORderPage;
+export default AllOrderCard;
