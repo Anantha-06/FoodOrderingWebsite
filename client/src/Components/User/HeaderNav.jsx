@@ -20,8 +20,8 @@ function HeaderNav() {
 
   return (
     <nav>
-      <Navbar expand="lg" className="bg-warning">
-        <Container fluid className="gap-lg-5 gap-md-3 gap-sm-1 gap-xs-0">
+      <Navbar expand="lg" className="bg-warning ">
+        <Container fluid className="gap-lg-5 gap-md-3 gap-sm-1 gap-xs-0 ">
           <Link to="/">
             <Navbar.Brand>
               <img
@@ -33,12 +33,12 @@ function HeaderNav() {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="me-auto my-2 my-lg-0 gap-lg-5 gap-md-3 gap-sm-1 gap-xs-1"
+              className="me-auto my-2 my-lg-0 gap-lg-5 gap-md-3 gap-sm-1 gap-xs-1 d-flex align-items-center"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/user/about">About Us</Nav.Link>
+              <Link to ={"/"} className="text-decoration-none text-reset">Home</Link>
+              <Link to ={"/user/about"} className="text-decoration-none text-reset">About Us</Link>
               <NavDropdown
                 title={
                   <img
@@ -48,10 +48,11 @@ function HeaderNav() {
                 }
                 id="navbarScrollingDropdown"
               >
-                <NavDropdown.Item href="/profile">Your Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">Your Order</NavDropdown.Item>
+                <Link to ={"/user/profile"} className="text-decoration-none text-reset"><li>Your Profile</li></Link>
+                <Link to ={"/"} className="text-decoration-none text-reset"><li>Your Order</li></Link>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleSignOut}>Sign Out</NavDropdown.Item>
+                <Link onClick={handleSignOut} className="text-decoration-none text-reset">Sign Out</Link>
+                <NavDropdown.Item ></NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="/checkoutpage">
                 <img
