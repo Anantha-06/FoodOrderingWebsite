@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Container } from "react-bootstrap";
 import useFetch from "../../Hooks/UseFetch.jsx";
 
-function AllOrderCard() {
+function AllOrderPage() {
   const [data, isLoading, error] = useFetch("/order/get/all");
   const orders = data?.orders || [];
 
@@ -45,4 +45,4 @@ function AllOrderCard() {
   );
 }
 
-export default AllOrderCard;
+export default AllOrderPage;

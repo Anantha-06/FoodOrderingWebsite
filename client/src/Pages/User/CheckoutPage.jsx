@@ -59,7 +59,7 @@ function CheckoutPage() {
     if (showAlert) {
       console.log("showAlert is true, navigating to /user/order");
       setTimeout(() => {
-        navigate("/user/order", { replace: true });
+        navigate("/user/payment", { replace: true });
       }, 2000);
     }
   }, [showAlert, navigate]);

@@ -14,10 +14,10 @@ import CheckoutPage from "./Pages/User/CheckoutPage.jsx";
 import PaymentPage from "./Pages/User/PaymentPage.jsx";
 import MainPage from "./Pages/Shared/MainPage.jsx";
 import UserRoute from "./routes/UserRoute.jsx";
-import AllOrderPage from "./Pages/User/AllORderPage.jsx"
 import AdminSignup from "./Pages/Admin/AdminSignup.jsx";
 import AdminLogin from "./Pages/Admin/AdminLogin.jsx";
 import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
+import AllOrderPage from "./Pages/User/AllORderPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,11 +30,15 @@ const router = createBrowserRouter([
       },
       {
         path: "user",
-        element: <UserRoute/>,
+        element: <UserRoute />,
         children: [
           {
             element: <ProtectedRoutes />,
             children: [
+              {
+                index: true, 
+                element: <Homepage />,
+              },
               {
                 path: "homepage",
                 element: <Homepage />,
@@ -60,38 +64,37 @@ const router = createBrowserRouter([
                 element: <CheckoutPage />,
               },
               {
-                path: "order",
-                element: <PaymentPage />,
+                path: "orders", 
+                element: <AllOrderPage />, 
               },
               {
-                path: "all/order",
-                element: <AllOrderPage />,
+                path: "payment",
+                element: <PaymentPage />, 
               },
             ],
           },
         ],
       },
       {
-        path: "/admin/dashboard",
-        element: <AdminDashboard/>
+        path: "admin/dashboard", 
+        element: <AdminDashboard />,
       },
       {
-        path: "/user/login",
+        path: "user/login", 
         element: <LoginPage />,
       },
       {
-        path: "/user/signup",
+        path: "user/signup", 
         element: <SignUpPage />,
       },
       {
-        path: "/admin/signup",
-        element: <AdminSignup/>
+        path: "admin/signup", 
+        element: <AdminSignup />,
       },
       {
-        path: "/admin/login",
-        element: <AdminLogin/>
+        path: "admin/login", 
+        element: <AdminLogin />,
       },
-
     ],
   },
 ]);

@@ -49,7 +49,7 @@ function HeaderNav() {
                 id="navbarScrollingDropdown"
               >
                 <Link to ={"/user/profile"} className="text-decoration-none text-reset"><li><p className="mx-2">Your Profile</p></li></Link>
-                <Link to ={"/user/all/order"} className="text-decoration-none text-reset"><li><p className="mx-2">Your Order</p></li></Link>
+                <Link to ={"/user/orders"} className="text-decoration-none text-reset"><li><p className="mx-2">Your Order</p></li></Link>
                 <NavDropdown.Divider />
                 <Link onClick={handleSignOut} className="text-decoration-none text-reset"><p className="mx-2 my-0">Sign Out</p></Link>
                 <NavDropdown.Item ></NavDropdown.Item>
