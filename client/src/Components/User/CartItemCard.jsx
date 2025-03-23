@@ -1,12 +1,18 @@
-import React from "react";
-import "../../App.css";
+import React, { useEffect } from "react";
+import { Container, Row, Col, Card, Button, Image, Spinner, Alert } from "react-bootstrap";
 import useFetch from "../../Hooks/UseFetch.jsx";
 import axiosInstance from "../../Axios/axiosInstance.js";
 
-function CartItemCard() {
+function CartItemCard({ setCartId }) {
   const [data, isLoading, error, refetch] = useFetch("/cart/all");
   const cart = data?.data || {};
   const items = cart.items || [];
+
+  useEffect(() => {
+    if (cart._id) {
+      setCartId(cart._id);
+    }
+  }, [cart, setCartId]);
 
   const handleQuantityUpdate = async (foodId, action) => {
     try {
@@ -23,82 +29,57 @@ function CartItemCard() {
     }
   };
 
-  if (isLoading) return <p>Loading cart items...</p>;
-  if (error) return <p className="d-flex flex-wrap mb-3 shadow-lg p-3 bg-body-tertiary rounded-5 fs-3 fw-bold">No Items Added To The Cart Or Failed To Fetch Cart</p>;
-  if (items.length === 0) return <p>No items added to the cart.</p>;
+  if (isLoading) return <Spinner animation="border" role="status" />;
+  if (error) return <Alert variant="danger">No Items Added To The Cart Or Failed To Fetch Cart</Alert>;
+  if (items.length === 0) return <Alert variant="warning">No items added to the cart.</Alert>;
 
   return (
-    <div className="container">
-      <div className="row my-4">
-        <div className="col-md-8">
+    <Container>
+      <Row className="my-4">
+        <Col md={8}>
           {items.map((item) => (
-            <div key={item.foodId} className="d-flex flex-wrap mb-3 shadow-lg p-3 bg-body-tertiary rounded-5">
-              <div className="me-auto p-2">
-                <div className="d-flex flex-row gap-2">
-                  <div>
-                    <img
-                      src={item.foodImage || "https://via.placeholder.com/150"}
-                      alt={item.foodName}
-                      className="checkoutCartImage rounded-5 img-fluid"
-                    />
-                  </div>
-                  <div className="d-flex flex-nowrap flex-column text-center">
-                    <p className="p-0 m-0 fw-bold fs-6">Food Name</p>
-                    <p className="fs-6">{item.foodName}</p>
-                  </div>
-                  <div className="d-flex flex-nowrap flex-column text-center">
-                    <p className="p-0 m-0 fw-bold">Added Quantity</p>
-                    <p>{item.quantity}</p>
-                  </div>
+            <Card key={item.foodId} className="mb-3 shadow-lg p-1 bg-light rounded-5">
+              <Card.Body className="d-flex flex-wrap align-items-center">
+                <Image
+                  src={item.foodImage || "https://via.placeholder.com/150"}
+                  alt={item.foodName}
+                  className="rounded-5 me-3"
+                  width={100}
+                  height={100}
+                />
+                <div className="flex-grow-1">
+                  <h6 className="fw-bold">{item.foodName}</h6>
+                  <p>Quantity: {item.quantity}</p>
                 </div>
-              </div>
-              <div className="p-2 ">
-                <div className="d-flex justify-content-end ">
-                  <div className="d-flex flex-nowrap flex-column  align-items-center">
-                    <p className="p-0 m-0 fw-bold">Add One More</p>
-                    <button 
-                      className="cartbutton-checkout rounded-3 bg-warning "
-                      onClick={() => handleQuantityUpdate(item.foodId, "increment")}
-                    >
-                      +
-                    </button>
-                  </div>
+                <div className="text-center">
+                  <p className="fw-bold mb-1">Add One More</p>
+                  <Button variant="warning"  className="px-4" size="sm" onClick={() => handleQuantityUpdate(item.foodId, "increment")}>
+                    +
+                  </Button>
                 </div>
-              </div>
-              <div className="p-2">
-                <div className="d-flex justify-content-end">
-                  <div className="d-flex flex-nowrap flex-column align-items-center">
-                    <p className="p-0 m-0 fw-bold">Remove</p>
-                    <button 
-                      className="cartbutton-checkout rounded-3 bg-warning"
-                      onClick={() => handleQuantityUpdate(item.foodId, "decrement")}
-                    >
-                      -
-                    </button>
-                  </div>
+                <div className="text-center ms-3">
+                  <p className="fw-bold mb-1">Remove</p>
+                  <Button variant="danger"   className="px-4" size="sm" onClick={() => handleQuantityUpdate(item.foodId, "decrement")}>
+                    -
+                  </Button>
                 </div>
-              </div>
-              <div className="p-2 mx-5">
-                <div className="d-flex justify-content-end">
-                  <div className="d-flex flex-nowrap flex-column text-center">
-                    <p className="p-0 m-0 fw-bold fs-5">Price</p>
-                    <p className="fs-5">₹{item.totalItemPrice}</p>
-                  </div>
+                <div className="text-end ms-3">
+                  <h5 className="fw-bold">₹{item.totalItemPrice}</h5>
                 </div>
-              </div>
-            </div>
+              </Card.Body>
+            </Card>
           ))}
-        </div>
-        <div className="col-md-4">
-          <div className="d-flex flex-column align-items-center shadow-lg p-3 bg-body-tertiary rounded-4">
-          <div className="d-flex flex-nowrap"><p className="fs-4 fw-bold">Total Price :</p>
-            <p className="fs-4 fw-bold">₹{cart?.totalPrice}</p></div>
-            <div className="d-flex flex-nowrap"><p className="fw-bold fs-3">Final Price :</p>
-            <p className="fs-3 fw-bold">₹{cart?.totalPrice}</p></div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+        <Col md={4}>
+          <Card className="shadow-lg p-3 bg-light rounded-5 text-center">
+            <Card.Body>
+              <h4 className="fw-bold">Total Price: ₹{cart?.totalPrice}</h4>
+              <h3 className="fw-bold text-primary">Final Price: ₹{cart?.totalPrice}</h3>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

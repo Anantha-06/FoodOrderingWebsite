@@ -57,9 +57,9 @@ function ShowAddress({ selectedAddressId, setSelectedAddressId }) {
   return (
     <Container fluid className="mt-4 p-0">
       <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6} className="p-0">
+        <Col xs={12} md={12} lg={12} className="">
           {address ? (
-            <Card className="p-4 shadow-lg bg-body-tertiary rounded-5">
+            <Card className="p-5 shadow-lg bg-body-tertiary rounded-5">
               <h3 className="fw-bold text-center mb-4">Saved Address</h3>
               {Object.entries(address).map(([key, value]) => (
                 <p key={key} className="mb-2">
