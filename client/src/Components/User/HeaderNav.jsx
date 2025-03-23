@@ -38,7 +38,7 @@ function HeaderNav() {
               navbarScroll
             >
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/about">About Us</Nav.Link>
+              <Nav.Link href="/user/about">About Us</Nav.Link>
               <NavDropdown
                 title={
                   <img

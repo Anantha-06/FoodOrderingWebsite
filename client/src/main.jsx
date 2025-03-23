@@ -16,7 +16,7 @@ import CheckoutPage from "./Pages/User/CheckoutPage.jsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Root />,
     children: [
       {
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
             element: <RestaurantPage />,
           },
           {
-            path: "about",
+            path: "/user/about",
             element: <AboutUs />,
           },
           {
