@@ -55,42 +55,47 @@ function ShowAddress({ selectedAddressId, setSelectedAddressId }) {
   };
 
   return (
-    <Container className="mt-4">
+    <Container fluid className="mt-4 p-0">
       <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6}>
+        <Col xs={12} md={8} lg={6} className="p-0">
           {address ? (
             <Card className="p-4 shadow-lg bg-body-tertiary rounded-5">
-              <h3 className="fw-bold text-center">Saved Address</h3>
+              <h3 className="fw-bold text-center mb-4">Saved Address</h3>
               {Object.entries(address).map(([key, value]) => (
-                <p key={key}>
+                <p key={key} className="mb-2">
                   <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
                 </p>
               ))}
-              <div className="text-center mt-3">
+              <div className="text-center mt-4">
                 <Link to={"/address/new"}>
-                <Button variant="warning" className="w-100 py-2">
-                  Update Address
-                </Button>
+                  <Button variant="warning" className="w-100 py-2" style={{ transition: "all 0.3s ease" }}>
+                    Update Address
+                  </Button>
                 </Link>
               </div>
             </Card>
           ) : (
             <Card className="p-4 shadow-lg bg-body-tertiary rounded-5">
-              <h3 className="text-center fw-bold">Add New Address</h3>
+              <h3 className="text-center fw-bold mb-4">Add New Address</h3>
               <Form onSubmit={handleSubmit}>
                 <Row>
                   {Object.keys(formData).map((field) => (
                     <Col xs={12} sm={6} key={field} className="mb-3">
                       <Form.Group>
                         <Form.Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
-                        <Form.Control type="text" name={field} value={formData[field]} onChange={handleChange} required />
+                        <Form.Control
+                          type="text"
+                          name={field}
+                          value={formData[field]}
+                          onChange={handleChange}
+                          required
+                        />
                       </Form.Group>
                     </Col>
                   ))}
                 </Row>
-                <div className="text-center mt-3">
-                    
-                  <Button type="submit" variant="warning" className="w-100 py-2">
+                <div className="text-center mt-4">
+                  <Button type="submit" variant="warning" className="w-100 py-2" style={{ transition: "all 0.3s ease" }}>
                     Add New Address
                   </Button>
                 </div>

@@ -14,19 +14,22 @@ const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
   }
 
   return (
-    <Container className="d-flex justify-content-center mt-4" fluid>
-      <Card className="text-center p-3 shadow-lg p-3 mb-5 bg-body-tertiary rounded-4" style={{ maxWidth: "400px" }}>
+    <Container fluid className="d-flex justify-content-center mt-4 p-0">
+      <Card className="text-center p-3 shadow-lg bg-body-tertiary rounded-4" style={{ width: "100%", maxWidth: "400px" }}>
         <Card.Body>
-          <Card.Title className="fw-bold">Available Offers!</Card.Title>
+          <Card.Title className="fw-bold mb-4">Available Offers!</Card.Title>
           {coupons.length > 0 ? (
             coupons.map((coupon) => (
-              <Row key={coupon._id} className="align-items-center border p-2 rounded-3 my-2 px-4">
-                <Col className="fw-bold">Get {coupon.discountPercentage}% Discount</Col>
-                <Col>
-                  <Button 
-                    variant={selectedCoupon === coupon.code ? "success" : "primary"} 
+              <Row key={coupon._id} className="align-items-center border p-2 rounded-3 my-2 mx-0">
+                <Col xs={7} className="fw-bold text-start">
+                  Get {coupon.discountPercentage}% Discount
+                </Col>
+                <Col xs={5} className="text-end">
+                  <Button
+                    variant={selectedCoupon === coupon.code ? "success" : "primary"}
                     onClick={() => setSelectedCoupon(coupon.code)}
-                    className="px-4"
+                    className="px-4 py-2"
+                    style={{ transition: "all 0.3s ease" }}
                   >
                     {selectedCoupon === coupon.code ? "Applied" : "Apply"}
                   </Button>
@@ -34,7 +37,7 @@ const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
               </Row>
             ))
           ) : (
-            <p>No coupons available</p>
+            <p className="text-muted">No coupons available</p>
           )}
         </Card.Body>
       </Card>
