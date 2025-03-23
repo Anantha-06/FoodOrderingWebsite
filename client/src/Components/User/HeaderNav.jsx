@@ -54,12 +54,11 @@ function HeaderNav() {
                 <Link onClick={handleSignOut} className="text-decoration-none text-reset"><p className="mx-2 my-0">Sign Out</p></Link>
                 <NavDropdown.Item ></NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="/checkoutpage">
-                <img
+              <Link to ={"/checkoutpage"} className="text-decoration-none text-reset"><img
                   src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756875/Food%20Order%20Website/hj0p5muuflnvmef2lq9z.png"
                   className="thumbnail-image-2"
-                />
-              </Nav.Link>
+                /></Link>
+              
             </Nav>
             <Form className="d-flex">
               <Form.Control
