@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-import AddNewAddress from "../../Components/User/AddNewAddress.jsx"
 import CartItemCard from "../../Components/User/CartItemCard.jsx";
-import AddCoupon from "../../Components/User/AddCoupon.jsx";
+import CouponCard from "../../Components/User/CouponCard.jsx";
+import ShowAddress from "../../Components/User/ShowAddress.jsx";
 
 function CheckoutPage(){
     return(
@@ -14,8 +14,8 @@ function CheckoutPage(){
             </div>
             <div>
                 <CartItemCard/>
-                <AddCoupon/>
-                <AddNewAddress/>
+                <ShowAddress/>
+                <CouponCard/>
             </div>
           </Row>
         </Container>

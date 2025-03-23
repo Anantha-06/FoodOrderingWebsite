@@ -16,14 +16,9 @@ const SliderArrow = ({ className, style, onClick, position }) => {
 };
 
 const BestSellerSlider = () => {
-  // Fetch data using the useFetch hook
-  const [data, isLoading, error] = useFetch("/menu/all");
-  console.log("Fetched Data:", data); // Log the fetched data
-
-  // Ensure productList is an array, even if data is undefined or null
+  
+  const [data, isLoading, error] = useFetch("/menu/all"); 
   const productList = data?.menuItems || [];
-
-  // Slider settings
   const settings = {
     dots: true,
     infinite: true,
@@ -48,8 +43,6 @@ const BestSellerSlider = () => {
     nextArrow: <SliderArrow position="next" />,
     prevArrow: <SliderArrow position="prev" />,
   };
-
-  // Loading and error states
   if (isLoading) return <p>Loading products...</p>;
   if (error) {
     console.error("Fetch Error:", error);

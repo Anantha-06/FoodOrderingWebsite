@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import "../../App.css";
 import useFetch from "../../Hooks/UseFetch.jsx"
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
   const [userData, isUserLoading, userError] = useFetch("/user/profile");
@@ -67,7 +68,7 @@ function ProfilePage() {
                 <div className="d-flex gap-2"><p>State :</p> <p>{address.state}</p></div>
                 <div className="d-flex gap-2"><p>Pincode :</p> <p>{address.pincode}</p></div>
                 <div className="d-flex gap-2"><p>Phone :</p> <p>{address.phone}</p></div>
-                <div><a className="text-decoration-none fw-bold fs-4" href="/address/new">Update Address</a></div>
+                <div> <Link to = {"/address/new"} className="text-decoration-none fw-bold fs-4">Update Address</Link></div>
               </div>
             )}
           </Tab>
