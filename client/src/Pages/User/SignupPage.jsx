@@ -33,7 +33,7 @@ function SignUpPage() {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          navigate("/login");
+          navigate("/user/login");
         }, 2000);
       } else {
         setError(response.data.message || "Signup failed. Please try again.");

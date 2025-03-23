@@ -9,9 +9,11 @@ import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
 import AboutUs from "./Pages/User/AboutUsPage.jsx";
 import LoginPage from "./Pages/User/LoginPage.jsx";
 import SignUpPage from "./Pages/User/SignupPage.jsx";
-import UserAddressEdit from "./Pages/User/UserAddressEdit.jsx"
+import UserAddressEdit from "./Pages/User/UserAddressEdit.jsx";
 import CheckoutPage from "./Pages/User/CheckoutPage.jsx";
 import PaymentPage from "./Pages/User/PaymentPage.jsx";
+import MainPage from "./Pages/Shared/MainPage.jsx";
+import UserRoute from "./routes/userRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,49 +21,58 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: "",
+        element: <MainPage />,
       },
       {
-        path: "/signup",
-        element: <SignUpPage />,
-      },
-      {
-        element: <ProtectedRoutes />,
+        path: "user",
+        element: <UserRoute />,
         children: [
           {
-            path: "",
-            element: <Homepage />,
-          },
-          {
-            path: "/restaurant/:id",
-            element: <RestaurantPage />,
-          },
-          {
-            path: "/user/about",
-            element: <AboutUs />,
-          },
-          {
-            path: "/user/profile",
-            element: <ProfilePage />,
-          },
-          {
-            path: "/address/new",
-            element: <UserAddressEdit/>,
-          },
-          {
-            path: "checkoutpage",
-            element: <CheckoutPage/>,
-          },
-          {
-            path: "orderpage",
-            element: <PaymentPage/>,
+            element: <ProtectedRoutes />,
+            children: [
+              {
+                path: "homepage",
+                element: <Homepage />,
+              },
+              {
+                path: "restaurant/:id",
+                element: <RestaurantPage />,
+              },
+              {
+                path: "about",
+                element: <AboutUs />,
+              },
+              {
+                path: "profile",
+                element: <ProfilePage />,
+              },
+              {
+                path: "address/new",
+                element: <UserAddressEdit />,
+              },
+              {
+                path: "checkout",
+                element: <CheckoutPage />,
+              },
+              {
+                path: "order",
+                element: <PaymentPage />,
+              },
+            ],
           },
         ],
       },
+      {
+        path: "/user/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "user/signup",
+        element: <SignUpPage />,
+      },
     ],
   },
-  
 ]);
 
 createRoot(document.getElementById("root")).render(

@@ -57,9 +57,9 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (showAlert) {
-      console.log("showAlert is true, navigating to /orderpage");
+      console.log("showAlert is true, navigating to /user/order");
       setTimeout(() => {
-        navigate("/orderpage", { replace: true });
+        navigate("/user/order", { replace: true });
       }, 2000);
     }
   }, [showAlert, navigate]);

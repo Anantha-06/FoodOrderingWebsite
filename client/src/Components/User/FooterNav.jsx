@@ -26,12 +26,12 @@ function FooterNav(){
         <Col xs={12} sm={12} md={6} lg={4} >
         <div className="d-flex flex-column flex-nowrap">
             <p className="fs-5 fw-bold my-1">Pages</p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/about">About Us</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">News</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Contact</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Blog</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Terms & Condition</a></p>
-         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/">Privacy Policy</a></p>
+         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/user/about">About Us</a></p>
+         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/user/homepage">News</a></p>
+         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/user/homepage">Contact</a></p>
+         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/user/homepage">Blog</a></p>
+         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/user/homepage">Terms & Condition</a></p>
+         <p className="m-0 p-0"><a  className="text-decoration-none text-reset" href="/user/homepage">Privacy Policy</a></p>
         </div>
         </Col>
         <Col xs={12} sm={12} md={6} lg={4}>

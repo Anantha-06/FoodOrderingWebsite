@@ -6,7 +6,7 @@ function RestaurantCard(props) {
   return (
     <Link
       className="restaurant-card-link text-decoration-none text-reset text-center d-flex"
-      to={`/restaurant/${props.id}`}
+      to={`/user/restaurant/${props.id}`}
     >
       <Card className="restaurant-card-container border border-0 rounded-5 my-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
         <div className="restaurant-card-image-container">

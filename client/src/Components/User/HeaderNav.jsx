@@ -22,7 +22,7 @@ function HeaderNav() {
     <nav>
       <Navbar expand="lg" className="bg-warning ">
         <Container fluid className="gap-lg-5 gap-md-3 gap-sm-1 gap-xs-0 ">
-          <Link to="/">
+          <Link to="/user/homepage">
             <Navbar.Brand>
               <img
                 src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png"
@@ -37,7 +37,7 @@ function HeaderNav() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Link to ={"/"} className="text-decoration-none text-reset">Home</Link>
+              <Link to ={"/user/homepage"} className="text-decoration-none text-reset">Home</Link>
               <Link to ={"/user/about"} className="text-decoration-none text-reset">About Us</Link>
               <NavDropdown
                 title={
@@ -54,7 +54,7 @@ function HeaderNav() {
                 <Link onClick={handleSignOut} className="text-decoration-none text-reset"><p className="mx-2 my-0">Sign Out</p></Link>
                 <NavDropdown.Item ></NavDropdown.Item>
               </NavDropdown>
-              <Link to ={"/checkoutpage"} className="text-decoration-none text-reset"><img
+              <Link to ={"/user/checkout"} className="text-decoration-none text-reset"><img
                   src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756875/Food%20Order%20Website/hj0p5muuflnvmef2lq9z.png"
                   className="thumbnail-image-2"
                 /></Link>

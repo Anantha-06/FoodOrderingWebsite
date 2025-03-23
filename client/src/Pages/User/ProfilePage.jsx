@@ -80,7 +80,7 @@ function ProfilePage() {
                     <ListGroup.Item><strong>Phone:</strong> {address.phone}</ListGroup.Item>
                   </ListGroup>
                   <div className="mt-3 text-center">
-                    <Link to="/address/new" className="btn btn-warning">Update Address</Link>
+                    <Link to="/user/address/new" className="btn btn-warning">Update Address</Link>
                   </div>
                 </Card.Body>
               </Card>

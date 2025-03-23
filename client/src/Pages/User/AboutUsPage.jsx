@@ -1,35 +1,46 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   return (
     <Container className="bg-warning p-5 rounded" fluid>
       <Row className="justify-content-center">
         <Col md={8}>
-          <motion.div 
-            whileHover={{ scale: 1.05 }} 
+          <motion.div
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 1.1 }}
-            initial={{ opacity: 0, y: 50 }} 
-            animate={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <Card className="shadow-lg border-0 rounded text-center p-4 bg-light">
               <Card.Img
                 variant="top"
-                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742453667/Food%20Order%20Website/About%20Us/mclfsqrveij9wxrgs0pg.jpg" 
+                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742453667/Food%20Order%20Website/About%20Us/mclfsqrveij9wxrgs0pg.jpg"
                 alt="About Byteeats"
                 className="img-fluid rounded shadow-sm"
                 style={{ maxHeight: "400px", objectFit: "cover" }}
               />
               <Card.Body>
-                <Card.Title className="text-dark fw-bold display-5">Welcome to Byteeats</Card.Title>
+                <Card.Title className="text-dark fw-bold display-5">
+                  Welcome to Byteeats
+                </Card.Title>
                 <Card.Text className="text-muted fs-5">
-                  Your ultimate destination for delicious and convenient food delivery.
-                  Satisfy your cravings with just a few clicks and experience hassle-free ordering
-                  from top restaurants near you!
+                  Your ultimate destination for delicious and convenient food
+                  delivery. Satisfy your cravings with just a few clicks and
+                  experience hassle-free ordering from top restaurants near you!
                 </Card.Text>
-                <Button variant="dark" size="lg" className="rounded-pill shadow-sm" href="/">Order Now</Button>
+                <Link to={"/user/homepage"}>
+                  <Button
+                    variant="dark"
+                    size="lg"
+                    className="rounded-pill shadow-sm"
+                  >
+                    Order Now
+                  </Button>{" "}
+                </Link>
               </Card.Body>
             </Card>
           </motion.div>
@@ -39,11 +50,11 @@ const AboutUs = () => {
       {/* Our Services Section */}
       <Row className="justify-content-center mt-5">
         <Col md={8}>
-          <motion.div 
-            whileHover={{ scale: 1.05 }} 
+          <motion.div
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 1.1 }}
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
             <Card className="shadow-lg border-0 rounded text-center p-4 bg-light">
@@ -55,9 +66,12 @@ const AboutUs = () => {
                 style={{ maxHeight: "400px", objectFit: "cover" }}
               />
               <Card.Body>
-                <Card.Title className="text-dark fw-bold display-5">Why Choose Byteeats?</Card.Title>
+                <Card.Title className="text-dark fw-bold display-5">
+                  Why Choose Byteeats?
+                </Card.Title>
                 <Card.Text className="text-muted fs-5">
-                  Enjoy top-quality services with the best food delivery experience.
+                  Enjoy top-quality services with the best food delivery
+                  experience.
                 </Card.Text>
                 <ul className="list-unstyled text-muted fs-5">
                   <li>🍽️ Wide variety of cuisines</li>
@@ -66,7 +80,15 @@ const AboutUs = () => {
                   <li>📍 Real-time order tracking</li>
                   <li>📞 24/7 customer support</li>
                 </ul>
-                <Button variant="dark" size="lg" className="rounded-pill shadow-sm" href="/">Explore Restaurants</Button>
+                <Link to={"/user/homepage"}>
+                  <Button
+                    variant="dark"
+                    size="lg"
+                    className="rounded-pill shadow-sm"
+                  >
+                    Explore Restaurants
+                  </Button>
+                </Link>
               </Card.Body>
             </Card>
           </motion.div>
@@ -76,11 +98,11 @@ const AboutUs = () => {
       {/* Faster & Secure Section */}
       <Row className="justify-content-center mt-5">
         <Col md={8}>
-          <motion.div 
-            whileHover={{ scale: 1.05 }} 
+          <motion.div
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 1.1 }}
-            initial={{ opacity: 0, x: -50 }} 
-            animate={{ opacity: 1, x: 0 }} 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
             <Card className="shadow-lg border-0 rounded text-center p-4 bg-light">
@@ -92,7 +114,9 @@ const AboutUs = () => {
                 style={{ maxHeight: "400px", objectFit: "cover" }}
               />
               <Card.Body>
-                <Card.Title className="text-dark fw-bold display-5">Fast & Secure Ordering</Card.Title>
+                <Card.Title className="text-dark fw-bold display-5">
+                  Fast & Secure Ordering
+                </Card.Title>
                 <Card.Text className="text-muted fs-5">
                   Your safety and convenience are our top priorities:
                 </Card.Text>
@@ -103,7 +127,15 @@ const AboutUs = () => {
                   <li>🛡️ Advanced data protection</li>
                   <li>📦 Contactless delivery options</li>
                 </ul>
-                <Button variant="dark" size="lg" className="rounded-pill shadow-sm" href="/">Start Ordering</Button>
+                <Link to={"/user/homepage"}>
+                  <Button
+                    variant="dark"
+                    size="lg"
+                    className="rounded-pill shadow-sm"
+                  >
+                    Start Ordering
+                  </Button>
+                </Link>
               </Card.Body>
             </Card>
           </motion.div>

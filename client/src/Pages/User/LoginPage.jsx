@@ -27,7 +27,7 @@ function LoginPage() {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          navigate("/");
+          navigate("/user/homepage");
         }, 2000);
     
     } catch (error) {
@@ -66,7 +66,7 @@ function LoginPage() {
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
-                <a href="/signup" className="text-decoration-none">
+                <a href="/user/signup" className="text-decoration-none">
                   <p className="my-3">Sign Up</p>
                 </a>
               </div>

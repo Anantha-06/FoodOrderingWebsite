@@ -67,7 +67,7 @@ function ShowAddress({ selectedAddressId, setSelectedAddressId }) {
                 </p>
               ))}
               <div className="text-center mt-4">
-                <Link to={"/address/new"}>
+                <Link to={"/user/address/new"}>
                   <Button variant="warning" className="w-100 py-2" style={{ transition: "all 0.3s ease" }}>
                     Update Address
                   </Button>
