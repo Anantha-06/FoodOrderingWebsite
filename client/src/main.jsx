@@ -15,6 +15,7 @@ import PaymentPage from "./Pages/User/PaymentPage.jsx";
 import MainPage from "./Pages/Shared/MainPage.jsx";
 import UserRoute from "./routes/userRoute.jsx";
 import AllOrderPage from "./Pages/User/AllORderPage.jsx"
+import AdminSignup from "./Pages/Admin/AdminSignup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "user",
-        element: <UserRoute />,
+        element: <UserRoute/>,
         children: [
           {
             element: <ProtectedRoutes />,
@@ -73,8 +74,16 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "user/signup",
+        path: "/user/signup",
         element: <SignUpPage />,
+      },
+      {
+        path: "/admin/signup",
+        element: <AdminSignup/>
+      },
+      {
+        path: "/admin/login",
+        element: <AdminSignup/>
       },
     ],
   },
