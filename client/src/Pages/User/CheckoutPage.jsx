@@ -3,8 +3,11 @@ import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import CartItemCard from "../../Components/User/CartItemCard.jsx";
 import CouponCard from "../../Components/User/CouponCard.jsx";
 import ShowAddress from "../../Components/User/ShowAddress.jsx";
+import { useState } from "react";
 
 function CheckoutPage(){
+  const [selectedCoupon, setSelectedCoupon] = useState(null);
+console.log(selectedCoupon)
     return(
         <>
         <Container fluid>
@@ -14,8 +17,8 @@ function CheckoutPage(){
             </div>
             <div>
                 <CartItemCard/>
+                <CouponCard selectedCoupon={selectedCoupon} setSelectedCoupon={setSelectedCoupon} />
                 <ShowAddress/>
-                <CouponCard/>
             </div>
           </Row>
         </Container>

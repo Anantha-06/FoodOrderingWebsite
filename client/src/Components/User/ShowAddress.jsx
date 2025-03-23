@@ -64,6 +64,11 @@ function ShowAddress() {
                   <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
                 </p>
               ))}
+              <div className="text-center mt-3">
+                <Button variant="warning" className="w-100 py-2">
+                  Update Address
+                </Button>
+              </div>
             </Card>
           ) : (
             <Card className="p-4 shadow-lg bg-body-tertiary rounded-5">
