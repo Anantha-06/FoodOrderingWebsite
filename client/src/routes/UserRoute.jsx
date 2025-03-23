@@ -3,7 +3,7 @@ import HeaderNav from "../Components/User/HeaderNav";
 import FooterNav from "../Components/User/FooterNav";
 import { Outlet } from "react-router-dom";
 
-function userRoute() {
+function UserRoute() {
   return (
     <>
       <div id="root">
@@ -17,4 +17,4 @@ function userRoute() {
   );
 }
 
-export default userRoute;
+export default UserRoute;
