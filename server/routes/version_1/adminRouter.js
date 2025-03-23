@@ -2,20 +2,19 @@ import express from "express";
 import {
   getProfile,
   getRole,
-  login,
   profileUpdate,
   signUp,
 } from "../../controllers/authContoller.js";
-import { authMiddleware } from "../../middileware/authmiddileware.js";
-import { verifyRestaurant } from "../../controllers/adminController.js";
+import { authMiddleware, roleMiddleware } from "../../middileware/authmiddileware.js";
+import { adminlogin, verifyRestaurant } from "../../controllers/adminController.js";
 
 const router = express.Router();
 
-router.post("/login", login);
+router.post("/login",adminlogin);
 router.post("/signup", signUp);
 router.get("/profile", authMiddleware, getProfile);
 router.put("/update", authMiddleware, profileUpdate);
 router.get("/profile/role", authMiddleware, getRole);
-router.put("/verify/:restaurantId",verifyRestaurant)
+router.put("/verify/:restaurantId",authMiddleware,roleMiddleware("admin"),verifyRestaurant)
 
 export const adminRouter = router;

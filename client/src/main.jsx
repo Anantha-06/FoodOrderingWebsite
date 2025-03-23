@@ -16,6 +16,8 @@ import MainPage from "./Pages/Shared/MainPage.jsx";
 import UserRoute from "./routes/UserRoute.jsx";
 import AllOrderPage from "./Pages/User/AllORderPage.jsx"
 import AdminSignup from "./Pages/Admin/AdminSignup.jsx";
+import AdminLogin from "./Pages/Admin/AdminLogin.jsx";
+import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +72,10 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "/admin/dashboard",
+        element: <AdminDashboard/>
+      },
+      {
         path: "/user/login",
         element: <LoginPage />,
       },
@@ -83,8 +89,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/login",
-        element: <AdminSignup/>
+        element: <AdminLogin/>
       },
+
     ],
   },
 ]);

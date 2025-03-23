@@ -1,15 +1,12 @@
 import React from "react";
-import HeaderNav from "../Components/User/HeaderNav"
-import FooterNav from "../Components/User/FooterNav";
 import { Outlet } from "react-router-dom";
 
-function root(){
-    return(
-        <> 
-
-      <Outlet/>
-        </>
-    )
+function root() {
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 }
 
-export default root
+export default root;
