@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Container, Form, Button, Card, Row, Col } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance.js";
+import { Link } from "react-router-dom";
 
-function ShowAddress() {
+function ShowAddress({ selectedAddressId, setSelectedAddressId }) {
   const [formData, setFormData] = useState({
     name: "",
     houseName: "",
@@ -23,6 +24,7 @@ function ShowAddress() {
         if (response.data.address) {
           const { _id, ...filteredAddress } = response.data.address;
           setAddress(filteredAddress);
+          setSelectedAddressId(_id);
         }
       } catch (error) {
         console.error("Error fetching address:", error);
@@ -65,9 +67,11 @@ function ShowAddress() {
                 </p>
               ))}
               <div className="text-center mt-3">
+                <Link to={"/address/new"}>
                 <Button variant="warning" className="w-100 py-2">
                   Update Address
                 </Button>
+                </Link>
               </div>
             </Card>
           ) : (
@@ -85,6 +89,7 @@ function ShowAddress() {
                   ))}
                 </Row>
                 <div className="text-center mt-3">
+                    
                   <Button type="submit" variant="warning" className="w-100 py-2">
                     Add New Address
                   </Button>

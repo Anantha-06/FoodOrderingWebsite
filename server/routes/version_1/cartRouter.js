@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/item",authMiddleware,addToCart)
 router.delete("/remove/:foodId",authMiddleware,deleteCartItem)
-router.put("/update",authMiddleware,addQuantity)
+router.put("/itemupdate",authMiddleware,addQuantity)
 router.get("/all",authMiddleware,getCart)
 export const cartRouter = router;

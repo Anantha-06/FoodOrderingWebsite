@@ -6,9 +6,12 @@ import ShowAddress from "../../Components/User/ShowAddress.jsx";
 import { useState } from "react";
 
 function CheckoutPage(){
+  
   const [selectedCoupon, setSelectedCoupon] = useState(null);
-console.log(selectedCoupon)
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  console.log(selectedCoupon,selectedAddressId)
     return(
+    
         <>
         <Container fluid>
           <Row>
@@ -18,7 +21,7 @@ console.log(selectedCoupon)
             <div>
                 <CartItemCard/>
                 <CouponCard selectedCoupon={selectedCoupon} setSelectedCoupon={setSelectedCoupon} />
-                <ShowAddress/>
+                <ShowAddress selectedAddressId={selectedAddressId} setSelectedAddressId={setSelectedAddressId} />
             </div>
           </Row>
         </Container>
