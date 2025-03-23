@@ -66,7 +66,7 @@ function CheckoutPage() {
 
   return (
     <Container fluid className="p-4">
-      {/* Page Header */}
+     
       <Row className="mb-4">
         <Col xs={12} className="text-center">
           <h1 className="fw-bold display-4">Cart Items</h1>
@@ -74,15 +74,15 @@ function CheckoutPage() {
       </Row>
 
       <Row>
-        {/* Cart Items */}
-        <Col xs={12} lg={9} className="mb-4">
+      
+        <Col xs={12} lg={9} md={12} className="mb-4">
           <CartItemCard setCartId={setCartId} />
         </Col>
 
-        {/* Coupon & Checkout Section */}
-        <Col xs={12} lg={3}>
+       
+        <Col xs={12} lg={3} md={6} >
           <Row>
-            <Col xs={12} className="mb-4">
+            <Col xs={12}  className="mb-4">
               <CouponCard
                 selectedCoupon={selectedCoupon}
                 setSelectedCoupon={setSelectedCoupon}

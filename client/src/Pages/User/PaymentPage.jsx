@@ -44,25 +44,25 @@ const PaymentPage = () => {
   return (
     <div className="container mt-5">
       {order ? (
-        <Card>
-          <Card.Body>
-            <Card.Title>Order Details</Card.Title>
+        <Card className="shadow-lg p-1 bg-light rounded-5 my-5">
+          <Card.Body className="my-2">
+            <Card.Title className="fs-3 fw-bold">Order Details</Card.Title>
             <p><strong>Order ID:</strong> {order._id}</p>
-            <p><strong>Restaurant:</strong> {order.restaurant.name}</p>
-            <p><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Product</th>
+            <p><strong>Restaurant Name:</strong> {order.restaurant.name}</p>
+            <p className="fw-bold"><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
+            <Table striped bordered hover >
+              <thead >
+                <tr className="mb-3 shadow-lg p-1 bg-light rounded-5">
+                  <th></th>
+                  <th>Food Items</th>
                   <th>Quantity</th>
                   <th>Price</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 {order.cartId.items.map(item => (
-                  <tr key={item._id}>
-                    <td><img src={item.foodImage} alt={item.foodName} width="50" /></td>
+                  <tr key={item._id} className="mb-3 shadow-lg p-1 bg-light rounded-5">
+                    <td ><img src={item.foodImage} alt={item.foodName} width="50" className="rounded-5"/></td>
                     <td>{item.foodName}</td>
                     <td>{item.quantity}</td>
                     <td>₹{item.totalItemPrice}</td>
@@ -70,7 +70,7 @@ const PaymentPage = () => {
                 ))}
               </tbody>
             </Table>
-            <Button variant="success" onClick={handlePayment}>Pay Now</Button>
+            <Button variant="warning" onClick={handlePayment} className="px-5">Pay Now</Button>
           </Card.Body>
         </Card>
       ) : (
