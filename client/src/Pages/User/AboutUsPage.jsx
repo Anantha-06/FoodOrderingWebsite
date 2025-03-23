@@ -35,7 +35,7 @@ const AboutUs = () => {
           </motion.div>
         </Col>
       </Row>
-      
+
       {/* Our Services Section */}
       <Row className="justify-content-center mt-5">
         <Col md={8}>
@@ -57,21 +57,22 @@ const AboutUs = () => {
               <Card.Body>
                 <Card.Title className="text-dark fw-bold display-5">Why Choose Byteeats?</Card.Title>
                 <Card.Text className="text-muted fs-5">
-                  <ul className="list-unstyled">
-                    <li>🍽️ Wide variety of cuisines</li>
-                    <li>🚀 Super-fast delivery</li>
-                    <li>💰 Exclusive discounts and deals</li>
-                    <li>📍 Real-time order tracking</li>
-                    <li>📞 24/7 customer support</li>
-                  </ul>
+                  Enjoy top-quality services with the best food delivery experience.
                 </Card.Text>
+                <ul className="list-unstyled text-muted fs-5">
+                  <li>🍽️ Wide variety of cuisines</li>
+                  <li>🚀 Super-fast delivery</li>
+                  <li>💰 Exclusive discounts and deals</li>
+                  <li>📍 Real-time order tracking</li>
+                  <li>📞 24/7 customer support</li>
+                </ul>
                 <Button variant="dark" size="lg" className="rounded-pill shadow-sm" href="/">Explore Restaurants</Button>
               </Card.Body>
             </Card>
           </motion.div>
         </Col>
       </Row>
-      
+
       {/* Faster & Secure Section */}
       <Row className="justify-content-center mt-5">
         <Col md={8}>
@@ -94,14 +95,14 @@ const AboutUs = () => {
                 <Card.Title className="text-dark fw-bold display-5">Fast & Secure Ordering</Card.Title>
                 <Card.Text className="text-muted fs-5">
                   Your safety and convenience are our top priorities:
-                  <ul className="list-unstyled">
-                    <li>⚡ Quick and seamless checkout</li>
-                    <li>🔒 Secure payment gateways</li>
-                    <li>✅ Verified restaurants for quality assurance</li>
-                    <li>🛡️ Advanced data protection</li>
-                    <li>📦 Contactless delivery options</li>
-                  </ul>
                 </Card.Text>
+                <ul className="list-unstyled text-muted fs-5">
+                  <li>⚡ Quick and seamless checkout</li>
+                  <li>🔒 Secure payment gateways</li>
+                  <li>✅ Verified restaurants for quality assurance</li>
+                  <li>🛡️ Advanced data protection</li>
+                  <li>📦 Contactless delivery options</li>
+                </ul>
                 <Button variant="dark" size="lg" className="rounded-pill shadow-sm" href="/">Start Ordering</Button>
               </Card.Body>
             </Card>

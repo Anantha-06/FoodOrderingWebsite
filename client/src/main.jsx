@@ -5,14 +5,13 @@ import Root from "./routes/root.jsx";
 import Homepage from "./Pages/User/Homepage.jsx";
 import RestaurantPage from "./Pages/User/RestaurantPage.jsx";
 import ProfilePage from "./Pages/User/ProfilePage.jsx";
-import AdminLoginPage from "./Pages/AdminLoginPage.jsx";
-import AdminDashboard from "./Pages/AdminDashboard.jsx";
 import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
 import AboutUs from "./Pages/User/AboutUsPage.jsx";
 import LoginPage from "./Pages/User/LoginPage.jsx";
 import SignUpPage from "./Pages/User/SignupPage.jsx";
 import UserAddressEdit from "./Pages/User/UserAddressEdit.jsx"
 import CheckoutPage from "./Pages/User/CheckoutPage.jsx";
+import PaymentPage from "./Pages/User/PaymentPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,14 +25,6 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUpPage />,
-      },
-      {
-        path: "/admin",
-        element: <AdminLoginPage />,
-      },
-      {
-        path: "/admin/dashboard",
-        element: <AdminDashboard />,
       },
       {
         element: <ProtectedRoutes />,
@@ -61,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: "checkoutpage",
             element: <CheckoutPage/>,
+          },
+          {
+            path: "orderpage",
+            element: <PaymentPage/>,
           },
         ],
       },

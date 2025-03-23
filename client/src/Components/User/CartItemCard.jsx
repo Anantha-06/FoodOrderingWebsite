@@ -16,16 +16,34 @@ function CartItemCard({ setCartId }) {
 
   const handleQuantityUpdate = async (foodId, action) => {
     try {
-      const response = await axiosInstance.put("/cart/itemupdate", {
-        foodId,
-        action,
-      });
+      const response = await axiosInstance.put("/cart/itemupdate", { foodId, action });
 
       if (response.status === 200) {
         refetch();
       }
     } catch (error) {
       console.error("Error updating quantity:", error);
+    }
+  };
+
+  const handleDeleteCart = async () => {
+    if (!cart._id) {
+      console.error("Cart ID is undefined");
+      alert("Cart ID not found!");
+      return;
+    }
+
+    try {
+      console.log("Deleting cart with ID:", cart._id);
+      const response = await axiosInstance.delete(`/cart/delete_cart/${cart._id}`);
+
+      if (response.status === 200) {
+        alert("Cart deleted successfully");
+        refetch(); // Refresh cart data
+      }
+    } catch (error) {
+      console.error("Error deleting cart:", error);
+      alert("Failed to delete cart. Please try again.");
     }
   };
 
@@ -53,13 +71,13 @@ function CartItemCard({ setCartId }) {
                 </div>
                 <div className="text-center">
                   <p className="fw-bold mb-1">Add One More</p>
-                  <Button variant="warning"  className="px-4" size="sm" onClick={() => handleQuantityUpdate(item.foodId, "increment")}>
+                  <Button variant="warning" className="px-4" size="sm" onClick={() => handleQuantityUpdate(item.foodId, "increment")}>
                     +
                   </Button>
                 </div>
                 <div className="text-center ms-3">
                   <p className="fw-bold mb-1">Remove</p>
-                  <Button variant="danger"   className="px-4" size="sm" onClick={() => handleQuantityUpdate(item.foodId, "decrement")}>
+                  <Button variant="danger" className="px-4" size="sm" onClick={() => handleQuantityUpdate(item.foodId, "decrement")}>
                     -
                   </Button>
                 </div>
@@ -75,6 +93,7 @@ function CartItemCard({ setCartId }) {
             <Card.Body>
               <h4 className="fw-bold">Total Price: ₹{cart?.totalPrice}</h4>
               <h3 className="fw-bold text-primary">Final Price: ₹{cart?.totalPrice}</h3>
+              <Button variant="danger" onClick={handleDeleteCart}>Delete Cart</Button>
             </Card.Body>
           </Card>
         </Col>

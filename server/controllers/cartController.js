@@ -157,3 +157,27 @@ export async function deleteCartItem(req, res) {
     return res.status(500).json({ message: error.message });
   }
 }
+
+
+export async function deleteCart(req, res) {
+  try {
+    const { cartId } = req.params;
+    
+    if (!cartId) {
+      return res.status(400).json({ message: "Cart ID is required" });
+    }
+
+    const cart = await Cart.findById(cartId);
+    
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    await Cart.findByIdAndDelete(cartId);
+
+    return res.status(200).json({ message: "Cart deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting cart:", error);
+    return res.status(500).json({ message: error.message });
+  }
+}
