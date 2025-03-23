@@ -20,52 +20,53 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/signup",
+        element: <SignUpPage />,
+      },
+      {
+        path: "/admin",
+        element: <AdminLoginPage />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
+      {
         element: <ProtectedRoutes />,
         children: [
           {
-            path: "/",
+            path: "",
             element: <Homepage />,
           },
           {
-            path: "/restaurant/:id",
+            path: "restaurant/:id",
             element: <RestaurantPage />,
           },
           {
-            path: "/about",
+            path: "about",
             element: <AboutUs />,
           },
           {
-            path: "/profile",
+            path: "profile",
             element: <ProfilePage />,
           },
           {
-            path: "/address/new",
+            path: "address/new",
             element: <UserAddressEdit/>,
           },
           {
-            path: "/checkoutpage",
+            path: "checkoutpage",
             element: <CheckoutPage/>,
           },
         ],
       },
     ],
   },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/signup",
-    element: <SignUpPage />,
-  },
-  {
-    path: "/admin",
-    element: <AdminLoginPage />,
-  },
-  {
-    path: "/admin/dashboard",
-    element: <AdminDashboard />,
-  },
+  
 ]);
 
 createRoot(document.getElementById("root")).render(
