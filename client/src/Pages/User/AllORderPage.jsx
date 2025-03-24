@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Container } from "react-bootstrap";
-import useFetch from "../../Hooks/UseFetch.jsx";
+import useFetch from "../../Hooks/useFetch.jsx";
 
 function AllOrderPage() {
   const [data, isLoading, error] = useFetch("/order/get/all");
@@ -9,11 +9,18 @@ function AllOrderPage() {
   if (isLoading) return <p className="text-center">Loading orders...</p>;
   if (error) {
     console.error("Fetch Error:", error);
-    return <p className="text-danger text-center">No Order Found or {error.message}</p>;
+    return (
+      <p className="text-danger text-center">
+        No Order Found or {error.message}
+      </p>
+    );
   }
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center" fluid>
+    <Container
+      className="d-flex flex-column justify-content-center align-items-center"
+      fluid
+    >
       <div className="fs-3 fw-bold my-5">Recent Orders</div>
       <div className="w-75">
         <Table striped bordered hover responsive className="text-center">

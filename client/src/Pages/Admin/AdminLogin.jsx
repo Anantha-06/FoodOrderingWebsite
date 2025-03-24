@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap"
 import { motion } from "framer-motion";
 import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance.js";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -66,9 +67,7 @@ function LoginPage() {
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
-                <a href="/user/signup" className="text-decoration-none">
-                  <p className="my-3">Sign Up</p>
-                </a>
+                <Link to ={"/admin/signup"} className="text-decoration-none"><p className="my-3">Sign Up</p></Link>
               </div>
             </Card>
           </motion.div>

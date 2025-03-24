@@ -18,6 +18,9 @@ import AdminSignup from "./Pages/Admin/AdminSignup.jsx";
 import AdminLogin from "./Pages/Admin/AdminLogin.jsx";
 import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
 import AllOrderPage from "./Pages/User/AllORderPage.jsx";
+import SellerSignup from "./Pages/Seller/SellerSignup.jsx";
+import SellerLogin from "./Pages/Seller/SellerLogin.jsx";
+import SellerProfile from "./Pages/Seller/SellerProfile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +93,18 @@ const router = createBrowserRouter([
       {
         path: "admin/login", 
         element: <AdminLogin />,
+      },
+      {
+        path: "seller/login", 
+        element: <SellerLogin />,
+      },
+      {
+        path: "seller/signup", 
+        element: <SellerSignup />,
+      },
+      {
+        path: "seller/dashboard", 
+        element: <SellerProfile />,
       },
     ],
   },
