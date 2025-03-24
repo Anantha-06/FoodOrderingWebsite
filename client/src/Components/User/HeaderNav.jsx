@@ -15,7 +15,9 @@ function HeaderNav() {
   const handleSignOut = () => {
     Cookies.remove("token"); 
     alert("Sign Out Successful!");
-    window.location.reload();  
+    navigate("/")
+    window.location.reload();
+    
   };
 
   return (
