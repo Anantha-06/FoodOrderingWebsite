@@ -14,8 +14,6 @@ function CreateMenu() {
   const [imagePreview, setImagePreview] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-
-  // Fetch Restaurant Profile to get restaurantId
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {

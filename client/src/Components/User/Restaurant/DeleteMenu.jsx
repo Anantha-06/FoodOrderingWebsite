@@ -32,8 +32,7 @@ function DeleteMenu() {
 
     try {
       await axiosInstance.delete(`/menu/${restaurantId}/delete/${selectedItem._id}`);
-      
-      // Update UI by removing deleted item
+ 
       setMenuItems(menuItems.filter((item) => item._id !== selectedItem._id));
       
       setShowConfirm(false);

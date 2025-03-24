@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Button, Row, Col, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useFetch from "../../Hooks/UseFetch.jsx";
+import "../../App.css";
 
 const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
   const [data, isLoading, error] = useFetch("/coupon/avaiable");
@@ -21,17 +22,17 @@ const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
           {coupons.length > 0 ? (
             coupons.map((coupon) => (
               <Row key={coupon._id} className="align-items-center border p-2 rounded-3 my-2 mx-0">
-                <Col xs={12} sm={7} className="fw-bold text-start">
+                <Col xs={12} sm={7} className="fw-bold text-start textsize">
                   Get {coupon.discountPercentage}% Discount on orders above {coupon.minOrderVal}
                 </Col>
                 <Col xs={12} sm={5} className="text-sm-end text-center mt-2 mt-sm-0">
                   <Button
                     variant={selectedCoupon === coupon.code ? "success" : "primary"}
-                    onClick={() => setSelectedCoupon(coupon.code)}
-                    className="px-4 py-2 w-100"
+                    onClick={() => setSelectedCoupon(selectedCoupon === coupon.code ? "" : coupon.code)}
+                    className="px-4 py-2 textsize"
                     style={{ transition: "all 0.3s ease" }}
                   >
-                    {selectedCoupon === coupon.code ? "Applied" : "Apply"}
+                    {selectedCoupon === coupon.code ? "Remove" : "Apply"}
                   </Button>
                 </Col>
               </Row>

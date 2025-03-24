@@ -37,7 +37,7 @@ function ProfilePage() {
 
       <div className="tabHeight shadow-lg p-3 mb-5 bg-body-tertiary rounded-5">
         <Tabs defaultActiveKey="Orders" id="profile-tabs" className="mb-3" fill>
-          {/* Orders Tab */}
+          
           <Tab eventKey="Orders" title="Recent Orders">
             {ordersError || orders.length === 0 ? (
               <p>No orders found.</p>
@@ -61,7 +61,7 @@ function ProfilePage() {
             )}
           </Tab>
 
-          {/* Address Tab */}
+          
           <Tab eventKey="address" title="Address">
             {addressError || !address ? (
               <p>No address found.</p>

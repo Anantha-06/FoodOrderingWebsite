@@ -1,0 +1,18 @@
+@keyframes animatedBackground {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+  
+  .restaurant-dashboard-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(45deg, #ff989b, #ff825f, #fdf184, #7cfff8);
+    background-size: 300% 300%;
+    animation: animatedBackground 10s infinite linear;
+  }
+  

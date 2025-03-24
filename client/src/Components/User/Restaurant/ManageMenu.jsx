@@ -24,7 +24,7 @@ function ManageMenu() {
   }, []);
 
   const handleEditClick = (item) => {
-    setEditingItemId(editingItemId === item._id ? null : item._id); // Toggle form
+    setEditingItemId(editingItemId === item._id ? null : item._id); 
     setFormData({
       name: item.name,
       description: item.description,

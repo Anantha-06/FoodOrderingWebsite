@@ -13,11 +13,10 @@ function HeaderNav() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    Cookies.remove("token"); 
+    Cookies.remove("token");
     alert("Sign Out Successful!");
-    navigate("/")
+    navigate("/");
     window.location.reload();
-    
   };
 
   return (
@@ -39,8 +38,18 @@ function HeaderNav() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Link to ={"/user/homepage"} className="text-decoration-none text-reset">Home</Link>
-              <Link to ={"/user/about"} className="text-decoration-none text-reset">About Us</Link>
+              <Link
+                to={"/user/homepage"}
+                className="text-decoration-none text-reset"
+              >
+                Home
+              </Link>
+              <Link
+                to={"/user/about"}
+                className="text-decoration-none text-reset"
+              >
+                About Us
+              </Link>
               <NavDropdown
                 title={
                   <img
@@ -50,17 +59,40 @@ function HeaderNav() {
                 }
                 id="navbarScrollingDropdown"
               >
-                <Link to ={"/user/profile"} className="text-decoration-none text-reset"><li><p className="mx-2">Your Profile</p></li></Link>
-                <Link to ={"/user/orders"} className="text-decoration-none text-reset"><li><p className="mx-2">Your Order</p></li></Link>
+                <Link
+                  to={"/user/profile"}
+                  className="text-decoration-none text-reset"
+                >
+                  <li>
+                    <p className="mx-2">Your Profile</p>
+                  </li>
+                </Link>
+                <Link
+                  to={"/user/orders"}
+                  className="text-decoration-none text-reset"
+                >
+                  <li>
+                    <p className="mx-2">Your Order</p>
+                  </li>
+                </Link>
                 <NavDropdown.Divider />
-                <Link onClick={handleSignOut} className="text-decoration-none text-reset"><p className="mx-2 my-0">Sign Out</p></Link>
-                <NavDropdown.Item ></NavDropdown.Item>
+                <Link
+                  onClick={handleSignOut}
+                  className="text-decoration-none text-reset"
+                >
+                  <p className="mx-2 my-0">Sign Out</p>
+                </Link>
+                <NavDropdown.Item></NavDropdown.Item>
               </NavDropdown>
-              <Link to ={"/user/checkout"} className="text-decoration-none text-reset"><img
+              <Link
+                to={"/user/checkout"}
+                className="text-decoration-none text-reset"
+              >
+                <img
                   src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756875/Food%20Order%20Website/hj0p5muuflnvmef2lq9z.png"
                   className="thumbnail-image-2"
-                /></Link>
-              
+                />
+              </Link>
             </Nav>
             <Form className="d-flex">
               <Form.Control
