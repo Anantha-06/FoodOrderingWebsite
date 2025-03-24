@@ -9,10 +9,14 @@ import {
   Container,
 } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState([]);
   const [unverifiedRestaurants, setUnverifiedRestaurants] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [coupon, setCoupon] = useState({
     code: "",
     discountPercentage: "",
@@ -25,6 +29,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchRestaurants();
+    fetchTransactions();
   }, []);
 
   const fetchRestaurants = async () => {
@@ -39,6 +44,15 @@ const AdminDashboard = () => {
     } catch (error) {
       setRestaurants([]);
       setUnverifiedRestaurants([]);
+    }
+  };
+
+  const fetchTransactions = async () => {
+    try {
+      const response = await axiosInstance.get("/payment/transaction");
+      setTransactions(response.data.data || []);
+    } catch (error) {
+      setTransactions([]);
     }
   };
 
@@ -81,6 +95,15 @@ const AdminDashboard = () => {
     } catch (error) {}
   };
 
+  const handleSignOut = () => {
+    Cookies.remove("token");
+    alert("Sign Out Successful!");
+    navigate("/");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
+
   return (
     <Container className="mt-4">
       <div className="text-center mb-4">
@@ -91,17 +114,8 @@ const AdminDashboard = () => {
         />
       </div>
       <h1 className="text-center">Admin Dashboard</h1>
-      <Tabs
-        defaultActiveKey="restaurants"
-        id="admin-dashboard-tabs"
-        className="mb-3 "
-        justify
-      >
-        <Tab
-          eventKey="restaurants"
-          title="All Restaurants"
-          className="shadow-lg p-3 mb-5 bg-body-tertiary rounded-5"
-        >
+      <Tabs defaultActiveKey="restaurants" id="admin-dashboard-tabs" className="mb-3" justify>
+        <Tab eventKey="restaurants" title="All Restaurants">
           <Table responsive striped bordered hover>
             <thead>
               <tr>
@@ -124,11 +138,7 @@ const AdminDashboard = () => {
           </Table>
         </Tab>
 
-        <Tab
-          eventKey="unverified"
-          title="Unverified Restaurants"
-          className="shadow-lg p-3 mb-5 bg-body-tertiary rounded-5"
-        >
+        <Tab eventKey="unverified" title="Unverified Restaurants">
           <Table responsive striped bordered hover>
             <thead>
               <tr>
@@ -145,10 +155,7 @@ const AdminDashboard = () => {
                   <td>{restaurant.phone}</td>
                   <td>{restaurant.email}</td>
                   <td>
-                    <Button
-                      variant="success"
-                      onClick={() => approveRestaurant(restaurant._id)}
-                    >
+                    <Button variant="success" onClick={() => approveRestaurant(restaurant._id)}>
                       Approve
                     </Button>
                   </td>
@@ -158,73 +165,34 @@ const AdminDashboard = () => {
           </Table>
         </Tab>
 
-        <Tab
-          eventKey="coupon"
-          title="Create Coupon"
-          className="shadow-lg p-3 mb-5 bg-body-tertiary rounded-5"
-        >
-          <Form>
-            <Form.Group controlId="code">
-              <Form.Label>Code</Form.Label>
-              <Form.Control
-                type="text"
-                name="code"
-                value={coupon.code}
-                onChange={handleCouponChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="discountPercentage">
-              <Form.Label>Discount %</Form.Label>
-              <Form.Control
-                type="number"
-                name="discountPercentage"
-                value={coupon.discountPercentage}
-                onChange={handleCouponChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="minOrderVal">
-              <Form.Label>Min Order Value</Form.Label>
-              <Form.Control
-                type="number"
-                name="minOrderVal"
-                value={coupon.minOrderVal}
-                onChange={handleCouponChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="maxDiscValue">
-              <Form.Label>Max Discount Value</Form.Label>
-              <Form.Control
-                type="number"
-                name="maxDiscValue"
-                value={coupon.maxDiscValue}
-                onChange={handleCouponChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="expiryDate">
-              <Form.Label>Expiry Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="expiryDate"
-                value={coupon.expiryDate}
-                onChange={handleCouponChange}
-              />
-              {dateError && (
-                <Alert variant="danger" className="mt-2">
-                  {dateError}
-                </Alert>
-              )}
-            </Form.Group>
-            <Button
-              variant="primary"
-              className="mt-2"
-              onClick={createCoupon}
-              disabled={!!dateError}
-            >
-              Create Coupon
-            </Button>
-          </Form>
+        <Tab eventKey="transactions" title="Transactions">
+          <Table responsive striped bordered hover>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((transaction) => (
+                <tr key={transaction._id}>
+                  <td>{new Date(transaction.createdAt).toLocaleDateString()}</td>
+                  <td>{transaction.user.name}</td>
+                  <td>{transaction.amount}</td>
+                  <td>{transaction.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </Tab>
       </Tabs>
+      <div>
+        <Link onClick={handleSignOut} className="text-decoration-none text-reset">
+          <button className="mx-2 my-0 bg-warning px-4 rounded-3 border-1">Sign Out</button>
+        </Link>
+      </div>
     </Container>
   );
 };
