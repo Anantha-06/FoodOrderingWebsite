@@ -25,7 +25,8 @@ const AdminDashboard = () => {
     expiryDate: "",
     isAvailable: true,
   });
-  const [dateError, setDateError] = useState("");
+  const [dateError, setDateError] = useState(" ");
+  const [formError, setFormError] = useState(" ");
 
   useEffect(() => {
     fetchRestaurants();
@@ -81,6 +82,10 @@ const AdminDashboard = () => {
   };
 
   const createCoupon = async () => {
+    if (!coupon.code || !coupon.discountPercentage || !coupon.minOrderVal || !coupon.maxDiscValue || !coupon.expiryDate) {
+      setFormError("All fields are required.");
+      return;
+    }
     if (dateError) return;
     try {
       await axiosInstance.post("/coupon/create", coupon);
@@ -92,6 +97,7 @@ const AdminDashboard = () => {
         expiryDate: "",
         isAvailable: true,
       });
+      setFormError("");
     } catch (error) {}
   };
 
@@ -99,9 +105,7 @@ const AdminDashboard = () => {
     Cookies.remove("token");
     alert("Sign Out Successful!");
     navigate("/");
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+    window.location.reload();
   };
 
   return (
@@ -114,9 +118,9 @@ const AdminDashboard = () => {
         />
       </div>
       <h1 className="text-center">Admin Dashboard</h1>
-      <Tabs defaultActiveKey="restaurants" id="admin-dashboard-tabs" className="mb-3" justify>
+      <Tabs defaultActiveKey="restaurants" id="admin-dashboard-tabs" className="mb-3 flex-column">
         <Tab eventKey="restaurants" title="All Restaurants">
-          <Table responsive striped bordered hover>
+          <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Name</th>
@@ -137,9 +141,8 @@ const AdminDashboard = () => {
             </tbody>
           </Table>
         </Tab>
-
         <Tab eventKey="unverified" title="Unverified Restaurants">
-          <Table responsive striped bordered hover>
+          <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Name</th>
@@ -164,9 +167,8 @@ const AdminDashboard = () => {
             </tbody>
           </Table>
         </Tab>
-
         <Tab eventKey="transactions" title="Transactions">
-          <Table responsive striped bordered hover>
+          <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Date</th>
@@ -187,14 +189,20 @@ const AdminDashboard = () => {
             </tbody>
           </Table>
         </Tab>
+        <Tab eventKey="coupon" title="Create Coupon">
+          <Form>
+            <Form.Control type="text" name="code" placeholder="Code" value={coupon.code} onChange={handleCouponChange} required />
+            <Form.Control type="number" name="discountPercentage" placeholder="Discount %" value={coupon.discountPercentage} onChange={handleCouponChange} required />
+            <Form.Control type="number" name="minOrderVal" placeholder="Min Order Value" value={coupon.minOrderVal} onChange={handleCouponChange} required />
+            <Form.Control type="number" name="maxDiscValue" placeholder="Max Discount Value" value={coupon.maxDiscValue} onChange={handleCouponChange} required />
+            <Form.Control type="date" name="expiryDate" value={coupon.expiryDate} onChange={handleCouponChange} required />
+            {formError && <Alert variant="danger">{formError}</Alert>}
+            <Button onClick={createCoupon}>Create Coupon</Button>
+          </Form>
+        </Tab>
       </Tabs>
-      <div>
-        <Link onClick={handleSignOut} className="text-decoration-none text-reset">
-          <button className="mx-2 my-0 bg-warning px-4 rounded-3 border-1">Sign Out</button>
-        </Link>
-      </div>
+      <Link onClick={handleSignOut} className=""><button className="bg-warning border-1 rounded-2 px-4">Sign Out</button></Link>
     </Container>
   );
 };
-
 export default AdminDashboard;
