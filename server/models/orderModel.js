@@ -82,4 +82,3 @@ orderSchema.pre("save", async function (next) {
 });
 
 export const Order = mongoose.model("Order", orderSchema);
-

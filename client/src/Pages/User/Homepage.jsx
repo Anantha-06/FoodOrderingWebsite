@@ -4,7 +4,7 @@ import BestSellerSlider from "../../Components/User/BestSellerSlider.jsx";
 import RestaurantCard from "../../Components/User/RestaurantCard.jsx";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import "../../App.css";
-import useFetch from "../../Hooks/useFetch.jsx";
+import useFetch from "../../Hooks/UseFetch.jsx";
 
 function Homepage() {
   const [data, isLoading, error] = useFetch("/restaurant/all");

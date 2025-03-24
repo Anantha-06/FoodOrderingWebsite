@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
 import { motion } from "framer-motion";
 import "../../App.css";
@@ -66,7 +66,9 @@ function LoginPage() {
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
-                <Link to ={"/user/signup"} className="text-decoration-none"><p className="my-3">Sign Up</p></Link>
+                <a href="/user/signup" className="text-decoration-none">
+                  <p className="my-3">Sign Up</p>
+                </a>
               </div>
             </Card>
           </motion.div>

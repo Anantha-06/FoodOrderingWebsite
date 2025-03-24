@@ -4,7 +4,6 @@ import {
   getAllRestaurant,
   getRestaurantById,
   getRestaurantByName,
-  getRestaurantProfile,
   loginRestaurant,
   logout,
   registerRestaurant,
@@ -20,7 +19,6 @@ router.post("/login", loginRestaurant);
 
 router.put("/update", restaurantMiddleware, upload.single("image"), updateRestaurant);
 
-router.get("/id/profile", restaurantMiddleware, getRestaurantProfile);
 router.get("/by/:name", getRestaurantByName);
 router.get("/all", getAllRestaurant);
 router.get("/id/:restaurantId", getRestaurantById);
