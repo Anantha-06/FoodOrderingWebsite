@@ -25,7 +25,7 @@ const MainPage = () => {
             </Link>
           </Col>
           <Col xs={12} md={4} className="mb-2">
-            <Link to="/seller/login">
+            <Link to="restaurant/login">
               <Button variant="success" className="button-animation w-100">Seller</Button>
             </Link>
           </Col>

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
 import { motion } from "framer-motion";
-import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance.js";
 
-function AdminLogin() {
+function RestaurantLogin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -22,11 +21,11 @@ function AdminLogin() {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.post("/admin/login", formData);
+      const response = await axiosInstance.post("/restaurant/login", formData);
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
-        navigate("/admin/dashboard");
+        navigate("/restaurant/dashboard");
       }, 2000);
     } catch (error) {
       setError(error.response?.data?.message || "Invalid email or password. Please try again.");
@@ -42,7 +41,7 @@ function AdminLogin() {
         <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-1 order-2">
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
             <Card className="text-center border-0 shadow-lg p-4 mb-5 bg-body-tertiary rounded-4 animated-card w-100" style={{ maxWidth: '400px' }}>
-              <motion.p className="fs-4 fw-bold text-primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>LOGIN</motion.p>
+              <motion.p className="fs-4 fw-bold text-primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>RESTAURANT LOGIN</motion.p>
               {error && <motion.p className="text-danger" initial={{ scale: 0.9 }} animate={{ scale: 1 }}>{error}</motion.p>}
               <Form className="inputBox-width" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
@@ -62,13 +61,13 @@ function AdminLogin() {
                   />
                 </Form.Group>
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">Submit</Button>
+                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill" disabled={loading}>
+                    {loading ? "Logging in..." : "Login"}
+                  </Button>
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
-                <a href="/user/signup" className="text-decoration-none">
-                  <p className="my-3">Sign Up</p>
-                </a>
+                <Link to ={"/restaurant/signup"} className="text-decoration-none my-3">Sign Up</Link>
               </div>
             </Card>
           </motion.div>
@@ -95,4 +94,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default RestaurantLogin;

@@ -161,3 +161,16 @@ export async function logout(req,res) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+export async function getRestaurantProfile(req, res) {
+  try {
+    const restaurant = req.restaurant;
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant Not Found" });
+    }
+    res.status(200).json({ message: "Restaurant Profile Fetched Successfully", restaurant });
+  } catch (error) {
+    console.error("Error fetching restaurant profile:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}

@@ -18,6 +18,9 @@ import AdminSignup from "./Pages/Admin/AdminSignup.jsx";
 import AdminLogin from "./Pages/Admin/AdminLogin.jsx";
 import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
 import AllOrderPage from "./Pages/User/AllORderPage.jsx";
+import RestaurantSignup from "./Pages/Restaurant/RestaurantSignup.jsx";
+import RestaurantLogin from "./Pages/Restaurant/RestaurantLogin.jsx";
+import RestaurantDashboard from "./Pages/Restaurant/RestaurantDashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +93,18 @@ const router = createBrowserRouter([
       {
         path: "admin/login", 
         element: <AdminLogin />,
+      },
+      {
+        path: "restaurant/signup", 
+        element: <RestaurantSignup />,
+      },
+      {
+        path: "restaurant/login", 
+        element: <RestaurantLogin />,
+      },
+      {
+        path: "restaurant/dashboard", 
+        element: <RestaurantDashboard />,
       },
     ],
   },

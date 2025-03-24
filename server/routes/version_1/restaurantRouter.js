@@ -4,6 +4,7 @@ import {
   getAllRestaurant,
   getRestaurantById,
   getRestaurantByName,
+  getRestaurantProfile,
   loginRestaurant,
   logout,
   registerRestaurant,
@@ -26,5 +27,5 @@ router.get("/id/:restaurantId", getRestaurantById);
 router.delete("/delete", restaurantMiddleware, deleteRestaurant);
 
 router.post("/logout", restaurantMiddleware, logout);
-
+router.get("/profile", restaurantMiddleware, getRestaurantProfile);
 export const restaurantRouter = router;
