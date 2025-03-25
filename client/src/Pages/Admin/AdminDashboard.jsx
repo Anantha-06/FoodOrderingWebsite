@@ -25,22 +25,26 @@ const AdminDashboard = () => {
     expiryDate: "",
     isAvailable: true,
   });
-  const [dateError, setDateError] = useState(" ");
-  const [formError, setFormError] = useState(" ");
+  const [dateError, setDateError] = useState("");
+  const [formError, setFormError] = useState("");
+  const [couponSuccess, setCouponSuccess] = useState(""); // ✅ Success message state
 
   useEffect(() => {
-    fetchRestaurants();
-    fetchTransactions();
-  }, []);
+    const authToken = Cookies.get("authToken");
+    if (!authToken) {
+      navigate("/admin/login");
+    } else {
+      fetchRestaurants();
+      fetchTransactions();
+    }
+  }, [navigate]);
 
   const fetchRestaurants = async () => {
     try {
       const response = await axiosInstance.get("/restaurant/all");
       if (Array.isArray(response.data.restaurant)) {
         setRestaurants(response.data.restaurant);
-        setUnverifiedRestaurants(
-          response.data.restaurant.filter((r) => !r.isVerified)
-        );
+        setUnverifiedRestaurants(response.data.restaurant.filter((r) => !r.isVerified));
       }
     } catch (error) {
       setRestaurants([]);
@@ -87,6 +91,7 @@ const AdminDashboard = () => {
       return;
     }
     if (dateError) return;
+
     try {
       await axiosInstance.post("/coupon/create", coupon);
       setCoupon({
@@ -98,13 +103,20 @@ const AdminDashboard = () => {
         isAvailable: true,
       });
       setFormError("");
-    } catch (error) {}
+      setCouponSuccess("Coupon created successfully!"); // ✅ Set success message
+
+      setTimeout(() => {
+        setCouponSuccess(""); // ✅ Clear success message after 3 seconds
+      }, 3000);
+    } catch (error) {
+      setCouponSuccess(""); // Ensure error resets success message if needed
+    }
   };
 
   const handleSignOut = () => {
-    Cookies.remove("token");
+    Cookies.remove("authToken");
     alert("Sign Out Successful!");
-    navigate("/");
+    navigate("/admin/login");
     window.location.reload();
   };
 
@@ -196,13 +208,21 @@ const AdminDashboard = () => {
             <Form.Control type="number" name="minOrderVal" placeholder="Min Order Value" value={coupon.minOrderVal} onChange={handleCouponChange} required />
             <Form.Control type="number" name="maxDiscValue" placeholder="Max Discount Value" value={coupon.maxDiscValue} onChange={handleCouponChange} required />
             <Form.Control type="date" name="expiryDate" value={coupon.expiryDate} onChange={handleCouponChange} required />
+          
             {formError && <Alert variant="danger">{formError}</Alert>}
+            
+           
+            {couponSuccess && <Alert variant="success">{couponSuccess}</Alert>}
+
             <Button onClick={createCoupon}>Create Coupon</Button>
           </Form>
         </Tab>
       </Tabs>
-      <Link onClick={handleSignOut} className=""><button className="bg-warning border-1 rounded-2 px-4">Sign Out</button></Link>
+      <Link onClick={handleSignOut} className="">
+        <button className="bg-warning border-1 rounded-2 px-4">Sign Out</button>
+      </Link>
     </Container>
   );
 };
+
 export default AdminDashboard;

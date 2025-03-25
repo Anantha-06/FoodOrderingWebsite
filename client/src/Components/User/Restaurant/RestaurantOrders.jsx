@@ -75,9 +75,9 @@ function RestaurantOrders() {
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>
-                  <strong>{order.user.name}</strong> <br />
-                  <small>{order.user.email}</small> <br />
-                  <small>{order.user.phone}</small>
+                  <strong>{order.user?.name}</strong> <br />
+                  <small>{order.user?.email}</small> <br />
+                  <small>{order.user?.phone}</small>
                 </td>
                 <td>
                   {order.cartId?.items?.length ? (
@@ -95,7 +95,11 @@ function RestaurantOrders() {
                 </td>
                 <td>₹{order.finalPrice}</td>
                 <td>
-                  {order.deliveryAddress.city}, {order.deliveryAddress.state}
+                  {order.deliveryAddress ? (
+                    `${order.deliveryAddress.city}, ${order.deliveryAddress.state}`
+                  ) : (
+                    <small>No address provided</small>
+                  )}
                 </td>
                 <td>
                   <Badge

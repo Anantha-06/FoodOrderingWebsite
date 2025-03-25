@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
 import { motion } from "framer-motion";
 import axiosInstance from "../../Axios/axiosInstance.js";
+import Cookies from "js-cookie"; // Import js-cookie
 
 function RestaurantLogin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -22,6 +23,9 @@ function RestaurantLogin() {
 
     try {
       const response = await axiosInstance.post("/restaurant/login", formData);
+    
+      Cookies.set("restaurantToken", response.data.token, { expires: 7 });
+
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);

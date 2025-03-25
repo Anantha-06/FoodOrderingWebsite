@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import RestaurantProfile from "../../Components/User/Restaurant/RestaurantProfile.jsx";
@@ -15,11 +15,17 @@ import "../../PageStyle/RestaurantDashboard.css";
 function RestaurantDashboard() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = Cookies.get("restaurantToken"); // Check if token exists
+    if (!token) {
+      navigate("/restaurant/login"); // Redirect to login if no token
+    }
+  }, [navigate]);
+
   const handleSignOut = () => {
-    Cookies.remove("token", { path: "/" });
-    Cookies.set("token", "", { expires: new Date(0), path: "/" }); 
+    Cookies.remove("restaurantToken"); // Remove the token
     alert("Sign Out Successful!");
-    navigate("/");
+    navigate("/restaurant/login"); // Redirect to login page
     setTimeout(() => window.location.reload(), 500);
   };
 
