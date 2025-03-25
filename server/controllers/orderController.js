@@ -14,7 +14,7 @@ export const createOrder = async (req, res) => {
   try {
     const user = req.user.id;
     const { restaurant, cartId, coupon, deliveryAddress } = req.body;
-    const findCoupon = coupon ? await Coupon.findOne({ code: coupon }) : null;
+    const findCoupon = coupon ? await Coupon.findOne({ code: coupon }).lean() : null;
 
     const order = new Order({
       user,
@@ -23,6 +23,7 @@ export const createOrder = async (req, res) => {
       coupon: findCoupon?._id || null,
       deliveryAddress,
     });
+
     await order.save();
     res.status(201).json({ message: "Order created successfully", order });
   } catch (error) {

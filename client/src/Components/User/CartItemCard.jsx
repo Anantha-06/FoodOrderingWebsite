@@ -92,7 +92,7 @@ function CartItemCard({ setCartId }) {
           <Card className="shadow-lg p-3 bg-light rounded-5 text-center">
             <Card.Body>
               <h4 className="fw-bold">Total Price: ₹{cart?.totalPrice}</h4>
-              <h3 className="fw-bold text-primary">Final Price: ₹{cart?.totalPrice}</h3>
+              <h3 className="fw-bold text-primary">Final Price: ₹{cart?.finalPrice}</h3>
               <Button variant="danger" onClick={handleDeleteCart}>Delete Cart</Button>
             </Card.Body>
           </Card>

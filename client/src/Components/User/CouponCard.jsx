@@ -34,7 +34,11 @@ const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
                 <Col xs={12} className="text-center">
                   <Button
                     variant={selectedCoupon === coupon.code ? "success" : "primary"}
-                    onClick={() => setSelectedCoupon(selectedCoupon === coupon.code ? "" : coupon.code)}
+                    onClick={() => {
+                      console.log("Previous Selected Coupon:", selectedCoupon);
+                      setSelectedCoupon(selectedCoupon === coupon.code ? "" : coupon.code);
+                      console.log("New Selected Coupon:", coupon.code);
+                    }}
                     className="px-4 py-2 textsize"
                     style={{ transition: "all 0.3s ease", fontSize: "14px" }}
                   >

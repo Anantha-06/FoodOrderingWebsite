@@ -49,6 +49,7 @@ const PaymentPage = () => {
             <p><strong>Order ID:</strong> {order._id}</p>
             <p><strong>Restaurant Name:</strong> {order.restaurant.name}</p>
             <p className="fw-bold"><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
+            <p className="fw-bold"><strong>Final Amount:</strong> ₹{order.finalPrice}</p>
             <Table striped bordered hover >
               <thead >
                 <tr className="mb-3 shadow-lg p-1 bg-light rounded-5">

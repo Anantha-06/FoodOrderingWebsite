@@ -8,7 +8,7 @@ import CouponCard from "../../Components/User/CouponCard.jsx";
 import ShowAddress from "../../Components/User/ShowAddress.jsx";
 
 function CheckoutPage() {
-  const [selectedCoupon, setSelectedCoupon] = useState(null);
+  const [selectedCoupon, setSelectedCoupon] = useState("");  // Default empty string
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [cartId, setCartId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -16,9 +16,13 @@ function CheckoutPage() {
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
-  const handleCheckout = async () => {
-    console.log("handleCheckout called");
+  // Debugging useEffect to track state changes
+  useEffect(() => {
+   
+  }, [selectedCoupon]);
 
+  const handleCheckout = async () => {
+   
     setError("");
 
     if (!cartId || !selectedAddressId) {
@@ -31,24 +35,24 @@ function CheckoutPage() {
     const requestBody = {
       restaurant: "67da8656b1e6fb6f2bf7e97d",
       cartId: cartId,
-      coupon: selectedCoupon || "",
+      coupon: selectedCoupon || "", 
       deliveryAddress: selectedAddressId,
     };
 
     try {
-      console.log("Sending request to /order/update", requestBody);
+      
       const response = await axiosInstance.post("/order/update", requestBody);
       console.log("Response received:", response);
 
       if (response.status === 200 || response.status === 201) {
-        console.log("Order placed successfully, setting showAlert to true");
+  
         setShowAlert(true);
       } else {
-        console.error("Unexpected response status:", response.status);
+    
         setError("Unexpected response from server. Please try again.");
       }
     } catch (error) {
-      console.error("Checkout failed:", error.response?.data || error.message);
+      
       setError("Failed to place order. Please try again.");
     } finally {
       setLoading(false);
@@ -57,7 +61,7 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (showAlert) {
-      console.log("showAlert is true, navigating to /user/order");
+     
       setTimeout(() => {
         navigate("/user/payment", { replace: true });
       }, 2000);
@@ -66,7 +70,6 @@ function CheckoutPage() {
 
   return (
     <Container fluid className="p-4">
-     
       <Row className="mb-4">
         <Col xs={12} className="text-center">
           <h1 className="fw-bold display-4">Cart Items</h1>
@@ -74,19 +77,14 @@ function CheckoutPage() {
       </Row>
 
       <Row>
-      
         <Col xs={12} lg={9} md={12} className="mb-4">
           <CartItemCard setCartId={setCartId} />
         </Col>
 
-       
-        <Col xs={12} lg={3} md={6} >
+        <Col xs={12} lg={3} md={6}>
           <Row>
-            <Col xs={12}  className="mb-4">
-              <CouponCard
-                selectedCoupon={selectedCoupon}
-                setSelectedCoupon={setSelectedCoupon}
-              />
+            <Col xs={12} className="mb-4">
+              <CouponCard selectedCoupon={selectedCoupon} setSelectedCoupon={setSelectedCoupon} />
               <div className="mb-3 shadow-lg p-3 bg-body-tertiary rounded-4 my-5">
                 <div className="bg-light.bg-gradient">
                   {error && <p className="text-danger">{error}</p>}
@@ -109,24 +107,19 @@ function CheckoutPage() {
           </Row>
         </Col>
 
-        {/* Address Selection */}
         <Row>
           <Col xs={12}>
-            <ShowAddress
-              selectedAddressId={selectedAddressId}
-              setSelectedAddressId={setSelectedAddressId}
-            />
+            <ShowAddress selectedAddressId={selectedAddressId} setSelectedAddressId={setSelectedAddressId} />
           </Col>
         </Row>
       </Row>
 
-      {/* Custom Alert Modal */}
       <Modal show={showAlert} centered>
         <Modal.Body className="text-center">
           <p className="fs-5 fw-bold text-success">
             ✅ Order placed successfully!
           </p>
-          <Button variant="warning" className="px-4 "onClick={() => setShowAlert(false)}>
+          <Button variant="warning" className="px-4" onClick={() => setShowAlert(false)}>
             OK
           </Button>
         </Modal.Body>

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Coupon } from "../models/couponModel.js";
-import { Cart } from "../models/cartModel.js"
+import { Cart } from "../models/cartModel.js";
+
 const { Schema } = mongoose;
 
 const ORDER_STATUS = {
@@ -15,16 +16,8 @@ const ORDER_STATUS = {
 const orderSchema = new Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    restaurant: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Restaurant",
-      required: true,
-    },
-    cartId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Cart",
-      required: true,
-    },
+    restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant", required: true },
+    cartId: { type: mongoose.Schema.Types.ObjectId, ref: "Cart", required: true },
     totalAmount: { type: Number },
     coupon: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon" },
     finalPrice: { type: Number, min: 0 },
@@ -33,35 +26,32 @@ const orderSchema = new Schema(
       enum: Object.values(ORDER_STATUS),
       default: ORDER_STATUS.PENDING,
     },
-    deliveryAddress: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Address",
-      required: true,
-    },
-    createdAt:{type:Date,default:Date.now}
-  },
+    deliveryAddress: { type: mongoose.Schema.Types.ObjectId, ref: "Address", required: true },
+    createdAt: { type: Date, default: Date.now },
+  }
 );
 
 const applyDiscount = async (totalAmount, couponId) => {
   if (!couponId) return totalAmount;
 
-  const coupon = await Coupon.findById(couponId);
+  const coupon = await Coupon.findById(couponId).lean();
   if (!coupon) throw new Error("Coupon not found.");
   if (!coupon.isAvailable) throw new Error("Coupon is inactive.");
   if (coupon.expiryDate < new Date()) throw new Error("Coupon has expired.");
   if (totalAmount < coupon.minOrderVal) {
-    throw new Error(
-      `Order value must be at least ${coupon.minOrderVal} to use this coupon.`
-    );
+    throw new Error(`Order value must be at least ${coupon.minOrderVal} to use this coupon.`);
   }
 
   const discount = Math.min(
-    (totalAmount * coupon.discountPercentage) / 100,
-    coupon.MaxDiscValue
+    (totalAmount * coupon.discountPercentage) / 100, 
+    coupon.maxDiscValue
   );
+
+  console.log(`💰 Total: ${totalAmount}, Discount: ${discount}, Final: ${totalAmount - discount}`);
 
   return Math.max(totalAmount - discount, 0);
 };
+
 
 orderSchema.pre("save", async function (next) {
   try {
@@ -69,16 +59,25 @@ orderSchema.pre("save", async function (next) {
     if (!cart) {
       throw new Error("Cart not found. Unable to calculate total amount.");
     }
+
     this.totalAmount = cart.totalPrice;
+    
+    console.log("🛒 Cart Total Price:", this.totalAmount);
+    console.log("🎟️ Coupon Applied:", this.coupon);
+
     if (this.coupon) {
       this.finalPrice = await applyDiscount(this.totalAmount, this.coupon);
+      console.log("✅ Final Price After Discount:", this.finalPrice);
     } else {
       this.finalPrice = this.totalAmount;
     }
+
     next();
   } catch (error) {
+    console.error("❌ Order Pre-save Hook Error:", error.message);
     next(error);
   }
 });
+;
 
 export const Order = mongoose.model("Order", orderSchema);
