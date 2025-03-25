@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
 import { motion } from "framer-motion";
-import "../../App.css";
+import Cookies from "js-cookie";
 import axiosInstance from "../../Axios/axiosInstance.js";
+import "../../App.css";
 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -23,28 +24,44 @@ function LoginPage() {
 
     try {
       const response = await axiosInstance.post("/user/login", formData);
-      console.log(response.data);
+      const { message, token } = response.data;
+
+      if (token) {
+        Cookies.set("authToken", token, { expires: 7, secure: true });
+
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
           navigate("/user/homepage");
         }, 2000);
-    
+      }
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
+      setError(error.response?.data?.message || "Invalid credentials");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <Container fluid className="loginBackground min-vh-100 d-flex align-items-center position-relative overflow-hidden">
-      <motion.div className="background-effect" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5 }}></motion.div>
+      <motion.div
+        className="background-effect"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+      ></motion.div>
       <Row className="w-100">
+        {/* Login Form Section */}
         <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-1 order-2">
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
             <Card className="text-center border-0 shadow-lg p-4 mb-5 bg-body-tertiary rounded-4 animated-card w-100" style={{ maxWidth: '400px' }}>
-              <motion.p className="fs-4 fw-bold text-primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>LOGIN</motion.p>
+              <motion.p className="fs-4 fw-bold text-primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+                LOGIN
+              </motion.p>
               {error && <motion.p className="text-danger" initial={{ scale: 0.9 }} animate={{ scale: 1 }}>{error}</motion.p>}
               <Form className="inputBox-width" onSubmit={handleSubmit}>
+                {/* Email Input */}
                 <Form.Group className="mb-3">
                   <motion.input
                     whileFocus={{ scale: 1.05, borderColor: "#ffc107", boxShadow: "0px 0px 8px rgba(255,193,7,0.8)" }}
@@ -53,6 +70,7 @@ function LoginPage() {
                     className="form-control rounded-pill py-2"
                   />
                 </Form.Group>
+                {/* Password Input */}
                 <Form.Group className="mb-3">
                   <motion.input
                     whileFocus={{ scale: 1.05, borderColor: "#ffc107", boxShadow: "0px 0px 8px rgba(255,193,7,0.8)" }}
@@ -61,8 +79,11 @@ function LoginPage() {
                     className="form-control rounded-pill py-2"
                   />
                 </Form.Group>
+                {/* Submit Button */}
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">Submit</Button>
+                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill">
+                    {loading ? "Logging in..." : "Submit"}
+                  </Button>
                 </motion.div>
               </Form>
               <div className="d-flex justify-content-end">
@@ -73,6 +94,7 @@ function LoginPage() {
             </Card>
           </motion.div>
         </Col>
+        {/* Image Section */}
         <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order-1">
           <motion.img 
             initial={{ opacity: 0, scale: 0.9 }} 
@@ -86,9 +108,12 @@ function LoginPage() {
           />
         </Col>
       </Row>
+      {/* Success Modal */}
       <Modal show={showSuccess} onHide={() => setShowSuccess(false)} centered>
         <Modal.Body className="text-center">
-          <motion.p className="fs-5 fw-bold text-warning" initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>Logged in successfully!</motion.p>
+          <motion.p className="fs-5 fw-bold text-warning" initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+            Logged in successfully!
+          </motion.p>
         </Modal.Body>
       </Modal>
     </Container>

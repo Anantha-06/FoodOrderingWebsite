@@ -13,10 +13,16 @@ function HeaderNav() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    Cookies.remove("token");
+    Cookies.remove("authToken"); 
     alert("Sign Out Successful!");
-    navigate("/");
-    window.location.reload();
+  
+   
+    navigate("/login");
+  
+  
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   return (
