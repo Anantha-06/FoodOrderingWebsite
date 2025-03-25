@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Container, Image, Badge, Form } from "react-bootstrap";
+import { Table, Container, Image, Badge, Form } from "react-bootstrap";
 import axiosInstance from "../../../Axios/axiosInstance.js";
 
 const ORDER_STATUS = [
@@ -41,14 +41,15 @@ function RestaurantOrders() {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axiosInstance.put(`/order/update/status/${orderId}`, { status: newStatus });
+      const response = await axiosInstance.put(`/order/update/status/${orderId}`, { status: newStatus });
+      console.log("Status update response:", response.data);
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === orderId ? { ...order, status: newStatus } : order
         )
       );
     } catch (err) {
-      console.error("Error updating order status:", err);
+      console.error("Error updating order status:", err.response ? err.response.data : err.message);
     }
   };
 
@@ -79,19 +80,33 @@ function RestaurantOrders() {
                   <small>{order.user.phone}</small>
                 </td>
                 <td>
-                  {order.cartId.items.map((item) => (
-                    <div key={item.foodId} className="d-flex align-items-center mb-2">
-                      <Image src={item.foodImage} width="50" height="50" rounded />
-                      <span className="ms-2">{item.foodName} x {item.quantity}</span>
-                    </div>
-                  ))}
+                  {order.cartId?.items?.length ? (
+                    order.cartId.items.map((item) => (
+                      <div key={item.foodId} className="d-flex align-items-center mb-2">
+                        <Image src={item.foodImage} width="50" height="50" rounded />
+                        <span className="ms-2">
+                          {item.foodName} x {item.quantity}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <small>No items found</small>
+                  )}
                 </td>
                 <td>₹{order.finalPrice}</td>
                 <td>
                   {order.deliveryAddress.city}, {order.deliveryAddress.state}
                 </td>
                 <td>
-                  <Badge bg={order.status === "pending" ? "warning" : order.status === "delivered" ? "success" : "primary"}>
+                  <Badge
+                    bg={
+                      order.status === "pending"
+                        ? "warning"
+                        : order.status === "delivered"
+                        ? "success"
+                        : "primary"
+                    }
+                  >
                     {order.status}
                   </Badge>
                 </td>

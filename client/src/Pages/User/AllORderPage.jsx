@@ -34,7 +34,7 @@ function AllOrderPage() {
                 <td>{order.restaurant.name}</td>
                 <td>{order.deliveryAddress.city}</td>
                 <td>{order.status}</td>
-                <td>₹{order.finalPrice}</td>
+                <td>₹{order.totalAmount}</td>
                 <td>{new Date(order.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
