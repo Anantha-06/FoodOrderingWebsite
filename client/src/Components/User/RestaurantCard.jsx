@@ -16,7 +16,7 @@ function RestaurantCard(props) {
             className="restaurant-card-image rounded-4"
           />
         </div>
-        <Card.Body>
+        <Card.Body className="d-flex flex-column flex-nowrap justify-content-center align-items-center">
           <Card.Title className="restaurant-card-title fw-bold">{props.title}</Card.Title>
           <div className="restaurant-card-rating d-flex flex-nowrap gap-3 justify-content-center">
             <Card.Text>{props.rating}</Card.Text>

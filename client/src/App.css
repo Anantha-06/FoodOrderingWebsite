@@ -1,7 +1,22 @@
 html, body {
-  height: 100%;
+  height: auto;
   margin: 0;
   min-width: 400px;
+  background: linear-gradient(135deg, #fffefc, #ffbc1e, #fffffe, #ffcb0d);
+  background-size: 400% 400%;
+  animation: gradientBackground 8s ease infinite;
+}
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #root {
@@ -19,205 +34,191 @@ html, body {
 }
 
 .restaurant-card-rating{
-width: 35px;
-height: 35px;
+  width: 35px;
+  height: 35px;
 }
 
 .thumbnail-image {
-    width: 25px;
-    height: 100%;
+  width: 25px;
+  height: 100%;
 }
 .thumbnail-image-2 {
-    width: 23px;
-    height: 100%;
+  width: 23px;
+  height: 100%;
 }
 .navBar-logimg {
-    width: 100%;
-    height: 40px;
+  width: 100%;
+  height: 40px;
 }
 .socialMedia-img {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 .footer-logimg {
-    width: 320px;
-    height: 40px;
+  width: 320px;
+  height: 40px;
 }
 .footericon {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .carousel-image {
-    width: 100%;
-    height: auto; /* Ensures images maintain their aspect ratio */
-    object-fit: cover; /* Ensures images cover the container */
-  }
-  
-  /* Optional: Additional customizations */
-  .carousel {
-    max-width: 100%;
-    margin: auto;
-  }
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carousel {
+  max-width: 100%;
+  margin: auto;
+}
 
 .bestSellerCarosuel {
-    width: 290px;
-    height: 290px;
+  width: 290px;
+  height: 290px;
 }
 .restaurantCard-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
 .loginImage {
-    height: 970px;
-    width: 550px;
+  height: 970px;
+  width: 550px;
 }
 .inputBox-width {
-    width: 350px;
+  width: 350px;
 }
 .loginBackground {
-    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
 }
 .signup-Background {
-    background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
 }
 .restaurant-image {
-    width: 250px;
-    height: 250px;
+  width: 250px;
+  height: 250px;
 }
 .menuItemimage {
-    width: 190px;
-    height: 190px;
+  width: 190px;
+  height: 190px;
 }
 .secondHEader {
-    text-shadow: 5px 2px 5px #ffc400;
+  text-shadow: 5px 2px 5px #ffc400;
 }
 .profilepage-image {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }
 .tabHeight {
-    min-height: 400px;
+  min-height: 400px;
 }
 .allPage-height{
-    min-height: 700px;
+  min-height: 700px;
 }
 
 .rating-icon{
-    height: 18px;
-    width: 18px;
+  height: 18px;
+  width: 18px;
 }
 
 .image-container {
-    width: 100%;
-    overflow: hidden;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-  }
-
-.page-review{
-    height: 25px;
-    height: 25px;
+  width: 100%;
+  overflow: hidden;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
-/*Best Seller Design*/
+.page-review{
+  height: 25px;
+  height: 25px;
+}
 
 .bestseller-image-wrapper {
-    overflow: hidden;
-    border-radius: 50%;
-    width: 250px; 
-    height: 250px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .bestseller-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .bestseller-image:hover,
-  .bestseller-image:active {
-    transform: scale(1.2);
-  }
+  overflow: hidden;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bestseller-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.bestseller-image:hover,
+.bestseller-image:active {
+  transform: scale(1.2);
+}
 
 .restaurant-card-container {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .restaurant-card-container:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
-  }
-  
-  
-  .restaurant-card-image-container {
-    overflow: hidden;
-    border-radius: 16px; 
-  }
-  
-  
-  .restaurant-card-image {
-    transition: transform 0.3s ease;
-  }
-  
-  .restaurant-card-container:hover .restaurant-card-image {
-    transform: scale(1.1); 
-  }
-  
-  
-  .restaurant-rating-icon {
-    width: 20px; 
-    height: 20px; 
-  }
-  
+.restaurant-card-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
-  .restaurant-card-title {
-    font-size: 1.25rem; 
-  }
+.restaurant-card-image-container {
+  overflow: hidden;
+  border-radius: 16px;
+}
 
-/*Restaurant Page card*/
+.restaurant-card-image {
+  transition: transform 0.3s ease;
+}
+
+.restaurant-card-container:hover .restaurant-card-image {
+  transform: scale(1.1);
+}
+
+.restaurant-rating-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.restaurant-card-title {
+  font-size: 1.25rem;
+}
 
 .zoom-container {
-    transition: transform 0.3s ease; 
-  }
-  
-  .zoom-container:hover .zoom-content {
-    transform: scale(1.05); 
-    cursor: pointer; 
-  }
+  transition: transform 0.3s ease;
+}
 
-  .zoom-container:hover .zoom-content {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+.zoom-container:hover .zoom-content {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.zoom-container:hover .zoom-content {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
 .position-relative {
-    position: relative;
-  }
-  
-  canvas {
-    z-index: 1;
-  }
-  
-  button {
-    z-index: 2;
-    position: relative;
-  }
+  position: relative;
+}
 
+canvas {
+  z-index: 1;
+}
 
-/*Popup*/
+button {
+  z-index: 2;
+  position: relative;
+}
 
-/* App.css */
 .popup {
   position: fixed;
   top: 20px;
   right: 20px;
-  
   color: rgb(0, 0, 0);
   padding: 5px;
   border-radius: 4px;
@@ -228,7 +229,7 @@ height: 35px;
 }
 
 .popup.error {
-  background-color: #f44336; /* Red for errors */
+  background-color: #f44336;
 }
 
 .popup-content {
@@ -250,7 +251,7 @@ height: 35px;
     transform: translateX(0);
   }
 }
-/*Checkout Page*/
+
 .checkoutCartImage {
   width: 50px;
   height: 50px;
@@ -260,19 +261,28 @@ height: 35px;
   height: auto;
 }
 
-/*Checkout Address*/
-
 .textsize{
   font-size: 12px;
 }
 
-/*next css  */
-
-@media (max-width: 768px) {
-    .carousel-item {
-      padding: 10px;
-    }
+.login-background {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f4edd5, #5b5b5b, #fffffe, #303030);
+  animation: gradientAnimation 6s infinite alternate;
 }
 
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
 
-  
+@media (max-width: 768px) {
+  .carousel-item {
+    padding: 10px;
+  }
+}

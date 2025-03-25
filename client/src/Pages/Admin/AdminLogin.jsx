@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
 import { motion } from "framer-motion";
-import Cookies from "js-cookie"; // Import Cookies for token storage
-import "../../App.css";
+import Cookies from "js-cookie";
 import axiosInstance from "../../Axios/axiosInstance.js";
 
 function AdminLogin() {
@@ -21,13 +20,11 @@ function AdminLogin() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       const response = await axiosInstance.post("/admin/login", formData);
-      const { token } = response.data; 
-
+      const { token } = response.data;
       if (token) {
-        Cookies.set("authToken", token, { expires: 1 }); 
+        Cookies.set("authToken", token, { expires: 1 });
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
@@ -42,56 +39,34 @@ function AdminLogin() {
   };
 
   return (
-    <Container fluid className="loginBackground min-vh-100 d-flex align-items-center position-relative overflow-hidden">
-      <motion.div className="background-effect" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5 }}></motion.div>
-      <Row className="w-100">
-        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-1 order-2">
+    <Container fluid style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,rgb(255, 255, 255),rgb(118, 118, 118))" }}>
+      <Row className="w-100" style={{ maxWidth: "900px" }}>
+        <Col xs={12} md={6} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <Card className="text-center border-0 shadow-lg p-4 mb-5 bg-body-tertiary rounded-4 animated-card w-100" style={{ maxWidth: '400px' }}>
-              <motion.p className="fs-4 fw-bold text-primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>ADMIN LOGIN</motion.p>
-              {error && <motion.p className="text-danger" initial={{ scale: 0.9 }} animate={{ scale: 1 }}>{error}</motion.p>}
-              <Form className="inputBox-width" onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                  <motion.input
-                    whileFocus={{ scale: 1.05, borderColor: "#ffc107", boxShadow: "0px 0px 8px rgba(255,193,7,0.8)" }}
-                    type="email" placeholder="Enter email" name="email"
-                    value={formData.email} onChange={handleChange} required
-                    className="form-control rounded-pill py-2"
-                  />
+            <Card style={{ textAlign: "center", border: "none", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", padding: "2rem", borderRadius: "15px", maxWidth: "400px", width: "100%" }}>
+              <motion.p style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#007bff" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>ADMIN LOGIN</motion.p>
+              {error && <motion.p style={{ color: "red" }}>{error}</motion.p>}
+              <Form onSubmit={handleSubmit}>
+                <Form.Group style={{ marginBottom: "1rem" }}>
+                  <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter email" required style={{ borderRadius: "25px", padding: "10px" }} />
                 </Form.Group>
-                <Form.Group className="mb-3">
-                  <motion.input
-                    whileFocus={{ scale: 1.05, borderColor: "#ffc107", boxShadow: "0px 0px 8px rgba(255,193,7,0.8)" }}
-                    type="password" placeholder="Password" name="password"
-                    value={formData.password} onChange={handleChange} required
-                    className="form-control rounded-pill py-2"
-                  />
+                <Form.Group style={{ marginBottom: "1rem" }}>
+                  <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required style={{ borderRadius: "25px", padding: "10px" }} />
                 </Form.Group>
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width shadow-lg rounded-pill" disabled={loading}>
-                    {loading ? "Logging in..." : "Submit"}
-                  </Button>
-                </motion.div>
+                <Button variant="warning" type="submit" style={{ width: "100%", padding: "10px", borderRadius: "25px", fontSize: "1rem", fontWeight: "bold" }} disabled={loading}>
+                  {loading ? "Logging in..." : "Submit"}
+                </Button>
               </Form>
             </Card>
           </motion.div>
         </Col>
-        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order-1">
-          <motion.img 
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ duration: 1 }}
-            whileHover={{ scale: 1.05, rotate: 2 }}
-            src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756879/Food%20Order%20Website/eyqxjirzit2trvcv5sv4.png" 
-            className="img-fluid loginImage" 
-            alt="Login Illustration" 
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
+        <Col xs={12} md={6} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <motion.img initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} whileHover={{ scale: 1.05, rotate: 2 }} src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742932376/DALL_E_2025-03-26_01.17.42_-_A_minimalistic_portrait_of_a_food_item_featuring_a_stylishly_plated_dish_with_vibrant_colors._The_dish_is_elegantly_arranged_on_a_white_plate_with_a_iumbg0.webp" alt="Login Illustration" style={{ maxWidth: "100%", height: "auto", objectFit: "contain", padding: "10px" }} />
         </Col>
       </Row>
       <Modal show={showSuccess} onHide={() => setShowSuccess(false)} centered>
-        <Modal.Body className="text-center">
-          <motion.p className="fs-5 fw-bold text-warning" initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>Logged in successfully!</motion.p>
+        <Modal.Body style={{ textAlign: "center" }}>
+          <motion.p style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#ffc107" }} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>Logged in successfully!</motion.p>
         </Modal.Body>
       </Modal>
     </Container>
