@@ -102,7 +102,7 @@ function LoginPage() {
             src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742932376/DALL_E_2025-03-26_01.19.39_-_A_minimalistic_portrait_of_a_gourmet_food_item_featuring_an_elegantly_plated_dish_with_vibrant_colors._The_dish_is_stylishly_arranged_on_a_white_plat_eaagli.webp"
             className="img-fluid d-none d-md-block"
             alt="Login Illustration"
-            style={{ maxWidth: "80%", height: "auto" }}
+            style={{ maxWidth: "100%", height: "800px", objectFit: "contain", padding: "10px" }} 
           />
         </Col>
       </Row>

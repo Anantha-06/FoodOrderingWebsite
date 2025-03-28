@@ -55,7 +55,7 @@ function RestaurantSignup() {
   return (
     <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
       <Row className="w-100">
-        <Col xs={12} md={6} className="d-flex justify-content-center">
+        <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-1 order-2">
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
             <Card className="p-4 shadow-lg w-100" style={{ maxWidth: '400px' }}>
               <h3 className="text-center text-primary">Restaurant Signup</h3>
@@ -86,6 +86,18 @@ function RestaurantSignup() {
             </Card>
           </motion.div>
         </Col>
+         <Col xs={12} md={6} lg={6} className="d-flex justify-content-center align-items-center order-md-2 order-1">
+                  <motion.img 
+                    initial={{ opacity: 0, scale: 0.9 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    transition={{ duration: 1 }}
+                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742932376/DALL_E_2025-03-26_01.21.07_-_A_minimalistic_portrait_of_a_gourmet_food_item_featuring_a_beautifully_plated_dish_with_vibrant_colors._The_dish_is_elegantly_arranged_on_a_white_pla_cuuzsm.webp" 
+                    className="img-fluid loginImage" 
+                    alt="Login Illustration" 
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
+                </Col>
       </Row>
       <Modal show={showSuccess} onHide={() => setShowSuccess(false)} centered>
         <Modal.Body className="text-center">

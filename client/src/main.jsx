@@ -21,6 +21,7 @@ import AllOrderPage from "./Pages/User/AllORderPage.jsx";
 import RestaurantSignup from "./Pages/Restaurant/RestaurantSignup.jsx";
 import RestaurantLogin from "./Pages/Restaurant/RestaurantLogin.jsx";
 import RestaurantDashboard from "./Pages/Restaurant/RestaurantDashboard.jsx";
+import LandingPage from "./Pages/Shared/LandingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       {
         path: "restaurant/dashboard", 
         element: <RestaurantDashboard />,
+      },
+      {
+        path: "user/landingpage", 
+        element: <LandingPage/>,
       },
     ],
   },

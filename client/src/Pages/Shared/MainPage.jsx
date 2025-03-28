@@ -20,7 +20,7 @@ const MainPage = () => {
             </Link>
           </Col>
           <Col xs={12} md={4} className="mb-2">
-            <Link to="/user/login">
+            <Link to="/user/landingpage">
               <Button variant="warning" className="button-animation w-100">User</Button>
             </Link>
           </Col>
