@@ -8,7 +8,17 @@ function AllOrderPage() {
   const [data, isLoading, error] = useFetch("/order/get/all");
   const orders = data?.orders || [];
 
-  if (isLoading) return <div class="loader"></div>;
+  if (isLoading)  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100vw'
+    }}>
+      <div className="loader"></div>
+    </div>
+  );
   if (error) {
     console.error("Fetch Error:", error);
     return <p className="text-danger text-center">No Order Found or {error.message}</p>;

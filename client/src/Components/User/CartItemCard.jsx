@@ -48,7 +48,17 @@ function CartItemCard({ setCartId }) {
     }
   };
 
-  if (isLoading) return <div class="loader"></div>;
+  if (isLoading)  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100vw'
+    }}>
+      <div className="loader"></div>
+    </div>
+  );
   if (error) return <Alert variant="danger">No Items Added To The Cart Or Failed To Fetch Cart</Alert>;
   if (items.length === 0) return <Alert variant="warning">No items added to the cart.</Alert>;
 

@@ -11,7 +11,15 @@ function Homepage() {
   const restaurants = data?.restaurant || [];
   if (isLoading) {
     return (
-      <div class="loader"></div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw'
+      }}>
+        <div className="loader"></div>
+      </div>
     );
   }
 

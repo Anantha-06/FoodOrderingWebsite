@@ -13,8 +13,18 @@ function ProfilePage() {
   const address = addressData?.address || null;
   const orders = Array.isArray(ordersData?.orders) ? ordersData.orders : [];
 
-  if (isUserLoading || isAddressLoading || isOrdersLoading) return <div class="loader"></div>;
-
+  if (isUserLoading || isAddressLoading || isOrdersLoading)  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100vw'
+    }}>
+      <div className="loader"></div>
+    </div>
+  );
+  
   return (
     <Container fluid>
       <div className="fs-1 fw-bold text-center">Profile</div>
