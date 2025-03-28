@@ -15,13 +15,13 @@ const MainPage = () => {
         />
         <Row className="w-50 text-center">
           <Col xs={12} md={4} className="mb-2">
-            <Link to="/admin/login">
-              <Button variant="primary" className="button-animation w-100">Admin</Button>
+            <Link to="/user/landingpage">
+              <Button variant="warning" className="button-animation w-100">User</Button>
             </Link>
           </Col>
           <Col xs={12} md={4} className="mb-2">
-            <Link to="/user/landingpage">
-              <Button variant="warning" className="button-animation w-100">User</Button>
+            <Link to="/admin/login">
+              <Button variant="primary" className="button-animation w-100">Admin</Button>
             </Link>
           </Col>
           <Col xs={12} md={4} className="mb-2">

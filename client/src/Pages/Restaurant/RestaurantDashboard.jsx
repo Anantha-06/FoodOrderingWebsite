@@ -16,16 +16,16 @@ function RestaurantDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get("restaurantToken"); // Check if token exists
+    const token = Cookies.get("restaurantToken"); 
     if (!token) {
-      navigate("/restaurant/login"); // Redirect to login if no token
+      navigate("/restaurant/login");
     }
   }, [navigate]);
 
   const handleSignOut = () => {
-    Cookies.remove("restaurantToken"); // Remove the token
+    Cookies.remove("restaurantToken"); 
     alert("Sign Out Successful!");
-    navigate("/restaurant/login"); // Redirect to login page
+    navigate("/restaurant/login"); 
     setTimeout(() => window.location.reload(), 500);
   };
 

@@ -40,11 +40,7 @@ function LandingPage() {
 
   if (isLoading) {
     return (
-      <div className="text-center my-5">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+        <div class="loader"></div>
     );
   }
 
@@ -114,6 +110,7 @@ function LandingPage() {
           </Container>
         </Navbar>
       </header>
+     
       <Container
         fluid
         className="landing-page flex-grow-1 d-flex flex-column justify-content-center align-items-center text-center position-relative p-0"

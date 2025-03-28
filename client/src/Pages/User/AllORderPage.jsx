@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Table, Container } from "react-bootstrap";
 import useFetch from "../../Hooks/UseFetch.jsx";
+import "../../App.css"
+
 
 function AllOrderPage() {
   const [data, isLoading, error] = useFetch("/order/get/all");
   const orders = data?.orders || [];
 
-  if (isLoading) return <p className="text-center">Loading orders...</p>;
+  if (isLoading) return <div class="loader"></div>;
   if (error) {
     console.error("Fetch Error:", error);
     return <p className="text-danger text-center">No Order Found or {error.message}</p>;

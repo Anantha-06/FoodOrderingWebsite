@@ -27,8 +27,7 @@ const AdminDashboard = () => {
   });
   const [dateError, setDateError] = useState("");
   const [formError, setFormError] = useState("");
-  const [couponSuccess, setCouponSuccess] = useState(""); // ✅ Success message state
-
+  const [couponSuccess, setCouponSuccess] = useState("");
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     if (!authToken) {
@@ -103,13 +102,13 @@ const AdminDashboard = () => {
         isAvailable: true,
       });
       setFormError("");
-      setCouponSuccess("Coupon created successfully!"); // ✅ Set success message
+      setCouponSuccess("Coupon created successfully!"); 
 
       setTimeout(() => {
-        setCouponSuccess(""); // ✅ Clear success message after 3 seconds
+        setCouponSuccess(""); 
       }, 3000);
     } catch (error) {
-      setCouponSuccess(""); // Ensure error resets success message if needed
+      setCouponSuccess(""); 
     }
   };
 

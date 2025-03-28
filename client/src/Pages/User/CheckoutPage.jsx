@@ -8,7 +8,7 @@ import CouponCard from "../../Components/User/CouponCard.jsx";
 import ShowAddress from "../../Components/User/ShowAddress.jsx";
 
 function CheckoutPage() {
-  const [selectedCoupon, setSelectedCoupon] = useState("");  // Default empty string
+  const [selectedCoupon, setSelectedCoupon] = useState(""); 
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [cartId, setCartId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ function CheckoutPage() {
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
-  // Debugging useEffect to track state changes
+
   useEffect(() => {
    
   }, [selectedCoupon]);

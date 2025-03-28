@@ -43,7 +43,7 @@ const BestSellerSlider = () => {
     nextArrow: <SliderArrow position="next" />,
     prevArrow: <SliderArrow position="prev" />,
   };
-  if (isLoading) return <p>Loading products...</p>;
+  if (isLoading) return <div class="loader"></div>;
   if (error) {
     console.error("Fetch Error:", error);
     return <p>{error.message}</p>;

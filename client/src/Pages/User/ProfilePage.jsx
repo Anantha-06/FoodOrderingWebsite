@@ -13,7 +13,7 @@ function ProfilePage() {
   const address = addressData?.address || null;
   const orders = Array.isArray(ordersData?.orders) ? ordersData.orders : [];
 
-  if (isUserLoading || isAddressLoading || isOrdersLoading) return <p>Loading...</p>;
+  if (isUserLoading || isAddressLoading || isOrdersLoading) return <div class="loader"></div>;
 
   return (
     <Container fluid>

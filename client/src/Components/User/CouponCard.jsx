@@ -2,12 +2,13 @@ import React from "react";
 import { Card, Button, Row, Col, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useFetch from "../../Hooks/UseFetch.jsx";
+import "../../App.css"
 
 const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
   const [data, isLoading, error] = useFetch("/coupon/avaiable");
   const coupons = data?.data || [];
 
-  if (isLoading) return <p className="text-center">Loading coupons...</p>;
+  if (isLoading) return <div class="loader"></div>;
   if (error) {
     console.error("Fetch Error:", error);
     return <p className="text-danger text-center">{error.message}</p>;

@@ -11,11 +11,7 @@ function Homepage() {
   const restaurants = data?.restaurant || [];
   if (isLoading) {
     return (
-      <div className="text-center my-5">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+      <div class="loader"></div>
     );
   }
 

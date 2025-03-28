@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Container, Row, Col, Card, Button, Image, Spinner, Alert } from "react-bootstrap";
 import useFetch from "../../Hooks/UseFetch.jsx";
 import axiosInstance from "../../Axios/axiosInstance.js";
+import "../../App.css"
 
 function CartItemCard({ setCartId }) {
   const [data, isLoading, error, refetch] = useFetch("/cart/all");
@@ -47,7 +48,7 @@ function CartItemCard({ setCartId }) {
     }
   };
 
-  if (isLoading) return <Spinner animation="border" role="status" />;
+  if (isLoading) return <div class="loader"></div>;
   if (error) return <Alert variant="danger">No Items Added To The Cart Or Failed To Fetch Cart</Alert>;
   if (items.length === 0) return <Alert variant="warning">No items added to the cart.</Alert>;
 
