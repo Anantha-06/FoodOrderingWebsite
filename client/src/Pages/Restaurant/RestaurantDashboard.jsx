@@ -25,7 +25,7 @@ function RestaurantDashboard() {
   const handleSignOut = () => {
     Cookies.remove("restaurantToken"); 
     alert("Sign Out Successful!");
-    navigate("/restaurant/login"); 
+    navigate("/"); 
     setTimeout(() => window.location.reload(), 500);
   };
 

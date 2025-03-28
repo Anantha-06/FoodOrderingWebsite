@@ -115,7 +115,7 @@ const AdminDashboard = () => {
   const handleSignOut = () => {
     Cookies.remove("authToken");
     alert("Sign Out Successful!");
-    navigate("/admin/login");
+    navigate("/");
     window.location.reload();
   };
 
