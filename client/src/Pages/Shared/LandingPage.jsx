@@ -40,10 +40,18 @@ function LandingPage() {
 
   if (isLoading) {
     return (
-        <div class="loader"></div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw'
+      }}>
+        <div className="loader"></div>
+      </div>
     );
   }
-
+  
   if (error) {
     return (
       <div className="text-center my-5">
