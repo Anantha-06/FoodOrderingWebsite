@@ -118,7 +118,6 @@ function LandingPage() {
           </Container>
         </Navbar>
       </header>
-     
       <Container
         fluid
         className="landing-page flex-grow-1 d-flex flex-column justify-content-center align-items-center text-center position-relative p-0"
