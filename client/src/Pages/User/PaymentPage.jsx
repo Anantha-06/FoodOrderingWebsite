@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
   const [order, setOrder] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance.get("/order/get/all")
@@ -15,31 +17,59 @@ const PaymentPage = () => {
       .catch(error => console.error("Error fetching orders:", error));
   }, []);
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!order) return;
-    const options = {
-      key: "YOUR_RAZORPAY_KEY", 
-      amount: order.totalAmount * 100,
-      currency: "INR",
-      name: order.restaurant.name,
-      description: `Order #${order._id}`,
-      image: "https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png",
-      handler: function (response) {
-        alert("Payment Successful: " + response.razorpay_payment_id);
-      },
-      prefill: {
-        name: order.user.name,
-        email: order.user.email,
-        contact: order.user.phone,
-      },
-      theme: {
-        color: "#F37254",
-      },
-    };
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+  
+    try {
+      const { data } = await axiosInstance.post(`/payment/create/${order._id}`);
+  
+      if (!data || !data.razorpayOrder) {
+        console.error("Failed to initiate payment");
+        return;
+      }
+  
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY, 
+        amount: data.razorpayOrder.amount,
+        currency: data.razorpayOrder.currency,
+        name: order.restaurant.name,
+        description: `Order #${order._id}`,
+        image:
+          "https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png",
+        order_id: data.razorpayOrder.id, 
+        handler: async function (response) {
+          try {
+            const verifyResponse = await axiosInstance.post("/payment/verify", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+  
+            alert(verifyResponse.data.message);
+            navigate("/user/homepage");
+          } catch (err) {
+            console.error("Payment verification failed:", err);
+            alert("Payment verification failed!");
+          }
+        },
+        prefill: {
+          name: order.user.name,
+          email: order.user.email,
+          contact: order.user.phone,
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+  
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+      alert("Error initiating payment. Please try again.");
+    }
   };
-
+  
   return (
     <div className="container mt-5">
       {order ? (
@@ -50,8 +80,8 @@ const PaymentPage = () => {
             <p><strong>Restaurant Name:</strong> {order.restaurant.name}</p>
             <p className="fw-bold"><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
             <p className="fw-bold"><strong>Final Amount:</strong> ₹{order.finalPrice}</p>
-            <Table striped bordered hover >
-              <thead >
+            <Table striped bordered hover>
+              <thead>
                 <tr className="mb-3 shadow-lg p-1 bg-light rounded-5">
                   <th></th>
                   <th>Food Items</th>
@@ -59,10 +89,10 @@ const PaymentPage = () => {
                   <th>Price</th>
                 </tr>
               </thead>
-              <tbody >
+              <tbody>
                 {order.cartId.items.map(item => (
                   <tr key={item._id} className="mb-3 shadow-lg p-1 bg-light rounded-5">
-                    <td ><img src={item.foodImage} alt={item.foodName} width="50" className="rounded-5"/></td>
+                    <td><img src={item.foodImage} alt={item.foodName} width="50" className="rounded-5"/></td>
                     <td>{item.foodName}</td>
                     <td>{item.quantity}</td>
                     <td>₹{item.totalItemPrice}</td>
