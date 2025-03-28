@@ -346,14 +346,15 @@ button {
   background-size: 17px 17px;
   background-clip: content-box;
   --c:no-repeat linear-gradient(#000 0 0);
-  -webkit-mask:
-      var(--c) 0    0, 
-      var(--c) 17px 0, 
-      var(--c) 0    17px, 
-      var(--c) 17px 17px, 
-      var(--c) 0    34px, 
-      var(--c) 17px 34px,
-      linear-gradient(#000 0 0);
+  mask:
+  var(--c) 0    0, 
+  var(--c) 17px 0, 
+  var(--c) 0    17px, 
+  var(--c) 17px 17px, 
+  var(--c) 0    34px, 
+  var(--c) 17px 34px,
+  linear-gradient(#000 0 0);
+mask-composite: exclude;
   -webkit-mask-composite:xor;
           mask-composite:exclude;
   animation: l6 3s infinite ;
