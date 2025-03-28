@@ -4,7 +4,7 @@ import useFetch from "../../Hooks/UseFetch.jsx";
 import axiosInstance from "../../Axios/axiosInstance.js";
 import "../../App.css"
 
-function CartItemCard({ setCartId }) {
+function CartItemCard({ setCartId, setRestaurantId }) {
   const [data, isLoading, error, refetch] = useFetch("/cart/all");
   const cart = data?.data || {};
   const items = cart.items || [];
@@ -13,8 +13,10 @@ function CartItemCard({ setCartId }) {
     if (cart._id) {
       setCartId(cart._id);
     }
-  }, [cart, setCartId]);
-
+    if (cart.restaurantId) {
+      setRestaurantId(cart.restaurantId);
+    }
+  }, [cart, setCartId, setRestaurantId]);
   const handleQuantityUpdate = async (foodId, action) => {
     try {
       const response = await axiosInstance.put("/cart/itemupdate", { foodId, action });

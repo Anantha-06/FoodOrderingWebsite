@@ -11,48 +11,39 @@ function CheckoutPage() {
   const [selectedCoupon, setSelectedCoupon] = useState(""); 
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [cartId, setCartId] = useState(null);
+  const [restaurantId, setRestaurantId] = useState(null); // New state for restaurantId
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
-
-  useEffect(() => {
-   
-  }, [selectedCoupon]);
-
   const handleCheckout = async () => {
-   
     setError("");
 
-    if (!cartId || !selectedAddressId) {
-      console.log("Missing cartId or selectedAddressId");
+    if (!cartId || !selectedAddressId || !restaurantId) {
+      console.log("Missing cartId, restaurantId, or selectedAddressId");
       setError("Please select an address and add items to the cart.");
       return;
     }
 
     setLoading(true);
     const requestBody = {
-      restaurant: "67da8656b1e6fb6f2bf7e97d",
+      restaurant: restaurantId, 
       cartId: cartId,
       coupon: selectedCoupon || "", 
       deliveryAddress: selectedAddressId,
     };
 
     try {
-      
       const response = await axiosInstance.post("/order/update", requestBody);
       console.log("Response received:", response);
 
       if (response.status === 200 || response.status === 201) {
-  
         setShowAlert(true);
       } else {
-    
         setError("Unexpected response from server. Please try again.");
       }
     } catch (error) {
-      
       setError("Failed to place order. Please try again.");
     } finally {
       setLoading(false);
@@ -61,7 +52,6 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (showAlert) {
-     
       setTimeout(() => {
         navigate("/user/payment", { replace: true });
       }, 2000);
@@ -70,7 +60,7 @@ function CheckoutPage() {
 
   return (
     <Container fluid className="p-4">
-      <Row className="mb-4">
+      <Row>
         <Col xs={12} className="text-center">
           <h1 className="fw-bold display-4">Cart Items</h1>
         </Col>
@@ -78,7 +68,7 @@ function CheckoutPage() {
 
       <Row>
         <Col xs={12} lg={9} md={12} className="mb-4">
-          <CartItemCard setCartId={setCartId} />
+          <CartItemCard setCartId={setCartId} setRestaurantId={setRestaurantId} />  
         </Col>
 
         <Col xs={12} lg={3} md={6}>
@@ -106,19 +96,17 @@ function CheckoutPage() {
             </Col>
           </Row>
         </Col>
+      </Row>
 
-        <Row>
-          <Col xs={12}>
-            <ShowAddress selectedAddressId={selectedAddressId} setSelectedAddressId={setSelectedAddressId} />
-          </Col>
-        </Row>
+      <Row>
+        <Col xs={12}>
+          <ShowAddress selectedAddressId={selectedAddressId} setSelectedAddressId={setSelectedAddressId} />
+        </Col>
       </Row>
 
       <Modal show={showAlert} centered>
         <Modal.Body className="text-center">
-          <p className="fs-5 fw-bold text-success">
-            ✅ Order placed successfully!
-          </p>
+          <p className="fs-5 fw-bold text-success">✅ Order placed successfully!</p>
           <Button variant="warning" className="px-4" onClick={() => setShowAlert(false)}>
             OK
           </Button>
