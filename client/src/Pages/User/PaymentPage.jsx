@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import "../../App.css"
 
 const PaymentPage = () => {
   const [order, setOrder] = useState(null);
+  const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +48,10 @@ const PaymentPage = () => {
             });
   
             alert(verifyResponse.data.message);
-            navigate("/user/homepage");
+            setShowLoader(true);
+            setTimeout(() => {
+              navigate("/user/homepage");
+            }, 4000);
           } catch (err) {
             console.error("Payment verification failed:", err);
             alert("Payment verification failed!");
@@ -70,6 +75,20 @@ const PaymentPage = () => {
     }
   };
   
+  if (showLoader) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw'
+      }}>
+        <div className="paymentd"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mt-5">
       {order ? (
