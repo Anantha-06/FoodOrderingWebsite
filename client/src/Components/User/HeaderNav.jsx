@@ -132,7 +132,7 @@ function HeaderNav() {
             <Form className="d-flex position-relative" onSubmit={handleSearchSubmit}>
               <Form.Control
                 type="search"
-                placeholder="Search restaurants or menu items"
+                placeholder="Search restaurants"
                 className="me-2"
                 aria-label="Search"
                 value={searchQuery}
