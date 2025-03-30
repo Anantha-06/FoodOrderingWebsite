@@ -56,8 +56,8 @@ function HeaderNav() {
 
   return (
     <nav>
-      <Navbar expand="lg" className="bg-warning ">
-        <Container fluid className="gap-lg-5 gap-md-3 gap-sm-1 gap-xs-0 ">
+      <Navbar expand="lg" className="bg-warning">
+        <Container fluid className="gap-lg-5 gap-md-3 gap-sm-1 gap-xs-0 my-3 ">
           <Link to="/user/homepage">
             <Navbar.Brand>
               <img

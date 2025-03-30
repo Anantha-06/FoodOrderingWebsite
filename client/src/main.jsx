@@ -110,7 +110,7 @@ const router = createBrowserRouter([
       {
         path: "user/landingpage", 
         element: <LandingPage/>,
-      },
+      },      
     ],
   },
 ]);
