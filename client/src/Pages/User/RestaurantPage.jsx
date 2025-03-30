@@ -12,7 +12,7 @@ function RestaurantPage() {
   const restaurant = datarest?.findRestaurant || [];
 
   return (
-    <Container fluid>
+    <Container >
       <motion.div 
         initial={{ opacity: 0, y: 50 }} 
         animate={{ opacity: 1, y: 0 }} 
@@ -45,7 +45,7 @@ function RestaurantPage() {
         </Row>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="shadow-lg p-3 mb-5 bg-body-tertiary rounded-5">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="">
         <div className="my-5">
           <p className="fs-1 fw-bold text-center secondHeader">Best In The BYTEEATS</p>
         </div>
