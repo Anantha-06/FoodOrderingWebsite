@@ -22,6 +22,7 @@ import RestaurantSignup from "./Pages/Restaurant/RestaurantSignup.jsx";
 import RestaurantLogin from "./Pages/Restaurant/RestaurantLogin.jsx";
 import RestaurantDashboard from "./Pages/Restaurant/RestaurantDashboard.jsx";
 import LandingPage from "./Pages/Shared/LandingPage.jsx";
+import ResponsiveCardHover from "./Pages/User/ResponsiveCardHover.jsx";
 
 const router = createBrowserRouter([
   {
@@ -110,7 +111,11 @@ const router = createBrowserRouter([
       {
         path: "user/landingpage", 
         element: <LandingPage/>,
-      },      
+      },   
+      {
+        path: "ak/test", 
+        element: <ResponsiveCardHover/>,
+      },   
     ],
   },
 ]);

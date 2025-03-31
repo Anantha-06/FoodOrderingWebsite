@@ -217,42 +217,6 @@ button {
   position: relative;
 }
 
-.popup {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  color: rgb(0, 0, 0);
-  padding: 5px;
-  border-radius: 4px;
-  z-index: 1000;
-  width: 300px;
-  height: auto;
-  animation: slideIn 0.5s ease-out;
-}
-
-.popup.error {
-  background-color: #f44336;
-}
-
-.popup-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.close-btn {
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
 
 .checkoutCartImage {
   width: 50px;
@@ -384,6 +348,51 @@ mask-composite: exclude;
   }
   100% {
     background-position: 100% 50%;
+  }
+}
+
+/*Popup*/
+
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  border-radius: 4px;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  animation: slideIn 0.5s ease-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup.error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.popup.success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
