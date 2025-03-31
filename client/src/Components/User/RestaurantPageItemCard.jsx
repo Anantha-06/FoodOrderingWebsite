@@ -62,7 +62,7 @@ return (
       <p className="product-description" title={props.desc}>
         {props.desc}
       </p>
-      <p className="product-price">${props.price.toFixed(2)}</p>
+      <p className="product-price py-2">Rs {props.price.toFixed(2)}</p>
     </div>
     <Button
           variant="warning"
