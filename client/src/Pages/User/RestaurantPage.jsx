@@ -11,7 +11,7 @@ function RestaurantPage() {
   const restaurant = datarest?.findRestaurant || [];
 
   return (
-    <Container>
+    <Container fluid>
       
         <div className="d-flex flex-row justify-content-around align-items-center shadow-lg bg-outlined rounded-4 my-5 p-3">
           <div
@@ -52,7 +52,7 @@ function RestaurantPage() {
             Best In The BYTEEATS
           </p>
         </div>
-        <Container>
+        <Container fluid>
           <div className="d-flex justify-content-center align-items-center my-5 flex-wrap gap-2">
             {restaurant.menu?.length > 0 ? (
               restaurant.menu.map((item, index) => (
