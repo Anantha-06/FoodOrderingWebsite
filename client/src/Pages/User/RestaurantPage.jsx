@@ -12,41 +12,37 @@ function RestaurantPage() {
 
   return (
     <Container fluid>
-      
-        <div className="d-flex flex-row justify-content-around align-items-center shadow-lg bg-outlined rounded-4 my-5 p-3">
-          <div
-                    className="d-flex justify-content-center align-items-center "
-          >
-            <img
-              src={restaurant.image}
-              className="restaurant-image rounded"
-              alt={restaurant.name}
-            />
+      <div className="d-flex flex-row justify-content-around align-items-center shadow-lg bg-outlined rounded-4 my-5 p-3">
+        <div className="d-flex justify-content-center align-items-center ">
+          <img
+            src={restaurant.image}
+            className="restaurant-image rounded"
+            alt={restaurant.name}
+          />
+        </div>
+        <div className="d-flex flex-column justify-content-center align-items-start">
+          <div>
+            <p className="fs-2 fw-bold">{restaurant.name}</p>
           </div>
-          <div
-     
-            className="d-flex flex-column justify-content-center align-items-start"
-          >
-            <div
-            >
-              <p className="fs-2 fw-bold">{restaurant.name}</p>
-            </div>
-            <div
-              className="d-flex flex-row flex-nowrap gap-3"
-            >
-              <p className="fs-5">{restaurant.rating}</p>
-              <img
-                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742377549/Food%20Order%20Website/crk2gldxuwtl8rqp5afi.png"
-                className="page-review"
-              />
-          
+          <div>
+            <p className="">Get Support on : {restaurant.contactEmail}</p>
+          </div>
+          <div>
+            <p className="fw-bold">
+              Available Menus: {restaurant.menu?.length}
+            </p>
+          </div>
+          <div className="d-flex flex-row flex-nowrap gap-3">
+            <p className="fs-5">{restaurant.rating}</p>
+            <img
+              src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742377549/Food%20Order%20Website/crk2gldxuwtl8rqp5afi.png"
+              className="page-review"
+            />
           </div>
         </div>
       </div>
 
-      <div
-        className=""
-      >
+      <div className="">
         <div className="">
           <p className="fs-1 fw-bold text-center secondHeader">
             Best In The BYTEEATS

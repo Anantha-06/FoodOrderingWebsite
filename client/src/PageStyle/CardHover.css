@@ -1,9 +1,10 @@
-
 :root {
   --card-height: 400px; 
   --card-width: calc(var(--card-height) / 1.5);
   --text-color: #ffffff;
   --description-color: rgba(255, 255, 255, 0.85);
+  --hover-elevation: 20px;
+  --transition-speed: 0.4s;
 }
 
 .product-card {
@@ -17,6 +18,11 @@
   perspective: 2500px;
   margin: 0 20px;
   cursor: pointer;
+  transition: transform var(--transition-speed);
+}
+
+.product-card.hovered {
+  transform: translateY(-10px);
 }
 
 .product-image {
@@ -24,23 +30,23 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  transition: all var(--transition-speed);
 }
 
 .product-wrapper {
-  transition: all 0.5s;
+  transition: all var(--transition-speed);
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: -1;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .product-card:hover .product-wrapper {
   transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
   box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
 }
 
 .product-wrapper::before,
@@ -49,7 +55,7 @@
   opacity: 0;
   width: 100%;
   height: 80px;
-  transition: all 0.5s;
+  transition: all var(--transition-speed);
   position: absolute;
   left: 0;
   border-radius: 8px;
@@ -86,12 +92,40 @@
   height: 120px;
 }
 
+/* Projected image effect */
+.projected-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
+  width: 80%;
+  height: 60%;
+  opacity: 0;
+  transition: all var(--transition-speed);
+  z-index: -2;
+  filter: blur(8px) brightness(0.8);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.product-card:hover .projected-image-container {
+  opacity: 0.6;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.projected-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .product-info {
   width: 100%;
-  transition: transform 0.5s;
+  transition: transform var(--transition-speed);
   text-align: center;
   color: var(--text-color);
   margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .product-card:hover .product-info {
@@ -102,29 +136,38 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 8px;
+  transition: all var(--transition-speed);
+}
+
+.product-card:hover .product-name {
+  transform: scale(1.05);
 }
 
 .product-description {
-  font-size: 0.85rem;
-  color: var(--description-color);
-  margin: 8px 0;
-  line-height: 1.4;
-  
-  /* Modern line clamping with fallback */
+  /* Required properties for line clamping */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Show 3 lines */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  -webkit-line-clamp: 3; /* Show max 3 lines */
   
-  /* Standard line clamp for newer browsers */
+  /* Fallback properties */
   display: -moz-box;
   -moz-box-orient: vertical;
   -moz-line-clamp: 3;
   
+  /* Standard properties (emerging support) */
   display: box;
   box-orient: vertical;
   line-clamp: 3;
+  
+  /* Required for all methods */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  /* Visual styling */
+  font-size: 0.85rem;
+  color: var(--description-color);
+  margin: 8px 0;
+  line-height: 1.4;
   
   /* Fallback for browsers without line clamp */
   max-height: 4.2em; /* line-height * number of lines */
@@ -134,19 +177,34 @@
   font-weight: bold;
   font-size: 1.2rem;
   margin-top: 5px;
+  transition: all var(--transition-speed);
+}
+
+.product-card:hover .product-price {
+  transform: scale(1.1);
+  color: #ffcc00;
 }
 
 .add-to-cart-btn {
   opacity: 0;
-  transition: all 0.5s;
+  transition: all var(--transition-speed);
   position: absolute;
   transform: translate3d(0%, 50%, 100px);
   z-index: 10;
   bottom: 30px;
   width: 80%;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .product-card:hover .add-to-cart-btn {
   opacity: 1;
   transform: translate3d(0%, -30%, 100px);
+}
+
+.add-to-cart-btn:hover {
+  transform: translate3d(0%, -30%, 100px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
