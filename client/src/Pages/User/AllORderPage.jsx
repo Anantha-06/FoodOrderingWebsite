@@ -25,12 +25,12 @@ function AllOrderPage() {
   }
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center" fluid>
-      <div className="fs-3 fw-bold my-5">Recent Orders</div>
+    <Container className="d-flex flex-column justify-content-center align-items-center " fluid>
+      <div className="fs-3 fw-bold my-2">Recent Orders</div>
       <div className="w-75">
-        <Table striped bordered hover responsive className="text-center">
-          <thead>
-            <tr>
+        <Table striped bordered hover responsive className="text-center my-5 ">
+          <thead >
+            <tr >
               <th>Order ID</th>
               <th>Restaurant</th>
               <th>City</th>
