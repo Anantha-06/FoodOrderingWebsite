@@ -45,7 +45,7 @@ function ProfilePage() {
       </Row>
       <hr />
 
-      <div className="tabHeight shadow-lg p-3 mb-5 bg-body-tertiary rounded-5">
+      <div className="tabHeight  rounded-5">
         <Tabs defaultActiveKey="Orders" id="profile-tabs" className="mb-3" fill>
           
           <Tab eventKey="Orders" title="Recent Orders">
@@ -54,13 +54,17 @@ function ProfilePage() {
             ) : (
               <>
                 {orders.map((order) => (
-                  <Card key={order._id} className="mb-3">
-                    <Card.Body>
-                      <Card.Title>Order #{order._id} - {order.status}</Card.Title>
+                  <Card key={order._id} className="mb-3 rounded-5 shadow-lg bg-body-tertiary p-3">
+                    <Card.Body className="">
+                      <Card.Title>Order No : {order._id}</Card.Title>
+                      <Card.Text>Order Status : {order.status}</Card.Text>
                       <ListGroup variant="flush">
                         {order.cartId?.items?.map((item, idx) => (
-                          <ListGroup.Item key={idx}>
-                            {item.foodName} - Quantity: {item.quantity} - Price: ₹{item.totalItemPrice}
+                          <ListGroup.Item key={idx}> <img src={item.foodImage} style={{
+                            height: '50px',
+                            width: '50px' 
+                          }}className="rounded"/> -
+                           Item Name : {item.foodName}  -  Quantity:  {item.quantity}  -  Price: ₹ {item.totalItemPrice}
                           </ListGroup.Item>
                         ))}
                       </ListGroup>
@@ -78,7 +82,7 @@ function ProfilePage() {
             ) : (
               <Card className="p-3">
                 <Card.Body>
-                  <Card.Title>Saved Address</Card.Title>
+                  <Card.Title className="text-center">Saved Address</Card.Title>
                   <ListGroup variant="flush">
                     <ListGroup.Item><strong>Name:</strong> {address.name}</ListGroup.Item>
                     <ListGroup.Item><strong>House Name:</strong> {address.houseName}</ListGroup.Item>
