@@ -86,7 +86,7 @@ const PaymentPage = () => {
       }} >
         <div className="d-flex flex-column justify-content-center align-items-center gap-3">
 
-        <p className="fs-3 fw-bold text-success ">Thanks for the order ! 🥳</p>
+        <p className="fs-3 fw-bold text-success ">Thanks for the order with Byteeats!!</p>
         <div className="paymentd"></div>
         </div>
       </div>

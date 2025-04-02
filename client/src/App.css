@@ -294,63 +294,42 @@ button {
   }
 }
 
+
+/*payment*/
+
+
 .paymentd {
-  width: 35px;
+  width: 80px;
   height: 80px;
-  position: relative;
-}
-.paymentd:before {
-  content: "";
-  position: absolute;
-  inset: 0 0 20px;
-  padding: 1px;
+  border-radius: 50%;
+  border: 8px solid #d1914b;
+  box-sizing: border-box;
+  --c:no-repeat radial-gradient(farthest-side, #d64123 94%,#0000);
+  --b:no-repeat radial-gradient(farthest-side, #000 94%,#0000);
   background:
-    conic-gradient(from -90deg at calc(100% - 3px) 3px,#7e3c26 135deg,#341612 0 270deg,#0000 0),
-    conic-gradient(from   0deg at 3px calc(100% - 3px),#0000 90deg,#341612 0 225deg,#7e3c26 0),
-    #54281f;
-  background-size: 17px 17px;
-  background-clip: content-box;
-  --c:no-repeat linear-gradient(#000 0 0);
-  mask:
-  var(--c) 0    0, 
-  var(--c) 17px 0, 
-  var(--c) 0    17px, 
-  var(--c) 17px 17px, 
-  var(--c) 0    34px, 
-  var(--c) 17px 34px,
-  linear-gradient(#000 0 0);
-mask-composite: exclude;
-  -webkit-mask-composite:xor;
-          mask-composite:exclude;
-  animation: l6 3s infinite ;
+    var(--c) 11px 15px,
+    var(--b) 6px 15px,    
+    var(--c) 35px 23px,
+    var(--b) 29px 15px,    
+    var(--c) 11px 46px,
+    var(--b) 11px 34px,    
+    var(--c) 36px 0px,
+    var(--b) 50px 31px,
+    var(--c) 47px 43px,
+    var(--b) 31px 48px,    
+    #f6d353; 
+  background-size: 15px 15px,6px 6px;
+  animation: l4 3s infinite;
 }
-.paymentd:after {
-  content: "";
-  position: absolute;
-  inset: 60% 0 0;
-  background: #B21B01;
-  border-top: 5px solid #c9c7c5; 
+@keyframes l4 {
+  0%     {-webkit-mask:conic-gradient(#0000 0     ,#000 0)}
+  16.67% {-webkit-mask:conic-gradient(#0000 60deg ,#000 0)}
+  33.33% {-webkit-mask:conic-gradient(#0000 120deg,#000 0)}
+  50%    {-webkit-mask:conic-gradient(#0000 180deg,#000 0)}
+  66.67% {-webkit-mask:conic-gradient(#0000 240deg,#000 0)}
+  83.33% {-webkit-mask:conic-gradient(#0000 300deg,#000 0)}
+  100%   {-webkit-mask:conic-gradient(#0000 360deg,#000 0)}
 }
-@keyframes l6 {
- 0%,14%  {-webkit-mask-size: 0 0,0 0,0 0,0 0,0 0,0 0,auto}
- 15%,29% {-webkit-mask-size: 17px 17px,0 0,0 0,0 0,0 0,0 0,auto}
- 30%,44% {-webkit-mask-size: 17px 17px,17px 17px,0 0,0 0,0 0,0 0,auto}
- 45%,59% {-webkit-mask-size: 17px 17px,17px 17px,17px 17px,0 0,0 0,0 0,auto}
- 60%,74% {-webkit-mask-size: 17px 17px,17px 17px,17px 17px,17px 17px,0 0,0 0,auto}
- 75%,89% {-webkit-mask-size: 17px 17px,17px 17px,17px 17px,17px 17px,17px 17px,0 0,auto}
- 90%,
- 100%    {-webkit-mask-size: 17px 17px,17px 17px,17px 17px,17px 17px,17px 17px,17px 17px,auto}
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
 /*Popup*/
 
 .popup {
