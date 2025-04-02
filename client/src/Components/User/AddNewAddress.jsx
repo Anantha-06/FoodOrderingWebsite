@@ -54,10 +54,10 @@ function AddNewAddress() {
   };
 
   return (
-    <Container fluid>
-      <Row className="d-flex flex-wrap mb-3 gap-4">
+    <Container fluid className=" ">
+      <Row className="d-flex flex-wrap my-5 py-5 gap-4 justify-content-center align-items-center">
         {address && (
-          <Col md={5} className="shadow-lg p-3 bg-body-tertiary rounded-5 zoom-content">
+          <Col md={5} className=" rounded-5 zoom-content">
             <div>
               <div className="fw-bold fs-3 my-2">Saved Address</div>
               {Object.entries(address).map(([key, value]) => (
@@ -68,7 +68,7 @@ function AddNewAddress() {
             </div>
           </Col>
         )}
-        <Col md={6} className="shadow-lg p-3 bg-body-tertiary rounded-5 zoom-content">
+        <Col md={6} className="zoom-content">
           <h3 className="text-center my-3 fw-bold fs-3">{address ? "Update Saved Address" : "Add New Address"}</h3>
           <Form onSubmit={handleSubmit}>
             <Row className="g-3">
