@@ -19,21 +19,21 @@ function HomepageCarousel() {
           alt="Slider Image 2"
         />
       </Carousel.Item>
-      <Carousel.Item>
+      <Carousel.Item interval={500}>
         <img
           src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743344617/1908426-uhd_3840_2160_25fps_jekqvz.gif"
           className="carousel-image"
           alt="Slider Image 3"
         />
       </Carousel.Item>
-      <Carousel.Item>
+      <Carousel.Item interval={500}>
         <img
           src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743345703/Untitled_design_1_jek4od.gif"
           className="carousel-image"
           alt="Slider Image 4"
         />
       </Carousel.Item>
-      <Carousel.Item>
+      <Carousel.Item interval={500}>
         <img
           src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743345857/Untitled_design_2_aybhb8.gif"
           className="carousel-image"
