@@ -10,9 +10,6 @@ function RestaurantPage() {
   const [datarest, isLoading, error] = useFetch(`/restaurant/id/${id}`);
   const restaurant = datarest?.findRestaurant || {};
 
-  const defaultImage =
-    "https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756875/Food%20Order%20Website/noeuwugmxrhszkjcq2no.png";
-
   return (
     <Container fluid className="py-4">
       {/* Header */}
@@ -23,7 +20,7 @@ function RestaurantPage() {
         transition={{ duration: 0.5 }}
       >
         <img
-          src={restaurant.image || defaultImage}
+          src={restaurant.image}
           className="restaurant-image rounded mb-3 mb-md-0"
           alt={restaurant.name}
           style={{ width: "250px", height: "auto", objectFit: "cover" }}
