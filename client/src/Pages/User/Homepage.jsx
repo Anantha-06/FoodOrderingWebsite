@@ -12,18 +12,9 @@ function Homepage() {
   const restaurants = data?.restaurant || [];
 
   if (isLoading) {
-    return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
-        background: 'linear-gradient(to right, #f9f9f9, #fff)'
-      }}>
-        <Spinner animation="border" variant="warning" role="status" />
-      </div>
-    );
+    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="loader"></div>
+  </div>
   }
 
   if (error) {
