@@ -1,44 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Table } from "react-bootstrap";
+import { Button, Card, Table, Toast, ToastContainer } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import "../../App.css"
+import "../../App.css";
 
 const PaymentPage = () => {
   const [order, setOrder] = useState(null);
   const [showLoader, setShowLoader] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
   const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance.get("/order/get/all")
       .then(response => {
         if (response.data.orders.length > 0) {
-          setOrder(response.data.orders[0]);
+          const latestOrder = response.data.orders.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )[0];
+          setOrder(latestOrder);
         }
       })
-      .catch(error => console.error("Error fetching orders:", error));
+      .catch(error => {
+        console.error("Error fetching orders:", error);
+        showToast("Failed to fetch order data", "error");
+      });
   }, []);
+
+  const showToast = (message, type = "success") => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ ...toast, show: false }), 4000);
+  };
 
   const handlePayment = async () => {
     if (!order) return;
-  
+
+    if (typeof window.Razorpay === "undefined") {
+      showToast("Razorpay SDK not loaded. Please try again later.", "error");
+      return;
+    }
+
     try {
       const { data } = await axiosInstance.post(`/payment/create/${order._id}`);
-  
+
       if (!data || !data.razorpayOrder) {
-        console.error("Failed to initiate payment");
+        showToast("Failed to initiate payment", "error");
         return;
       }
-  
+
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY, 
+        key: import.meta.env.VITE_RAZORPAY_KEY,
         amount: data.razorpayOrder.amount,
         currency: data.razorpayOrder.currency,
         name: order.restaurant.name,
         description: `Order #${order._id}`,
         image:
           "https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png",
-        order_id: data.razorpayOrder.id, 
+        order_id: data.razorpayOrder.id,
         handler: async function (response) {
           try {
             const verifyResponse = await axiosInstance.post("/payment/verify", {
@@ -46,15 +63,15 @@ const PaymentPage = () => {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             });
-  
-            alert(verifyResponse.data.message);
+
+            showToast(verifyResponse.data.message, "success");
             setShowLoader(true);
             setTimeout(() => {
-              navigate("/user/homepage");
+              navigate("/user/orders");
             }, 4000);
           } catch (err) {
             console.error("Payment verification failed:", err);
-            alert("Payment verification failed!");
+            showToast("Payment verification failed!", "error");
           }
         },
         prefill: {
@@ -66,29 +83,20 @@ const PaymentPage = () => {
           color: "#F37254",
         },
       };
-  
+
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
       console.error("Error initiating payment:", error);
-      alert("Error initiating payment. Please try again.");
+      showToast("Error initiating payment. Please try again.", "error");
     }
   };
-  
+
   if (showLoader) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        width: '100vw'
-      }} >
-        <div className="d-flex flex-column justify-content-center align-items-center gap-3">
-
-        <p className="fs-3 fw-bold text-success ">Thanks for the order with Byteeats!!</p>
+      <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <p className="fs-3 fw-bold text-success">Thanks for the order with Byteeats!!</p>
         <div className="paymentd"></div>
-        </div>
       </div>
     );
   }
@@ -114,8 +122,8 @@ const PaymentPage = () => {
               </thead>
               <tbody>
                 {order.cartId.items.map(item => (
-                  <tr key={item._id} className="mb-3 shadow-lg p-1 bg-light rounded-5">
-                    <td><img src={item.foodImage} alt={item.foodName} width="50" className="rounded-5"/></td>
+                  <tr key={item._id}>
+                    <td><img src={item.foodImage} alt={item.foodName} width="50" className="rounded-5" /></td>
                     <td>{item.foodName}</td>
                     <td>{item.quantity}</td>
                     <td>₹{item.totalItemPrice}</td>
@@ -123,12 +131,24 @@ const PaymentPage = () => {
                 ))}
               </tbody>
             </Table>
-            <Button variant="warning" onClick={handlePayment} className="px-5">Pay Now</Button>
+            <div className="d-flex justify-content-between mt-4">
+              <Button variant="outline-secondary" onClick={() => navigate("/user/checkout")}>Cancel</Button>
+              <Button variant="warning" onClick={handlePayment} className="px-5" disabled={showLoader}>
+                {showLoader ? "Processing..." : "Pay Now"}
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       ) : (
         <p>Loading order details...</p>
       )}
+
+      {/* Toast Notification */}
+      <ToastContainer position="top-center" className="mt-4">
+        <Toast show={toast.show} bg={toast.type === "error" ? "danger" : "success"} onClose={() => setToast({ ...toast, show: false })}>
+          <Toast.Body className="text-white fw-bold text-center">{toast.message}</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 };

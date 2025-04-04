@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance.js";
-
 function AddNewAddress() {
   const [formData, setFormData] = useState({
     name: "",
@@ -54,12 +53,12 @@ function AddNewAddress() {
   };
 
   return (
-    <Container fluid className=" ">
-      <Row className="d-flex flex-wrap my-5 py-5 gap-4 justify-content-center align-items-center">
+    <Container fluid className="full-address-page px-4">
+      <Row className="d-flex flex-wrap py-5 gap-5 justify-content-center align-items-start">
         {address && (
-          <Col md={5} className=" rounded-5 zoom-content">
+          <Col md={5} className="rounded-4 p-4 address-box zoom-on-hover shadow-lg">
             <div>
-              <div className="fw-bold fs-3 my-2">Saved Address</div>
+              <div className="fw-bold fs-3 mb-3 ">Saved Address</div>
               {Object.entries(address).map(([key, value]) => (
                 <p key={key}>
                   <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
@@ -68,21 +67,31 @@ function AddNewAddress() {
             </div>
           </Col>
         )}
-        <Col md={6} className="zoom-content">
-          <h3 className="text-center my-3 fw-bold fs-3">{address ? "Update Saved Address" : "Add New Address"}</h3>
+        <Col md={6} className="zoom-on-hover p-4 rounded-4 shadow-lg form-container">
+          <h3 className="text-center mb-4 fw-bold ">
+            {address ? "Update Saved Address" : "Add New Address"}
+          </h3>
           <Form onSubmit={handleSubmit}>
             <Row className="g-3">
               {Object.keys(formData).map((field) => (
                 <Col xs={12} md={6} key={field}>
                   <Form.Group>
                     <Form.Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
-                    <Form.Control type="text" name={field} value={formData[field]} onChange={handleChange} required />
+                    <Form.Control
+                      type="text"
+                      name={field}
+                      value={formData[field]}
+                      onChange={handleChange}
+                      required
+                    />
                   </Form.Group>
                 </Col>
               ))}
             </Row>
-            <div className="text-center mt-3">
-              <Button type="submit" variant="warning" className="px-5 py-2">{address ? "Update Address" : "Add New Address"}</Button>
+            <div className="text-center mt-4">
+              <Button type="submit" variant="warning" className="px-5 py-2">
+                {address ? "Update Address" : "Add New Address"}
+              </Button>
             </div>
           </Form>
         </Col>

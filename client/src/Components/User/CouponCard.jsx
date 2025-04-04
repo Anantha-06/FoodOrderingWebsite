@@ -46,9 +46,8 @@ const CouponCard = ({ selectedCoupon, setSelectedCoupon }) => {
                   <Button
                     variant={selectedCoupon === coupon.code ? "success" : "primary"}
                     onClick={() => {
-                      console.log("Previous Selected Coupon:", selectedCoupon);
                       setSelectedCoupon(selectedCoupon === coupon.code ? "" : coupon.code);
-                      console.log("New Selected Coupon:", coupon.code);
+                     
                     }}
                     className="px-4 py-2 textsize"
                     style={{ transition: "all 0.3s ease", fontSize: "14px" }}
