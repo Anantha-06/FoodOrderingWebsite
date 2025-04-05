@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const cartSchema = new Schema(
   {
     userId: { type: String, required: true },
-    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant", required: true },
+    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant", required: false },
     items: [
       {
         foodId: { type: mongoose.Schema.Types.ObjectId, required: true },
@@ -22,7 +22,6 @@ const cartSchema = new Schema(
   { timestamps: true }
 );
 
-// Fix: Correct method name and calculation
 cartSchema.methods.calculateTotalPrice = function () {
   this.totalPrice = this.items.reduce((total, item) => total + item.totalItemPrice, 0);
 };
