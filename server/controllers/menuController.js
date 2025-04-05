@@ -79,16 +79,29 @@ export async function getMenuByName(req, res) {
     const { name } = req.params;
     const restaurants = await Restaurant.find();
     let foundMenuItem = null;
+    let restaurantId = null;
+
     for (const restaurant of restaurants) {
-      foundMenuItem = restaurant.menu.find(
-        (item) => item.name.toLowerCase() === name.toLowerCase()
+      const menuMatch = restaurant.menu.find((item) =>
+        item.name.toLowerCase().includes(name.toLowerCase())
       );
-      if (foundMenuItem) break;
+      if (menuMatch) {
+        foundMenuItem = menuMatch;
+        restaurantId = restaurant._id;
+        break;
+      }
     }
+
     if (!foundMenuItem) {
       return res.status(404).json({ message: "Menu item not found" });
     }
-    res.status(200).json({ menuItem: foundMenuItem });
+
+    res.status(200).json({
+      menuItem: {
+        ...foundMenuItem.toObject?.() ?? foundMenuItem,
+        restaurantId,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });

@@ -15,11 +15,14 @@ import "../../PageStyle/NewHeaderModern.css";
 function HeaderNav() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
+  const [restaurantResults, setRestaurantResults] = useState(null);
+  const [menuResults, setMenuResults] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [data] = useFetch(searchQuery ? `/restaurant/by/${searchQuery}` : null);
+
+  const [restaurantData] = useFetch(searchQuery ? `/restaurant/by/${searchQuery}` : null);
+  const [menuData] = useFetch(searchQuery ? `/menu/by/${searchQuery}` : null);
 
   const handleSignOut = () => {
     Cookies.remove("authToken");
@@ -29,28 +32,34 @@ function HeaderNav() {
   };
 
   useEffect(() => {
-    if (data) {
-      setSearchResults(data);
+    if (restaurantData || menuData) {
+      setRestaurantResults(restaurantData?.restaurant || null);
+      setMenuResults(menuData?.menuItem || null);
       setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
     }
-  }, [data]);
+  }, [restaurantData, menuData]);
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     if (value.trim() === "") {
       setShowDropdown(false);
-      setSearchResults(null);
+      setRestaurantResults(null);
+      setMenuResults(null);
     }
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (searchResults) {
-      navigate(`/user/restaurant/${searchResults.restaurant._id}`);
-      setShowDropdown(false);
-      setSearchQuery("");
+    if (restaurantResults) {
+      navigate(`/user/restaurant/${restaurantResults._id}`);
+    } else if (menuResults && menuResults.restaurantId) {
+      navigate(`/user/restaurant/${menuResults.restaurantId}`);
     }
+    setShowDropdown(false);
+    setSearchQuery("");
   };
 
   const handleMenuItemClick = (restaurantId) => {
@@ -78,7 +87,7 @@ function HeaderNav() {
         <form className="search-form" onSubmit={handleSearchSubmit}>
           <input
             type="text"
-            placeholder="Search restaurants..."
+            placeholder="Search restaurants or menu items..."
             value={searchQuery}
             onChange={handleSearchChange}
             className="search-input"
@@ -88,43 +97,56 @@ function HeaderNav() {
           </button>
         </form>
 
-        {showDropdown && searchResults && (
+        {showDropdown && (
           <div className="search-dropdown">
-            <div
-              className="search-item"
-              onClick={() =>
-                handleMenuItemClick(searchResults.restaurant._id)
-              }
-            >
-              <img src={searchResults.restaurant.image} alt="" />
-              <div>
-                <strong>{searchResults.restaurant.name} :</strong>
-                <small> Rating: {searchResults.restaurant.rating} ★</small>
-              </div>
-            </div>
-            <div className="menu-list">
-              {searchResults.restaurant.menu.map((item) => (
+            {restaurantResults && (
+              <>
                 <div
-                  key={item._id}
                   className="search-item"
-                  onClick={() =>
-                    handleMenuItemClick(searchResults.restaurant._id)
-                  }
+                  onClick={() => handleMenuItemClick(restaurantResults._id)}
                 >
-                  <img src={item.image} alt="" />
+                  <img src={restaurantResults.image} alt="" />
                   <div>
-                    <strong>{item.name}</strong>
+                    <strong>{restaurantResults.name}</strong>
+                    <small> Rating: {restaurantResults.rating} ★</small>
                   </div>
                 </div>
-              ))}
-            </div>
+                <div className="menu-list">
+                  {restaurantResults.menu.map((item) => (
+                    <div
+                      key={item._id}
+                      className="search-item"
+                      onClick={() => handleMenuItemClick(restaurantResults._id)}
+                    >
+                      <img src={item.image} alt="" />
+                      <div>
+                        <strong>{item.name}</strong>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {menuResults && (
+              <div
+                className="search-item"
+                onClick={() => handleMenuItemClick(menuResults.restaurantId)}
+              >
+                <img src={menuResults.image} alt="" />
+                <div>
+                  <strong>{menuResults.name}</strong>
+                 
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
 
       <div className={`header-right ${menuOpen ? "show" : ""}`}>
         <Link to="/user/homepage" className="icon-link fs-5" title="Home">
-         Home
+          Home
         </Link>
         <Link to="/user/about" className="icon-link fs-5" title="About">
           About Us
