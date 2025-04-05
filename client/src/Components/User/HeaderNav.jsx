@@ -136,7 +136,7 @@ function HeaderNav() {
         >
           <FaUserCircle />
           {showProfile && (
-            <div className="profile-dropdown">
+            <div className="profile-dropdown fs-6">
               <Link to="/user/profile">Your Profile</Link>
               <Link to="/user/orders">Your Orders</Link>
               <Link to="/user/address/new">Your Address</Link>

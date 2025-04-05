@@ -8,7 +8,7 @@ import CouponCard from "../../Components/User/CouponCard.jsx";
 import ShowAddress from "../../Components/User/ShowAddress.jsx";
 
 function CheckoutPage() {
-  const [selectedCoupon, setSelectedCoupon] = useState(""); 
+  const [selectedCoupon, setSelectedCoupon] = useState("");
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [cartId, setCartId] = useState(null);
   const [restaurantId, setRestaurantId] = useState(null);
@@ -21,15 +21,16 @@ function CheckoutPage() {
     setError("");
 
     if (!cartId || !selectedAddressId || !restaurantId) {
+      console.log("Missing fields:", { cartId, selectedAddressId, restaurantId });
       setError("🚨 Please select an address and ensure your cart is not empty.");
       return;
     }
 
     setLoading(true);
     const requestBody = {
-      restaurant: restaurantId, 
+      restaurant: restaurantId,
       cartId: cartId,
-      coupon: selectedCoupon || "", 
+      coupon: selectedCoupon || "",
       deliveryAddress: selectedAddressId,
     };
 
@@ -97,16 +98,23 @@ function CheckoutPage() {
                   <p className="fs-5 fw-bold text-center mb-3">
                     🧾 Ready to place your order?
                   </p>
+
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button
                       variant="warning"
                       className="w-100 py-2 rounded-3 fw-bold shadow-lg"
                       onClick={handleCheckout}
-                      disabled={loading}
+                      disabled={loading || !restaurantId}
                     >
                       {loading ? "Processing..." : "✅ Check Out"}
                     </Button>
                   </motion.div>
+
+                  {!restaurantId && (
+                    <p className="text-danger text-center mt-2 small">
+                      ⚠️ Please add items from a restaurant before checking out.
+                    </p>
+                  )}
                 </div>
               </Col>
             </Row>
@@ -121,7 +129,10 @@ function CheckoutPage() {
       >
         <Row className="mt-4">
           <Col xs={12}>
-            <ShowAddress selectedAddressId={selectedAddressId} setSelectedAddressId={setSelectedAddressId} />
+            <ShowAddress
+              selectedAddressId={selectedAddressId}
+              setSelectedAddressId={setSelectedAddressId}
+            />
           </Col>
         </Row>
       </motion.div>
