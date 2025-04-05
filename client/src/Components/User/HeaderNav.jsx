@@ -123,11 +123,11 @@ function HeaderNav() {
       </div>
 
       <div className={`header-right ${menuOpen ? "show" : ""}`}>
-        <Link to="/user/homepage" className="icon-link" title="Home">
-          <FaHome />
+        <Link to="/user/homepage" className="icon-link fs-5" title="Home">
+         Home
         </Link>
-        <Link to="/user/about" className="icon-link" title="About">
-          <FaInfoCircle />
+        <Link to="/user/about" className="icon-link fs-5" title="About">
+          About Us
         </Link>
         <div
           className="icon-link profile-icon"
