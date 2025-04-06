@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal, Spinner } from "react-bootstrap";
+import Cookies from "js-cookie";
 import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance";
 
@@ -16,7 +17,22 @@ function SignUpPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-    
+
+ 
+useEffect(() => {
+  const userToken = Cookies.get("authToken");
+  const restaurantToken = Cookies.get("restaurantToken");
+  const adminToken = Cookies.get("adminauthToken")
+
+  if (userToken) {
+    navigate("/user/homepage");
+  } else if (restaurantToken) {
+    navigate("/restaurant/dashboard");
+  }else if (adminToken) {
+    navigate("/admin/dashboard");
+  }
+  
+}, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +45,7 @@ function SignUpPage() {
 
     try {
       const response = await axiosInstance.post("/user/signup", formData);
-      
+
       if (response.status === 201 || response.status === 200) {
         setShowSuccess(true);
         setTimeout(() => {
@@ -111,6 +127,7 @@ function SignUpPage() {
           />
         </Col>
       </Row>
+
       <Modal show={showSuccess} onHide={() => setShowSuccess(false)} centered>
         <Modal.Body className="text-center">
           <p className="fs-5 fw-bold text-warning">Signed up successfully!</p>
