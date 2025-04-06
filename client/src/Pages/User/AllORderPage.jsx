@@ -20,18 +20,23 @@ function AllOrderPage() {
   const handleCancelOrder = async (order) => {
     try {
       setUpdatingOrderId(order._id);
+
       const payload = {
-        coupon: order.coupon,
         status: "cancelled",
-        deliveryAddress: order.deliveryAddress._id,
+        ...(order.deliveryAddress?._id && { deliveryAddress: order.deliveryAddress._id }),
+        ...(order.coupon?.code && { coupon: order.coupon.code }),
       };
+
+      console.log("Sending cancel payload:", payload);
+
       await axiosInstance.put(`/order/update/${order._id}`, payload);
+
       const updatedOrders = orders.map((o) =>
         o._id === order._id ? { ...o, status: "cancelled" } : o
       );
       setOrders(updatedOrders);
     } catch (err) {
-      console.error("Failed to cancel order:", err);
+      console.error("Failed to cancel order:", err.response?.data || err.message);
     } finally {
       setUpdatingOrderId(null);
     }
