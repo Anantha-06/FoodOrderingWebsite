@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal, Spinner } from "react-bootstrap";
 import "../../App.css";
@@ -16,21 +16,6 @@ function SignUpPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-    useEffect(() => {
-      const userToken = Cookies.get("authToken");
-      const restaurantToken = Cookies.get("restaurantToken");
-      const adminToken = Cookies.get("adminauthToken")
-    
-      if (userToken) {
-        navigate("/user/homepage");
-      } else if (restaurantToken) {
-        navigate("/restaurant/dashboard");
-      }else if (adminToken) {
-        navigate("/admin/dashboard");
-      }
-      
-    }, [navigate]);
     
 
   const handleChange = (e) => {
