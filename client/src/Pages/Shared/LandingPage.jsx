@@ -77,7 +77,7 @@ function LandingPage() {
                 whileHover={{ scale: 1.05 }}
               >
                 <img
-                  src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png" // Replace with your actual logo
+                  src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png" 
                   height="40"
                   className="d-inline-block align-top"
                   alt="Byteeats logo"

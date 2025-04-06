@@ -16,7 +16,7 @@ function FooterNav() {
           <Col xs={12} md={4} className="mb-4">
             <motion.div whileHover={{ scale: 1.03 }} className="d-flex flex-column align-items-center align-items-md-start gap-3">
               <img
-                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png"
+                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png"
                 alt="ByteEats Logo"
                 className="footer-logimg"
               />

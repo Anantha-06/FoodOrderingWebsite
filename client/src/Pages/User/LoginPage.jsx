@@ -64,7 +64,7 @@ useEffect(() => {
           <Card className="text-center border-0 shadow-lg p-4 bg-body rounded-4" style={{ maxWidth: "400px", width: "90%" }}>
             <div className="text-center mb-4">
               <img
-                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png"
+                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png"
                 alt="Admin Logo"
                 style={{ maxWidth: "200px", height: "auto" }}
               />
