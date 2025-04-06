@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Table, Toast, ToastContainer } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import "../../App.css";
 
 const PaymentPage = () => {
@@ -32,6 +33,15 @@ const PaymentPage = () => {
   };
 
   const handlePayment = async () => {
+    const token = Cookies.get("authToken");
+    if (!token) {
+      showToast("Please log in to proceed with the payment", "error");
+      setTimeout(() => {
+        navigate("/user/login");
+      }, 1500);
+      return;
+    }
+
     if (!order) return;
 
     if (typeof window.Razorpay === "undefined") {
@@ -143,7 +153,6 @@ const PaymentPage = () => {
         <p>Loading order details...</p>
       )}
 
-      {/* Toast Notification */}
       <ToastContainer position="top-center" className="mt-4">
         <Toast show={toast.show} bg={toast.type === "error" ? "danger" : "success"} onClose={() => setToast({ ...toast, show: false })}>
           <Toast.Body className="text-white fw-bold text-center">{toast.message}</Toast.Body>
