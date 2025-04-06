@@ -5,19 +5,18 @@ import "../App.css";
 
 function ProtectedRoutes() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication status
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
-    const token = Cookies.get("authToken"); // Retrieve the token
+    const token = Cookies.get("authToken"); 
 
     if (!token) {
-      navigate("/user/login"); // Redirect if token is missing
+      navigate("/user/login"); 
     } else {
-      setIsAuthenticated(true); // Set authentication state to true if token exists
+      setIsAuthenticated(true); 
     }
   }, [navigate]);
 
-  if (!isAuthenticated) return null; // Prevent rendering protected content until check is done
+  if (!isAuthenticated) return null; 
 
   return <Outlet />;
 }

@@ -23,11 +23,13 @@ import RestaurantLogin from "./Pages/Restaurant/RestaurantLogin.jsx";
 import RestaurantDashboard from "./Pages/Restaurant/RestaurantDashboard.jsx";
 import LandingPage from "./Pages/Shared/LandingPage.jsx";
 import ResponsiveCardHover from "./Pages/User/ResponsiveCardHover.jsx";
+import ErrorPage from "./Pages/Shared/ErrorPage.jsx"
 
 const router = createBrowserRouter([
   {
     path: "",
     element: <Root />,
+    errorElement: <ErrorPage />, 
     children: [
       {
         path: "/",
@@ -115,7 +117,11 @@ const router = createBrowserRouter([
       {
         path: "ak/test", 
         element: <ResponsiveCardHover/>,
-      },   
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      }   
     ],
   },
 ]);

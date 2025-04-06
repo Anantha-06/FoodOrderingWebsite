@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   const [formError, setFormError] = useState("");
   const [couponSuccess, setCouponSuccess] = useState("");
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
+    const authToken = Cookies.get("adminauthToken");
     if (!authToken) {
       navigate("/admin/login");
     } else {
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
   };
 
   const handleSignOut = () => {
-    Cookies.remove("authToken");
+    Cookies.remove("adminauthToken");
     alert("Sign Out Successful!");
     navigate("/");
     window.location.reload();
