@@ -122,30 +122,22 @@ function AllOrderPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {order.cartId?.items?.length > 0 ? (
-                        order.cartId.items.map((item, index) => (
-                          <tr key={index}>
-                            <td>{item.foodName}</td>
-                            <td>
-                              <img
-                                src={item.foodImage}
-                                alt={item.foodName}
-                                className="rounded"
-                                style={{ width: 50, height: 50, objectFit: "cover" }}
-                              />
-                            </td>
-                            <td>{item.quantity}</td>
-                            <td>₹{(item.totalItemPrice / item.quantity).toFixed(2)}</td>
-                            <td>₹{item.totalItemPrice.toFixed(2)}</td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan="5" className="text-muted">
-                            No items found in this order.
+                      {order.cartId.items.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.foodName}</td>
+                          <td>
+                            <img
+                              src={item.foodImage}
+                              alt={item.foodName}
+                              className="rounded"
+                              style={{ width: 50, height: 50, objectFit: "cover" }}
+                            />
                           </td>
+                          <td>{item.quantity}</td>
+                          <td>₹{(item.totalItemPrice / item.quantity).toFixed(2)}</td>
+                          <td>₹{item.totalItemPrice.toFixed(2)}</td>
                         </tr>
-                      )}
+                      ))}
                     </tbody>
                   </Table>
 

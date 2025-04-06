@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import useFetch from "../../Hooks/UseFetch.jsx";
 import {
+  FaHome,
+  FaInfoCircle,
   FaUserCircle,
   FaShoppingCart,
   FaSearch,

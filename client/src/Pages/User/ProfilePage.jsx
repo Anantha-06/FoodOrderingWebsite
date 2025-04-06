@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Accordion,
-  Card,
-  Col,
-  Container,
-  ListGroup,
-  Row,
-  Tab,
-  Tabs,
-} from "react-bootstrap";
+import { Col, Container, Row, Tab, Tabs, Card, ListGroup } from "react-bootstrap";
 import "../../App.css";
 import useFetch from "../../Hooks/UseFetch.jsx";
 import { Link } from "react-router-dom";
@@ -71,65 +62,44 @@ function ProfilePage() {
         transition={{ delay: 0.3 }}
       >
         <Tabs defaultActiveKey="Orders" id="profile-tabs" className="mb-3" fill>
-          
           {/* ORDERS TAB */}
           <Tab eventKey="Orders" title="🛍 Recent Orders">
-  {ordersError || orders.length === 0 ? (
-    <p>No orders found.</p>
-  ) : (
-    <>
-      <Accordion alwaysOpen>
-        {orders.slice(0, 5).map((order, index) => (
-          <motion.div
-            key={order._id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Accordion.Item eventKey={index.toString()}>
-              <Accordion.Header>
-                <div className="fw-semibold">
-                  Order No: {order._id} &nbsp;
-                  <span className="text-muted">
-                    | Status: <span className="text-capitalize">{order.status}</span>
-                  </span>
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <ListGroup variant="flush">
-                  {order.cartId?.items?.map((item, idx) => (
-                    <ListGroup.Item key={idx} className="d-flex align-items-center gap-2">
-                      <img
-                        src={item.foodImage}
-                        alt={item.foodName}
-                        className="rounded"
-                        style={{ height: "50px", width: "50px", objectFit: "cover" }}
-                      />
-                      <div>
-                        <strong>{item.foodName}</strong><br />
-                        Qty: {item.quantity} - ₹{item.totalItemPrice}
-                      </div>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Accordion.Body>
-            </Accordion.Item>
-          </motion.div>
-        ))}
-      </Accordion>
-
-      {/* Show 'Check Other Orders' button if more than 5 orders */}
-      {orders.length > 5 && (
-        <div className="text-center mt-4">
-          <Link to="/user/orders" className="btn btn-outline-primary rounded-pill px-4">
-            Check Other Orders
-          </Link>
-        </div>
-      )}
-    </>
-  )}
-</Tab>
-
+            {ordersError || orders.length === 0 ? (
+              <p>No orders found.</p>
+            ) : (
+              orders.map((order, index) => (
+                <motion.div
+                  key={order._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="mb-3 rounded-5 shadow bg-body-secondary p-3 border-0">
+                    <Card.Body>
+                      <Card.Title className="fw-semibold">Order No: {order._id}</Card.Title>
+                      <Card.Text>Status: <span className="text-capitalize">{order.status}</span></Card.Text>
+                      <ListGroup variant="flush">
+                        {order.cartId?.items?.map((item, idx) => (
+                          <ListGroup.Item key={idx} className="d-flex align-items-center gap-2">
+                            <img
+                              src={item.foodImage}
+                              alt={item.foodName}
+                              className="rounded"
+                              style={{ height: "50px", width: "50px", objectFit: "cover" }}
+                            />
+                            <div>
+                              <strong>{item.foodName}</strong><br />
+                              Qty: {item.quantity} - ₹{item.totalItemPrice}
+                            </div>
+                          </ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    </Card.Body>
+                  </Card>
+                </motion.div>
+              ))
+            )}
+          </Tab>
 
           {/* ADDRESS TAB */}
           <Tab eventKey="address" title="📍 Address">
@@ -141,7 +111,7 @@ function ProfilePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <Card className="p-4 shadow-sm border-0 rounded-4">
+                <Card className="p-4 shadow-sm border-0 rounded-4 ">
                   <Card.Body>
                     <Card.Title className="text-center mb-3 fw-bold">Saved Address</Card.Title>
                     <ListGroup variant="flush">
