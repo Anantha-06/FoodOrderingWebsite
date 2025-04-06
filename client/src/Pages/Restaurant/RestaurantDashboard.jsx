@@ -33,7 +33,7 @@ function RestaurantDashboard() {
     <div className="restaurant-dashboard-container">
       <div className="d-flex justify-content-between align-items-center mb-4 gap-5">
         <img
-          src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png"
+          src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png"
           alt="Company Logo"
           className="img-fluid"
           style={{ maxWidth: "150px", height: "auto" }}

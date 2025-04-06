@@ -54,7 +54,7 @@ const PaymentPage = () => {
         name: order.restaurant.name,
         description: `Order #${order._id}`,
         image:
-          "https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png",
+          "https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png",
         order_id: data.razorpayOrder.id,
         handler: async function (response) {
           try {
