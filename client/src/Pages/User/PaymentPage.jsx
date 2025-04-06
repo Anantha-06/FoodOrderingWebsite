@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Table, Toast, ToastContainer } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import "../../App.css";
 
 const PaymentPage = () => {
@@ -33,15 +32,6 @@ const PaymentPage = () => {
   };
 
   const handlePayment = async () => {
-    const token = Cookies.get("authToken");
-    if (!token) {
-      showToast("Please log in to proceed with the payment", "error");
-      setTimeout(() => {
-        navigate("/user/login");
-      }, 1500);
-      return;
-    }
-
     if (!order) return;
 
     if (typeof window.Razorpay === "undefined") {
@@ -64,7 +54,7 @@ const PaymentPage = () => {
         name: order.restaurant.name,
         description: `Order #${order._id}`,
         image:
-          "https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png",
+          "https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756873/Food%20Order%20Website/Byteeats%20Profile%20Logo.png",
         order_id: data.razorpayOrder.id,
         handler: async function (response) {
           try {
@@ -153,6 +143,7 @@ const PaymentPage = () => {
         <p>Loading order details...</p>
       )}
 
+      {/* Toast Notification */}
       <ToastContainer position="top-center" className="mt-4">
         <Toast show={toast.show} bg={toast.type === "error" ? "danger" : "success"} onClose={() => setToast({ ...toast, show: false })}>
           <Toast.Body className="text-white fw-bold text-center">{toast.message}</Toast.Body>

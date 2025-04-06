@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal, Spinner } from "react-bootstrap";
 import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance";
-import Cookies from "js-cookie";
 
 function AdminSignup() {
   const [formData, setFormData] = useState({
@@ -32,7 +31,7 @@ function AdminSignup() {
     }
     
   }, [navigate]);
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
