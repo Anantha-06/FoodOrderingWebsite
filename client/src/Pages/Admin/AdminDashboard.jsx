@@ -29,8 +29,8 @@ const AdminDashboard = () => {
   const [formError, setFormError] = useState("");
   const [couponSuccess, setCouponSuccess] = useState("");
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
-    if (!authToken) {
+    const authTokenAdmin = Cookies.get("authTokenAdmin");
+    if (!authTokenAdmin) {
       navigate("/admin/login");
     } else {
       fetchRestaurants();
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
   };
 
   const handleSignOut = () => {
-    Cookies.remove("authTokenAdmin");
+    Cookies.remove("authTokenAdminAdmin");
     alert("Sign Out Successful!");
     navigate("/");
     window.location.reload();
