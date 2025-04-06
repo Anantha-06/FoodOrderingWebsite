@@ -24,7 +24,7 @@ function AdminLogin() {
       const response = await axiosInstance.post("/admin/login", formData);
       const { token } = response.data;
       if (token) {
-        Cookies.set("authToken", token, { expires: 1 });
+        Cookies.set("authTokenAdmin", token, { expires: 1 });
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
