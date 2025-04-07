@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import useFetch from "../../Hooks/UseFetch.jsx";
 import axiosInstance from "../../Axios/axiosInstance.js";
 import "../../App.css";
+import Loading from "../../Components/User/Loading.jsx";
 
 function AllOrderPage() {
   const [data, isLoading, error] = useFetch("/order/get/all");
@@ -62,9 +63,7 @@ function AllOrderPage() {
 
   if (isLoading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="loader"></div>
-      </div>
+     <Loading/>
     );
   }
 
