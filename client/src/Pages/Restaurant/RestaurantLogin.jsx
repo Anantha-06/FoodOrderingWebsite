@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
 import { motion } from "framer-motion";
@@ -11,6 +11,20 @@ function RestaurantLogin() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+      const userToken = Cookies.get("authToken");
+      const restaurantToken = Cookies.get("restaurantToken");
+      const adminToken = Cookies.get("authTokenAdmin");
+  
+      if (adminToken) {
+        navigate("admin/dashboard");
+      } else if (userToken) {
+        navigate("/user/homepage");
+      } else if (restaurantToken) {
+        navigate("restaurant/dashboard");
+      }
+    }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Form, Modal, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Modal,
+  Spinner,
+} from "react-bootstrap";
 import "../../App.css";
 import axiosInstance from "../../Axios/axiosInstance";
+import Cookies from "js-cookie";
 
 function AdminSignup() {
   const [formData, setFormData] = useState({
@@ -17,6 +27,20 @@ function AdminSignup() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userToken = Cookies.get("authToken");
+    const restaurantToken = Cookies.get("restaurantToken");
+    const adminToken = Cookies.get("authTokenAdmin");
+
+    if (adminToken) {
+      navigate("admin/dashboard");
+    } else if (userToken) {
+      navigate("/user/homepage");
+    } else if (restaurantToken) {
+      navigate("restaurant/dashboard");
+    }
+  }, [navigate]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,7 +52,7 @@ function AdminSignup() {
 
     try {
       const response = await axiosInstance.post("/user/signup", formData);
-      
+
       if (response.status === 201 || response.status === 200) {
         setShowSuccess(true);
         setTimeout(() => {
@@ -39,7 +63,10 @@ function AdminSignup() {
         setError(response.data.message || "Signup failed. Please try again.");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Network error. Please try again later.");
+      setError(
+        error.response?.data?.message ||
+          "Network error. Please try again later."
+      );
     } finally {
       setLoading(false);
     }
@@ -48,7 +75,13 @@ function AdminSignup() {
   return (
     <Container fluid className="signup-Background">
       <Row>
-        <Col xs={12} sm={12} md={9} lg={9} className="d-flex flex-column justify-content-center align-items-center">
+        <Col
+          xs={12}
+          sm={12}
+          md={9}
+          lg={9}
+          className="d-flex flex-column justify-content-center align-items-center"
+        >
           <Card className="d-flex text-center border border-0 shadow-lg p-3 mb-5 bg-body-tertiary rounded-3">
             <div>
               <p className="fs-4 fw-bold">SIGNUP</p>
@@ -94,15 +127,32 @@ function AdminSignup() {
                     required
                   />
                 </Form.Group>
-                <Button variant="warning" type="submit" className="py-2 px-4 fs-6 inputBox-width" disabled={loading}>
-                  {loading ? <Spinner animation="border" size="sm" /> : "Submit"}
+                <Button
+                  variant="warning"
+                  type="submit"
+                  className="py-2 px-4 fs-6 inputBox-width"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <Spinner animation="border" size="sm" />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </Form>
             </div>
           </Card>
-          <p className="fs-6">By signing up, you agree to our Terms of Service and Privacy Policy.</p>
+          <p className="fs-6">
+            By signing up, you agree to our Terms of Service and Privacy Policy.
+          </p>
         </Col>
-        <Col xs={12} sm={12} md={3} lg={3} className="d-flex justify-content-end m-0 p-0">
+        <Col
+          xs={12}
+          sm={12}
+          md={3}
+          lg={3}
+          className="d-flex justify-content-end m-0 p-0"
+        >
           <img
             src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740883119/Food%20Order%20Website/gtqxturrfthvupa4vxjw.webp"
             className="loginImage"
