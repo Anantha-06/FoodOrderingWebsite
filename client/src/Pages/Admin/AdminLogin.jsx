@@ -18,11 +18,11 @@ function AdminLogin() {
     const adminToken = Cookies.get("authTokenAdmin");
 
     if (adminToken) {
-      navigate("admin/dashboard");
+      navigate("/admin/dashboard");
     } else if (userToken) {
       navigate("/user/homepage");
     } else if (restaurantToken) {
-      navigate("restaurant/dashboard");
+      navigate("/restaurant/dashboard");
     }
   }, [navigate]);
 
