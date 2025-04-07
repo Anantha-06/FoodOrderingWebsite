@@ -3,6 +3,7 @@ import { Button, Card, Table, Toast, ToastContainer } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
+import Loading from "../../Components/User/Loading.jsx";
 
 const PaymentPage = () => {
   const [order, setOrder] = useState(null);
@@ -28,7 +29,7 @@ const PaymentPage = () => {
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
-    setTimeout(() => setToast({ ...toast, show: false }), 4000);
+    setTimeout(() => setToast({ ...toast, show: false }), 5000);
   };
 
   const handlePayment = async () => {
@@ -94,10 +95,7 @@ const PaymentPage = () => {
 
   if (showLoader) {
     return (
-      <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <p className="fs-3 fw-bold text-success">Thanks for the order with Byteeats!!</p>
-        <div className="paymentd"></div>
-      </div>
+     <Loading/>
     );
   }
 
