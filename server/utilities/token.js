@@ -8,7 +8,7 @@ export const generateToken = (user, role) => {
       { id: user._id,role:user.role },
       process.env.JWT_SECRET,
       {
-        expiresIn: "7h",
+        expiresIn: "7d",
       }
     );
     return token;
@@ -24,7 +24,7 @@ export const restaurantToken = (restaurant) => {
       { id: restaurant._id },
       process.env.JWT_SECRET,
       {
-        expiresIn: "7h",
+        expiresIn: "7d",
       }
     );
     return token;
