@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import axiosInstance from "../../Axios/axiosInstance.js"
 import "../../PageStyle/Footer.css";
 
 function FooterNav() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    try {
+      await axiosInstance.post("/subscribe/create", { email });
+      setMessage("Subscribed successfully!");
+      setEmail("");
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (err) {
+      setMessage("This Email Is Already Subscribed");
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -12,7 +30,6 @@ function FooterNav() {
     >
       <Container fluid className="bg-warning text-dark pt-5 pb-4 px-5">
         <Row className="text-center text-md-start">
-          {/* Logo and Social */}
           <Col xs={12} md={4} className="mb-4">
             <motion.div whileHover={{ scale: 1.03 }} className="d-flex flex-column align-items-center align-items-md-start gap-3">
               <img
@@ -29,7 +46,6 @@ function FooterNav() {
             </motion.div>
           </Col>
 
-          {/* Navigation Links */}
           <Col xs={12} md={4} className="mb-4">
             <div className="d-flex flex-column gap-1">
               <p className="fs-5 fw-bold mb-2">Pages</p>
@@ -41,25 +57,45 @@ function FooterNav() {
             </div>
           </Col>
 
-          {/* Subscribe */}
           <Col xs={12} md={4}>
             <p className="fs-5 fw-bold mb-1">Subscribe</p>
             <p className="small">Simply enter your email below:</p>
-            <Form className="d-flex gap-2 mb-2 flex-nowrap">
-              <Form.Control type="email" placeholder="Enter email" />
+            <Form onSubmit={handleSubscribe} className="d-flex gap-2 mb-2 flex-nowrap">
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Button variant="primary" type="submit">
                   Submit
                 </Button>
               </motion.div>
             </Form>
+            <AnimatePresence>
+              {showSuccess && (
+                <motion.div
+                  key="success-message"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <p className="small text-success fw-semibold">{message}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {!showSuccess && message && (
+              <p className="small text-danger">{message}</p>
+            )}
             <p className="small">
               By subscribing, you agree to receive emails from us and acknowledge our Privacy Policy.
             </p>
           </Col>
         </Row>
 
-        {/* Bottom Section */}
         <hr />
         <Row className="pt-2 text-center text-md-start">
           <Col xs={12} md={6} lg={3} className="mb-2 d-flex align-items-center gap-2 justify-content-center justify-content-md-start">
