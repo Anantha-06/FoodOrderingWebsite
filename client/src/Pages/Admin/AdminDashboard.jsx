@@ -309,6 +309,7 @@ const AdminDashboard = () => {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Role</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -317,6 +318,7 @@ const AdminDashboard = () => {
                   <tr key={u._id}>
                     <td>{u.name}</td>
                     <td>{u.email}</td>
+                    <td>{u.role}</td>
                     <td>
                       <Button
                         size="sm"
