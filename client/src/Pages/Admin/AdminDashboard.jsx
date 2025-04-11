@@ -10,14 +10,21 @@ import {
   Row,
   Col,
   Spinner,
-  Badge
+  Badge,
 } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaSignOutAlt, FaCheck, FaTimes, FaTrash, FaPlus, FaSearch } from "react-icons/fa";
-import "../../PageStyle/AdminDashboard.css"; 
+import {
+  FaSignOutAlt,
+  FaCheck,
+  FaTimes,
+  FaTrash,
+  FaPlus,
+  FaSearch,
+} from "react-icons/fa";
+import "../../PageStyle/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -42,7 +49,7 @@ const AdminDashboard = () => {
     unverified: false,
     transactions: false,
     users: false,
-    coupon: false
+    coupon: false,
   });
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -56,11 +63,25 @@ const AdminDashboard = () => {
   }, [navigate]);
 
   const fetchInitialData = async () => {
-    setLoading(prev => ({ ...prev, restaurants: true, transactions: true, users: true }));
+    setLoading((prev) => ({
+      ...prev,
+      restaurants: true,
+      transactions: true,
+      users: true,
+    }));
     try {
-      await Promise.all([fetchRestaurants(), fetchTransactions(), fetchUsers()]);
+      await Promise.all([
+        fetchRestaurants(),
+        fetchTransactions(),
+        fetchUsers(),
+      ]);
     } finally {
-      setLoading(prev => ({ ...prev, restaurants: false, transactions: false, users: false }));
+      setLoading((prev) => ({
+        ...prev,
+        restaurants: false,
+        transactions: false,
+        users: false,
+      }));
     }
   };
 
@@ -69,7 +90,9 @@ const AdminDashboard = () => {
       const response = await axiosInstance.get("/restaurant/all");
       if (Array.isArray(response.data.restaurant)) {
         setRestaurants(response.data.restaurant);
-        setUnverifiedRestaurants(response.data.restaurant.filter((r) => !r.isVerified));
+        setUnverifiedRestaurants(
+          response.data.restaurant.filter((r) => !r.isVerified)
+        );
       }
     } catch (error) {
       setRestaurants([]);
@@ -106,13 +129,13 @@ const AdminDashboard = () => {
 
   const approveRestaurant = async (id) => {
     try {
-      setLoading(prev => ({ ...prev, unverified: true }));
+      setLoading((prev) => ({ ...prev, unverified: true }));
       await axiosInstance.put(`/admin/verify/${id}`);
       fetchRestaurants();
     } catch (error) {
       console.error("Error approving restaurant:", error);
     } finally {
-      setLoading(prev => ({ ...prev, unverified: false }));
+      setLoading((prev) => ({ ...prev, unverified: false }));
     }
   };
 
@@ -134,14 +157,20 @@ const AdminDashboard = () => {
   };
 
   const createCoupon = async () => {
-    if (!coupon.code || !coupon.discountPercentage || !coupon.minOrderVal || !coupon.maxDiscValue || !coupon.expiryDate) {
+    if (
+      !coupon.code ||
+      !coupon.discountPercentage ||
+      !coupon.minOrderVal ||
+      !coupon.maxDiscValue ||
+      !coupon.expiryDate
+    ) {
       setFormError("All fields are required.");
       return;
     }
     if (dateError) return;
 
     try {
-      setLoading(prev => ({ ...prev, coupon: true }));
+      setLoading((prev) => ({ ...prev, coupon: true }));
       await axiosInstance.post("/coupon/create", coupon);
       setCoupon({
         code: "",
@@ -160,7 +189,7 @@ const AdminDashboard = () => {
       setCouponSuccess("");
       setFormError("Failed to create coupon. Please try again.");
     } finally {
-      setLoading(prev => ({ ...prev, coupon: false }));
+      setLoading((prev) => ({ ...prev, coupon: false }));
     }
   };
 
@@ -169,26 +198,29 @@ const AdminDashboard = () => {
     navigate("/");
   };
 
-  const filteredRestaurants = restaurants.filter(restaurant =>
-    restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    restaurant.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredRestaurants = restaurants.filter(
+    (restaurant) =>
+      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredUnverified = unverifiedRestaurants.filter(restaurant =>
-    restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    restaurant.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUnverified = unverifiedRestaurants.filter(
+    (restaurant) =>
+      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredTransactions = transactions
-    .filter(transaction => transaction && transaction.user)
-    .filter(transaction => {
-      const userName = transaction.user?.name || '';
-      const status = transaction.status || '';
+    .filter((transaction) => transaction && transaction.user)
+    .filter((transaction) => {
+      const userName = transaction.user?.name || "";
+      const status = transaction.status || "";
       return (
         userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         status.toLowerCase().includes(searchTerm.toLowerCase())
@@ -198,11 +230,11 @@ const AdminDashboard = () => {
   const tabVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 20 }
+    exit: { opacity: 0, x: 20 },
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -210,7 +242,7 @@ const AdminDashboard = () => {
       className="admin-dashboard"
     >
       <Container className="mt-4">
-        <motion.div 
+        <motion.div
           className="text-center mb-4"
           initial={{ y: -20 }}
           animate={{ y: 0 }}
@@ -223,30 +255,15 @@ const AdminDashboard = () => {
           />
           <h1 className="text-center mt-3">Admin Dashboard</h1>
         </motion.div>
-        
+
         <Row>
           <Col md={3}>
-            <motion.div 
+            <motion.div
               className="sidebar"
               initial={{ x: -50 }}
               animate={{ x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="search-box mb-3">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <Button variant="outline-secondary">
-                    <FaSearch />
-                  </Button>
-                </div>
-              </div>
-
               <Tabs
                 activeKey={activeKey}
                 onSelect={(k) => setActiveKey(k)}
@@ -256,9 +273,14 @@ const AdminDashboard = () => {
                 <Tab
                   eventKey="restaurants"
                   title={
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <span>All Restaurants</span>
-                      <Badge bg="secondary" className="ms-2">{restaurants.length}</Badge>
+                      <Badge bg="secondary" className="ms-2">
+                        {restaurants.length}
+                      </Badge>
                     </motion.div>
                   }
                   className="border-0"
@@ -266,9 +288,14 @@ const AdminDashboard = () => {
                 <Tab
                   eventKey="unverified"
                   title={
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <span>Unverified</span>
-                      <Badge bg="danger" className="ms-2">{unverifiedRestaurants.length}</Badge>
+                      <Badge bg="danger" className="ms-2">
+                        {unverifiedRestaurants.length}
+                      </Badge>
                     </motion.div>
                   }
                   className="border-0"
@@ -276,9 +303,14 @@ const AdminDashboard = () => {
                 <Tab
                   eventKey="transactions"
                   title={
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <span>Transactions</span>
-                      <Badge bg="secondary" className="ms-2">{transactions.length}</Badge>
+                      <Badge bg="secondary" className="ms-2">
+                        {transactions.length}
+                      </Badge>
                     </motion.div>
                   }
                   className="border-0"
@@ -286,9 +318,14 @@ const AdminDashboard = () => {
                 <Tab
                   eventKey="coupon"
                   title={
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <span>Create Coupon</span>
-                      <Badge bg="success" className="ms-2"><FaPlus size={10} /></Badge>
+                      <Badge bg="success" className="ms-2">
+                        <FaPlus size={10} />
+                      </Badge>
                     </motion.div>
                   }
                   className="border-0"
@@ -296,21 +333,30 @@ const AdminDashboard = () => {
                 <Tab
                   eventKey="users"
                   title={
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <span>Manage Users</span>
-                      <Badge bg="secondary" className="ms-2">{users.length}</Badge>
+                      <Badge bg="secondary" className="ms-2">
+                        {users.length}
+                      </Badge>
                     </motion.div>
                   }
                   className="border-0"
                 />
               </Tabs>
 
-              <motion.div 
+              <motion.div
                 className="sign-out-btn"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button variant="warning" onClick={handleSignOut} className="w-100 mt-3">
+                <Button
+                  variant="warning"
+                  onClick={handleSignOut}
+                  className="w-100 mt-3"
+                >
                   <FaSignOutAlt className="me-2" />
                   Sign Out
                 </Button>
@@ -413,14 +459,23 @@ const AdminDashboard = () => {
                                 <td>{restaurant.phone}</td>
                                 <td>{restaurant.email}</td>
                                 <td>
-                                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                    <Button 
-                                      variant="success" 
-                                      onClick={() => approveRestaurant(restaurant._id)}
+                                  <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                  >
+                                    <Button
+                                      variant="success"
+                                      onClick={() =>
+                                        approveRestaurant(restaurant._id)
+                                      }
                                       disabled={loading.unverified}
                                     >
                                       {loading.unverified ? (
-                                        <Spinner as="span" animation="border" size="sm" />
+                                        <Spinner
+                                          as="span"
+                                          animation="border"
+                                          size="sm"
+                                        />
                                       ) : (
                                         "Approve"
                                       )}
@@ -467,12 +522,31 @@ const AdminDashboard = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.05 }}
                               >
-                                <td>{transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString() : 'N/A'}</td>
-                                <td>{transaction.user?.name || 'Unknown User'}</td>
-                                <td>Rs {transaction.amount ? transaction.amount.toFixed(2) : '0.00'}</td>
                                 <td>
-                                  <Badge bg={transaction.status === "completed" ? "success" : "warning"}>
-                                    {transaction.status || 'unknown'}
+                                  {transaction.createdAt
+                                    ? new Date(
+                                        transaction.createdAt
+                                      ).toLocaleDateString()
+                                    : "N/A"}
+                                </td>
+                                <td>
+                                  {transaction.user?.name || "Unknown User"}
+                                </td>
+                                <td>
+                                  Rs{" "}
+                                  {transaction.amount
+                                    ? transaction.amount.toFixed(2)
+                                    : "0.00"}
+                                </td>
+                                <td>
+                                  <Badge
+                                    bg={
+                                      transaction.status === "completed"
+                                        ? "success"
+                                        : "warning"
+                                    }
+                                  >
+                                    {transaction.status || "unknown"}
                                   </Badge>
                                 </td>
                               </motion.tr>
@@ -500,67 +574,67 @@ const AdminDashboard = () => {
                         <Form className="coupon-form">
                           <Form.Group className="mb-3">
                             <Form.Label>Code</Form.Label>
-                            <Form.Control 
-                              type="text" 
-                              name="code" 
-                              placeholder="Enter coupon code" 
-                              value={coupon.code} 
-                              onChange={handleCouponChange} 
-                              required 
+                            <Form.Control
+                              type="text"
+                              name="code"
+                              placeholder="Enter coupon code"
+                              value={coupon.code}
+                              onChange={handleCouponChange}
+                              required
                             />
                           </Form.Group>
-                          
+
                           <Form.Group className="mb-3">
                             <Form.Label>Discount Percentage</Form.Label>
-                            <Form.Control 
-                              type="number" 
-                              name="discountPercentage" 
-                              placeholder="e.g., 10 for 10%" 
-                              value={coupon.discountPercentage} 
-                              onChange={handleCouponChange} 
-                              required 
+                            <Form.Control
+                              type="number"
+                              name="discountPercentage"
+                              placeholder="e.g., 10 for 10%"
+                              value={coupon.discountPercentage}
+                              onChange={handleCouponChange}
+                              required
                               min="1"
                               max="100"
                             />
                           </Form.Group>
-                          
+
                           <Form.Group className="mb-3">
                             <Form.Label>Minimum Order Value</Form.Label>
-                            <Form.Control 
-                              type="number" 
-                              name="minOrderVal" 
-                              placeholder="Minimum order amount" 
-                              value={coupon.minOrderVal} 
-                              onChange={handleCouponChange} 
-                              required 
+                            <Form.Control
+                              type="number"
+                              name="minOrderVal"
+                              placeholder="Minimum order amount"
+                              value={coupon.minOrderVal}
+                              onChange={handleCouponChange}
+                              required
                               min="0"
                             />
                           </Form.Group>
-                          
+
                           <Form.Group className="mb-3">
                             <Form.Label>Maximum Discount Value</Form.Label>
-                            <Form.Control 
-                              type="number" 
-                              name="maxDiscValue" 
-                              placeholder="Maximum discount amount" 
-                              value={coupon.maxDiscValue} 
-                              onChange={handleCouponChange} 
-                              required 
+                            <Form.Control
+                              type="number"
+                              name="maxDiscValue"
+                              placeholder="Maximum discount amount"
+                              value={coupon.maxDiscValue}
+                              onChange={handleCouponChange}
+                              required
                               min="0"
                             />
                           </Form.Group>
-                          
+
                           <Form.Group className="mb-3">
                             <Form.Label>Expiry Date</Form.Label>
-                            <Form.Control 
-                              type="date" 
-                              name="expiryDate" 
-                              value={coupon.expiryDate} 
-                              onChange={handleCouponChange} 
-                              required 
+                            <Form.Control
+                              type="date"
+                              name="expiryDate"
+                              value={coupon.expiryDate}
+                              onChange={handleCouponChange}
+                              required
                             />
                             {dateError && (
-                              <motion.div 
+                              <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 className="text-danger mt-2"
@@ -569,7 +643,7 @@ const AdminDashboard = () => {
                               </motion.div>
                             )}
                           </Form.Group>
-                          
+
                           {formError && (
                             <motion.div
                               initial={{ opacity: 0 }}
@@ -578,7 +652,7 @@ const AdminDashboard = () => {
                               <Alert variant="danger">{formError}</Alert>
                             </motion.div>
                           )}
-                          
+
                           {couponSuccess && (
                             <motion.div
                               initial={{ opacity: 0 }}
@@ -587,20 +661,25 @@ const AdminDashboard = () => {
                               <Alert variant="success">{couponSuccess}</Alert>
                             </motion.div>
                           )}
-                          
+
                           <motion.div
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <Button 
-                              variant="primary" 
+                            <Button
+                              variant="primary"
                               onClick={createCoupon}
                               disabled={loading.coupon}
                               className="w-100 py-2"
                             >
                               {loading.coupon ? (
                                 <>
-                                  <Spinner as="span" animation="border" size="sm" className="me-2" />
+                                  <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    className="me-2"
+                                  />
                                   Creating...
                                 </>
                               ) : (
@@ -653,22 +732,33 @@ const AdminDashboard = () => {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.05 }}
-                                whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)' }}
+                                whileHover={{
+                                  backgroundColor: "rgba(0,0,0,0.05)",
+                                }}
                               >
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user.phone || 'N/A'}</td>
+                                <td>{user.phone || "N/A"}</td>
                                 <td>
-                                  <Badge bg={user.role === 'admin' ? 'danger' : 'primary'}>
+                                  <Badge
+                                    bg={
+                                      user.role === "admin"
+                                        ? "danger"
+                                        : "primary"
+                                    }
+                                  >
                                     {user.role}
                                   </Badge>
                                 </td>
                                 <td>
-                                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                    <Button 
-                                      variant="danger" 
+                                  <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                  >
+                                    <Button
+                                      variant="danger"
                                       onClick={() => deleteUser(user._id)}
-                                      disabled={user.role === 'admin'}
+                                      disabled={user.role === "admin"}
                                     >
                                       <FaTrash />
                                     </Button>
