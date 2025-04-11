@@ -450,7 +450,7 @@ const AdminDashboard = () => {
                               >
                                 <td>{new Date(transaction.createdAt).toLocaleDateString()}</td>
                                 <td>{transaction.user.name}</td>
-                                <td>${transaction.amount.toFixed(2)}</td>
+                                <td>Rs {transaction.amount.toFixed(2)}</td>
                                 <td>
                                   <Badge bg={transaction.status === "completed" ? "success" : "warning"}>
                                     {transaction.status}
