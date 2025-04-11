@@ -469,7 +469,7 @@ const AdminDashboard = () => {
                               >
                                 <td>{transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString() : 'N/A'}</td>
                                 <td>{transaction.user?.name || 'Unknown User'}</td>
-                                <td>${transaction.amount ? transaction.amount.toFixed(2) : '0.00'}</td>
+                                <td>Rs {transaction.amount ? transaction.amount.toFixed(2) : '0.00'}</td>
                                 <td>
                                   <Badge bg={transaction.status === "completed" ? "success" : "warning"}>
                                     {transaction.status || 'unknown'}
