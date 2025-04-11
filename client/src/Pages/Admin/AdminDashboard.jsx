@@ -13,7 +13,7 @@ import {
   Badge
 } from "react-bootstrap";
 import axiosInstance from "../../Axios/axiosInstance";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaSignOutAlt, FaCheck, FaTimes, FaTrash, FaPlus, FaSearch } from "react-icons/fa";
@@ -80,7 +80,7 @@ const AdminDashboard = () => {
   const fetchTransactions = async () => {
     try {
       const response = await axiosInstance.get("/payment/transaction");
-      setTransactions(response.data.data || []);
+      setTransactions(response.data?.data || []);
     } catch (error) {
       setTransactions([]);
     }
@@ -184,10 +184,16 @@ const AdminDashboard = () => {
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredTransactions = transactions.filter(transaction =>
-    transaction.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    transaction.status.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredTransactions = transactions
+    .filter(transaction => transaction && transaction.user)
+    .filter(transaction => {
+      const userName = transaction.user?.name || '';
+      const status = transaction.status || '';
+      return (
+        userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        status.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
 
   const tabVariants = {
     hidden: { opacity: 0, x: -20 },
@@ -226,7 +232,20 @@ const AdminDashboard = () => {
               animate={{ x: 0 }}
               transition={{ delay: 0.2 }}
             >
-            
+              <div className="search-box mb-3">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <Button variant="outline-secondary">
+                    <FaSearch />
+                  </Button>
+                </div>
+              </div>
 
               <Tabs
                 activeKey={activeKey}
@@ -448,12 +467,12 @@ const AdminDashboard = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.05 }}
                               >
-                                <td>{new Date(transaction.createdAt).toLocaleDateString()}</td>
-                                <td>{transaction.user.name}</td>
-                                <td>Rs {transaction.amount.toFixed(2)}</td>
+                                <td>{transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString() : 'N/A'}</td>
+                                <td>{transaction.user?.name || 'Unknown User'}</td>
+                                <td>${transaction.amount ? transaction.amount.toFixed(2) : '0.00'}</td>
                                 <td>
                                   <Badge bg={transaction.status === "completed" ? "success" : "warning"}>
-                                    {transaction.status}
+                                    {transaction.status || 'unknown'}
                                   </Badge>
                                 </td>
                               </motion.tr>
