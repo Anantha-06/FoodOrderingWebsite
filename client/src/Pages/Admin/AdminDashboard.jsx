@@ -17,6 +17,7 @@ const AdminDashboard = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [unverifiedRestaurants, setUnverifiedRestaurants] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [users, setUsers] = useState([]);
   const [coupon, setCoupon] = useState({
     code: "",
     discountPercentage: "",
@@ -35,6 +36,7 @@ const AdminDashboard = () => {
     } else {
       fetchRestaurants();
       fetchTransactions();
+      fetchUsers();
     }
   }, [navigate]);
 
@@ -58,6 +60,22 @@ const AdminDashboard = () => {
     } catch (error) {
       setTransactions([]);
     }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axiosInstance.get("/user/all");
+      setUsers(response.data.users || []);
+    } catch (error) {
+      setUsers([]);
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      await axiosInstance.delete(`/user/delete/${userId}`);
+      fetchUsers();
+    } catch (error) {}
   };
 
   const approveRestaurant = async (id) => {
@@ -102,13 +120,12 @@ const AdminDashboard = () => {
         isAvailable: true,
       });
       setFormError("");
-      setCouponSuccess("Coupon created successfully!"); 
-
+      setCouponSuccess("Coupon created successfully!");
       setTimeout(() => {
-        setCouponSuccess(""); 
+        setCouponSuccess("");
       }, 3000);
     } catch (error) {
-      setCouponSuccess(""); 
+      setCouponSuccess("");
     }
   };
 
@@ -207,14 +224,42 @@ const AdminDashboard = () => {
             <Form.Control type="number" name="minOrderVal" placeholder="Min Order Value" value={coupon.minOrderVal} onChange={handleCouponChange} required />
             <Form.Control type="number" name="maxDiscValue" placeholder="Max Discount Value" value={coupon.maxDiscValue} onChange={handleCouponChange} required />
             <Form.Control type="date" name="expiryDate" value={coupon.expiryDate} onChange={handleCouponChange} required />
-          
             {formError && <Alert variant="danger">{formError}</Alert>}
-            
-           
             {couponSuccess && <Alert variant="success">{couponSuccess}</Alert>}
-
             <Button onClick={createCoupon}>Create Coupon</Button>
           </Form>
+        </Tab>
+        <Tab eventKey="users" title="Manage Users">
+          {users.length === 0 ? (
+            <p>No users found.</p>
+          ) : (
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      <Button variant="danger" onClick={() => deleteUser(user._id)}>
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
         </Tab>
       </Tabs>
       <Link onClick={handleSignOut} className="">

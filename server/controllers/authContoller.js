@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utilities/token.js";
 import dotenv from "dotenv"
 dotenv.config()
+import mongoose from "mongoose";
 
 export async function signUp(req, res) {
   try {
@@ -123,6 +124,36 @@ export async function logout(req,res) {
   try {
     res.clearCookie("token")
     res.status(200).json({message:"Logged Out Succesfully"})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export async function getAllUsers(req, res) {
+  try {
+    const users = await User.find().select("-password");
+    res.status(200).json({ message: "All Users Fetched Successfully", users });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export async function deleteUser(req, res) {
+  try {
+    const userId = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid User ID" });
+    }
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User Not Found" });
+    }
+
+    res.status(200).json({ message: "User Deleted Successfully", deletedUser });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
