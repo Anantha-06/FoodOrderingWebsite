@@ -20,7 +20,6 @@ export const verifyRestaurant = async (req, res) => {
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
     }
-
     restaurant.isVerified = true;
     await restaurant.save();
 
