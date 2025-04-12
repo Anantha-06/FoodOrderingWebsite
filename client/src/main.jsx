@@ -24,6 +24,7 @@ import RestaurantDashboard from "./Pages/Restaurant/RestaurantDashboard.jsx";
 import LandingPage from "./Pages/Shared/LandingPage.jsx";
 import ResponsiveCardHover from "./Pages/User/ResponsiveCardHover.jsx";
 import ErrorPage from "./Pages/User/ErrorPage.jsx"; 
+import ForgotPassword from "./Pages/User/ForgotPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <ErrorPage />,
+      },
+      {
+        path: "/user/update-password",
+        element: <ForgotPassword />,
       }
     ],
   },

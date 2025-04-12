@@ -104,6 +104,9 @@ function LoginPage() {
             <div className="mt-3">
               <a href="/user/signup" className="text-decoration-none text-primary">Sign Up</a>
             </div>
+            <div className="mt-3">
+              <a href="/user/update-password" className="text-decoration-none text-primary">Forgot Password</a>
+            </div>
           </Card>
         </Col>
 

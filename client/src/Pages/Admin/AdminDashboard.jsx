@@ -275,7 +275,7 @@ const AdminDashboard = () => {
                 {filtered(subscribers).map((s) => (
                   <tr key={s._id}>
                     <td>{s.email}</td>
-                    <td>{new Date(s.createdAt).toLocaleDateString()}</td>
+                    <td>{s.subscribedAt}</td>
                   </tr>
                 ))}
               </tbody>

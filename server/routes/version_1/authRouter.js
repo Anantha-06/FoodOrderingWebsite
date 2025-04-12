@@ -5,7 +5,7 @@ import {
   login,
   logout,
   profileUpdate,
-  signUp,getAllUsers,deleteUser
+  signUp,getAllUsers,deleteUser,updatePasswordWithVerification
 } from "../../controllers/authContoller.js";
 import {
   authMiddleware,
@@ -22,4 +22,5 @@ router.get("/profile/role", authMiddleware, getRole);
 router.post("/logout",authMiddleware,logout)
 router.get("/all", getAllUsers);
 router.delete("/delete/:id", authMiddleware, deleteUser);
+router.put("/update-password", updatePasswordWithVerification);
 export const authRouter = router;
