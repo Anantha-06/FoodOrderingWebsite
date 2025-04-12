@@ -1,8 +1,26 @@
 import React, { useEffect } from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import { 
+  Tabs, 
+  Tab, 
+  Button,
+  Container,
+  Row,
+  Col,
+  Badge
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import {
+  FaSignOutAlt,
+  FaStore,
+  FaUtensils,
+  FaPlusCircle,
+  FaTrash,
+  FaEdit,
+  FaClipboardList,
+  FaUserCircle
+} from "react-icons/fa";
 
 import RestaurantProfile from "../../Components/User/Restaurant/RestaurantProfile.jsx";
 import UpdateRestaurant from "../../Components/User/Restaurant/UpdateRestaurant.jsx";
@@ -16,54 +34,132 @@ function RestaurantDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get("restaurantToken"); 
+    const token = Cookies.get("restaurantToken");
     if (!token) {
       navigate("/restaurant/login");
     }
   }, [navigate]);
 
   const handleSignOut = () => {
-    Cookies.remove("restaurantToken"); 
-    alert("Sign Out Successful!");
-    navigate("/"); 
-    setTimeout(() => window.location.reload(), 500);
+    Cookies.remove("restaurantToken");
+    navigate("/");
   };
 
   return (
-    <div className="restaurant-dashboard-container">
-      <div className="d-flex justify-content-between align-items-center mb-4 gap-5">
-        <img
-          src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png"
-          alt="Company Logo"
-          className="img-fluid"
-          style={{ maxWidth: "150px", height: "auto" }}
-        />
-        <button className="bg-warning border-1 rounded-2 px-4" onClick={handleSignOut}>
-          Sign Out
-        </button>
-      </div>
+    <Container fluid className="p-4 restaurant-dashboard-container">
+      <Row className="mb-4">
+        <Col>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center">
+              <img
+                src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1743949318/Food%20Order%20Website/New%20Image%20for%20login/zjbubfxtliury2rhjoif.png"
+                alt="Company Logo"
+                className="img-fluid me-3"
+                style={{ maxWidth: "120px", height: "auto" }}
+              />
+              <h2 className="mb-0">Restaurant Dashboard</h2>
+            </div>
+            <Button 
+              variant="danger" 
+              onClick={handleSignOut}
+              className="d-flex align-items-center"
+            >
+              <FaSignOutAlt className="me-2" />
+              Sign Out
+            </Button>
+          </div>
+        </Col>
+      </Row>
 
-      <Tabs defaultActiveKey="RestaurantProfile" id="restaurant-dashboard-tabs">
-        <Tab eventKey="RestaurantProfile" title="Restaurant Profile">
-          <RestaurantProfile />
-        </Tab>
-        <Tab eventKey="RestaurantOrders" title="Restaurant Orders">
-          <RestaurantOrders />
-        </Tab>
-        <Tab eventKey="ManageMenu" title="Manage Menu">
-          <ManageMenu />
-        </Tab>
-        <Tab eventKey="CreateMenu" title="Create Menu">
-          <CreateMenu />
-        </Tab>
-        <Tab eventKey="DeleteMenu" title="Delete Menu">
-          <DeleteMenu />
-        </Tab>
-        <Tab eventKey="UpdateRestaurant" title="Update Restaurant">
-          <UpdateRestaurant />
-        </Tab>
-      </Tabs>
-    </div>
+      <Row>
+        <Col>
+          <Tabs 
+            defaultActiveKey="RestaurantProfile" 
+            id="restaurant-dashboard-tabs"
+            className="mb-3 custom-tabs"
+          >
+            <Tab 
+              eventKey="RestaurantProfile" 
+              title={
+                <span>
+                  <FaUserCircle className="me-2" />
+                  Profile
+                </span>
+              }
+            >
+              <div className="p-3 tab-content-wrapper">
+                <RestaurantProfile />
+              </div>
+            </Tab>
+            <Tab 
+              eventKey="RestaurantOrders" 
+              title={
+                <span>
+                  <FaClipboardList className="me-2" />
+                  Orders
+                </span>
+              }
+            >
+              <div className="p-3 tab-content-wrapper">
+                <RestaurantOrders />
+              </div>
+            </Tab>
+            <Tab 
+              eventKey="ManageMenu" 
+              title={
+                <span>
+                  <FaUtensils className="me-2" />
+                  Manage Menu
+                </span>
+              }
+            >
+              <div className="p-3 tab-content-wrapper">
+                <ManageMenu />
+              </div>
+            </Tab>
+            <Tab 
+              eventKey="CreateMenu" 
+              title={
+                <span>
+                  <FaPlusCircle className="me-2" />
+                  Create Menu
+                </span>
+              }
+            >
+              <div className="p-3 tab-content-wrapper">
+                <CreateMenu />
+              </div>
+            </Tab>
+            <Tab 
+              eventKey="DeleteMenu" 
+              title={
+                <span>
+                  <FaTrash className="me-2" />
+                  Delete Menu
+                </span>
+              }
+            >
+              <div className="p-3 tab-content-wrapper">
+                <DeleteMenu />
+              </div>
+            </Tab>
+            <Tab 
+              eventKey="UpdateRestaurant" 
+              title={
+                <span>
+                  <FaEdit className="me-2" />
+                  Update Restaurant
+                </span>
+              }
+            >
+              <div className="p-3 tab-content-wrapper">
+                <UpdateRestaurant />
+              </div>
+            </Tab>
+          </Tabs>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

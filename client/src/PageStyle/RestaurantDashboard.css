@@ -1,18 +1,28 @@
-@keyframes animatedBackground {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-  }
-  
-  .restaurant-dashboard-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: linear-gradient(45deg, #ff989b, #ff825f, #fdf184, #7cfff8);
-    background-size: 300% 300%;
-    animation: animatedBackground 10s infinite linear;
-  }
-  
+.restaurant-dashboard-container {
+ 
+  min-height: 100vh;
+}
+
+.custom-tabs .nav-link {
+  font-weight: 500;
+  color: #495057;
+  border: none;
+  padding: 0.75rem 1.5rem;
+}
+
+.custom-tabs .nav-link.active {
+  color: #0d6efd;
+  background-color: transparent;
+  border-bottom: 3px solid #0d6efd;
+}
+
+.custom-tabs .nav-link:hover {
+  color: #0d6efd;
+  border-color: transparent;
+}
+
+.tab-content-wrapper {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
