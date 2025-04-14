@@ -24,7 +24,7 @@ router.get("/by/:name", getRestaurantByName);
 router.get("/all", getAllRestaurant);
 router.get("/id/:restaurantId", getRestaurantById);
 
-router.delete("/delete", restaurantMiddleware, deleteRestaurant);
+router.delete("/delete/:restaurantId", deleteRestaurant);
 
 router.post("/logout", restaurantMiddleware, logout);
 router.get("/profile", restaurantMiddleware, getRestaurantProfile);

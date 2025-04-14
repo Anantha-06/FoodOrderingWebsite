@@ -127,6 +127,18 @@ const AdminDashboard = () => {
     setLoading((prev) => ({ ...prev, unverified: false }));
   };
 
+  const deleteRestaurant = async (id) => {
+    try {
+      await axiosInstance.delete(`/restaurant/delete/${id}`);
+      const updatedRestaurants = await axiosInstance.get("/restaurant/all");
+      const restaurantList = updatedRestaurants.data?.restaurant || [];
+      setRestaurants(restaurantList);
+      setUnverifiedRestaurants(restaurantList.filter((r) => !r.isVerified));
+    } catch (error) {
+      console.error("Error deleting restaurant:", error);
+    }
+  };
+
   const deleteUser = async (id) => {
     try {
       await axiosInstance.delete(`/user/delete/${id}`);
@@ -496,14 +508,13 @@ const AdminDashboard = () => {
               <Row xs={1} md={2} lg={3} className="g-4">
                 {filtered(restaurants).map((restaurant) => (
                   <Col key={restaurant._id}>
-                    <Card 
-                      onClick={() => viewRestaurantDetails(restaurant)} 
-                      className="h-100 restaurant-card"
-                    >
+                    <Card className="h-100">
                       <Card.Img 
                         variant="top" 
                         src={restaurant.image} 
                         style={{ height: '200px', objectFit: 'cover' }} 
+                        onClick={() => viewRestaurantDetails(restaurant)}
+                        className="cursor-pointer"
                       />
                       <Card.Body>
                         <Card.Title>{restaurant.name}</Card.Title>
@@ -512,13 +523,22 @@ const AdminDashboard = () => {
                             <FaEnvelope className="me-2" /> {restaurant.email}
                           </small>
                         </Card.Text>
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between align-items-center">
                           <Badge bg={restaurant.isVerified ? "success" : "danger"}>
                             {restaurant.isVerified ? "Verified" : "Unverified"}
                           </Badge>
-                          <Badge bg="warning" text="dark">
-                            <FaStar className="me-1" /> {restaurant.rating || "N/A"}
-                          </Badge>
+                          <Button 
+                            variant="danger" 
+                            size="sm" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm('Are you sure you want to delete this restaurant?')) {
+                                deleteRestaurant(restaurant._id);
+                              }
+                            }}
+                          >
+                            <FaTrash />
+                          </Button>
                         </div>
                       </Card.Body>
                     </Card>
@@ -707,7 +727,6 @@ const AdminDashboard = () => {
         </Col>
       </Row>
 
-      {/* Restaurant Details Modal */}
       <Modal show={showDetails} onHide={() => setShowDetails(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>{selectedRestaurant?.name}</Modal.Title>
@@ -820,6 +839,17 @@ const AdminDashboard = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
+          <Button 
+            variant="danger" 
+            onClick={() => {
+              if (window.confirm('Are you sure you want to delete this restaurant?')) {
+                deleteRestaurant(selectedRestaurant._id);
+                setShowDetails(false);
+              }
+            }}
+          >
+            <FaTrash className="me-1" /> Delete Restaurant
+          </Button>
           <Button variant="secondary" onClick={() => setShowDetails(false)}>
             Close
           </Button>
