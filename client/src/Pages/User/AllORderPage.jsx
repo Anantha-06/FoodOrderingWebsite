@@ -140,8 +140,8 @@ function AllOrderPage() {
                         </small>
                       </div>
                       <div className="d-flex flex-column text-md-end">
-                        <span className="fw-semibold">₹{order.finalPrice.toFixed(2)}</span>
-                        <small className="text-muted">{order.cartId.items.length} item(s)</small>
+                        <span className="fw-semibold">₹{order.finalPrice?.toFixed(2)}</span>
+                        <small className="text-muted">{order.cartId?.items?.length || 0} item(s)</small>
                       </div>
                     </div>
                   </Card.Header>
@@ -156,10 +156,12 @@ function AllOrderPage() {
                         </div>
                         <div className="ps-4">
                           <p className="mb-1">
-                            <span className="fw-medium">Name:</span> {order.restaurant.name}
+                            <span className="fw-medium">Name:</span> 
+                            {order.restaurant?.name || "Restaurant information not available"}
                           </p>
                           <p className="mb-1">
-                            <span className="fw-medium">Location:</span> {order.restaurant.city}
+                            <span className="fw-medium">Location:</span> 
+                            {order.restaurant?.city || "Location not specified"}
                           </p>
                         </div>
                       </div>
@@ -169,11 +171,17 @@ function AllOrderPage() {
                           <h5 className="mb-0 fw-semibold">Delivery Address</h5>
                         </div>
                         <div className="ps-4">
-                          <p className="mb-1">{order.deliveryAddress.street}</p>
-                          <p className="mb-1">
-                            {order.deliveryAddress.city}, {order.deliveryAddress.state}
-                          </p>
-                          <p className="mb-1">Pincode: {order.deliveryAddress.pincode}</p>
+                          {order.deliveryAddress ? (
+                            <>
+                              <p className="mb-1">{order.deliveryAddress.street}</p>
+                              <p className="mb-1">
+                                {order.deliveryAddress.city}, {order.deliveryAddress.state}
+                              </p>
+                              <p className="mb-1">Pincode: {order.deliveryAddress.pincode}</p>
+                            </>
+                          ) : (
+                            <p className="text-muted">Delivery address not available</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -191,7 +199,7 @@ function AllOrderPage() {
                             </tr>
                           </thead>
                           <tbody>
-                            {order.cartId.items.map((item, index) => (
+                            {order.cartId?.items?.map((item, index) => (
                               <tr key={index} className="border-bottom">
                                 <td className="text-start ps-0">
                                   <div className="d-flex flex-column">
@@ -233,9 +241,9 @@ function AllOrderPage() {
                         <div className="ps-4">
                           <div className="d-flex justify-content-between mb-1">
                             <span>Subtotal:</span>
-                            <span>₹{order.totalAmount.toFixed(2)}</span>
+                            <span>₹{order.totalAmount?.toFixed(2)}</span>
                           </div>
-                          {order.coupon && (
+                          {order.coupon?.code && (
                             <div className="d-flex justify-content-between mb-1 text-success">
                               <span>Coupon Discount ({order.coupon.discountPercentage}%):</span>
                               <span>-₹{(order.totalAmount - order.finalPrice).toFixed(2)}</span>
@@ -243,7 +251,7 @@ function AllOrderPage() {
                           )}
                           <div className="d-flex justify-content-between mt-2 pt-2 border-top fw-bold">
                             <span>Total:</span>
-                            <span>₹{order.finalPrice.toFixed(2)}</span>
+                            <span>₹{order.finalPrice?.toFixed(2)}</span>
                           </div>
                         </div>
                       </div>

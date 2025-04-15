@@ -314,6 +314,12 @@ function SignUpPage() {
               src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756875/Food%20Order%20Website/hn0jwlxetvu0rf2tskkt.png"
               alt="Signup Illustration"
               className="img-fluid"
+              style={{
+                height: '100vh',
+                width: 'auto',
+                maxWidth: '100%',
+                objectFit: 'cover'
+              }}
             />
           </motion.div>
         </Col>
