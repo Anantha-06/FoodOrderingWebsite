@@ -6,63 +6,6 @@ import axiosInstance from "../../Axios/axiosInstance.js";
 import CartItemCard from "../../Components/User/CartItemCard.jsx";
 import CouponCard from "../../Components/User/CouponCard.jsx";
 import ShowAddress from "../../Components/User/ShowAddress.jsx";
-import styled from "styled-components";
-
-// Styled components
-const CheckoutContainer = styled(Container)`
-  padding: 2rem 1rem;
-  max-width: 1400px;
-`;
-
-const CheckoutCard = styled.div`
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-  width:100%;
-`;
-
-const PrimaryButton = styled(Button).attrs({
-  variant: "warning"
-})`
-  border-radius: 12px;
-  padding: 12px 24px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  &:disabled {
-    opacity: 0.7;
-    transform: none !important;
-  }
-`;
-
-const SectionTitle = styled.h2`
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  position: relative;
-  padding-bottom: 0.5rem;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, #f39c12, #e74c3c);
-    border-radius: 2px;
-  }
-`;
 
 function CheckoutPage() {
   const [selectedCoupon, setSelectedCoupon] = useState("");
@@ -78,6 +21,7 @@ function CheckoutPage() {
     setError("");
 
     if (!cartId || !selectedAddressId || !restaurantId) {
+      console.log("Missing fields:", { cartId, selectedAddressId, restaurantId });
       setError("🚨 Please select an address and ensure your cart is not empty.");
       return;
     }
@@ -98,7 +42,7 @@ function CheckoutPage() {
         setError("Unexpected response from server. Please try again.");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Failed to place order. Please try again.");
+      setError("Failed to place order. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -108,140 +52,103 @@ function CheckoutPage() {
     if (showAlert) {
       const timer = setTimeout(() => {
         navigate("/user/payment", { replace: true });
-      }, 1500);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [showAlert, navigate]);
 
   return (
-    <CheckoutContainer>
+    <Container fluid className="p-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Row className="mb-4">
+        <Row>
           <Col xs={12} className="text-center">
-            <SectionTitle>Checkout</SectionTitle>
+            <h1 className="fw-bold display-4 mb-4">🛒 Cart Items</h1>
           </Col>
         </Row>
       </motion.div>
 
       <Row>
-        {/* Left Column - Cart Items */}
-        <Col lg={8} md={12} className="mb-4">
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ delay: 0.3 }}
-          >
-            <CheckoutCard>
-              <h3 className="fw-bold mb-4">Your Cart</h3>
-              <CartItemCard 
-                setCartId={setCartId} 
-                setRestaurantId={setRestaurantId} 
-              />
-            </CheckoutCard>
-          </motion.div>
-
-          {/* Address Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <CheckoutCard>
-              <h3 className="fw-bold mb-4">Delivery Address</h3>
-              <ShowAddress
-                selectedAddressId={selectedAddressId}
-                setSelectedAddressId={setSelectedAddressId}
-              />
-            </CheckoutCard>
+        <Col xs={12} lg={9} md={12} className="mb-4">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+            <CartItemCard setCartId={setCartId} setRestaurantId={setRestaurantId} />
           </motion.div>
         </Col>
 
-        {/* Right Column - Order Summary */}
-        <Col lg={4} md={12}>
+        <Col xs={12} lg={3} md={6}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <CheckoutCard>
-              <h3 className="fw-bold mb-4">Order Summary</h3>
-              
-              <CouponCard 
-                selectedCoupon={selectedCoupon} 
-                setSelectedCoupon={setSelectedCoupon} 
-              />
+            <Row>
+              <Col xs={12} className="mb-4">
+                <CouponCard selectedCoupon={selectedCoupon} setSelectedCoupon={setSelectedCoupon} />
 
-              <div className="mt-4 pt-3 border-top">
-                {error && (
-                  <Alert variant="danger" className="text-center mb-3">
-                    {error}
-                  </Alert>
-                )}
+                <div className="shadow-lg p-4 bg-body-tertiary rounded-4 mt-5">
+                  {error && (
+                    <Alert variant="danger" className="text-center">
+                      {error}
+                    </Alert>
+                  )}
 
-                <div className="d-grid gap-2">
-                  <motion.div 
-                    whileHover={{ scale: 1.02 }} 
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <PrimaryButton
+                  <p className="fs-5 fw-bold text-center mb-3">
+                    🧾 Ready to place your order?
+                  </p>
+
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                      variant="warning"
+                      className="w-100 py-2 rounded-3 fw-bold shadow-lg"
                       onClick={handleCheckout}
                       disabled={loading || !restaurantId}
                     >
-                      {loading ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          Processing...
-                        </>
-                      ) : (
-                        "Proceed to Payment"
-                      )}
-                    </PrimaryButton>
+                      {loading ? "Processing..." : "✅ Check Out"}
+                    </Button>
                   </motion.div>
-                </div>
 
-                {!restaurantId && (
-                  <p className="text-danger text-center mt-2 small">
-                    ⚠️ Please add items to your cart before checkout
-                  </p>
-                )}
-              </div>
-            </CheckoutCard>
+                  {!restaurantId && (
+                    <p className="text-danger text-center mt-2 small">
+                      ⚠️ Please add items from a restaurant before checking out.
+                    </p>
+                  )}
+                </div>
+              </Col>
+            </Row>
           </motion.div>
         </Col>
       </Row>
 
-      {/* Success Modal */}
-      <Modal show={showAlert} centered backdrop="static">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <Row className="mt-4">
+          <Col xs={12}>
+            <ShowAddress
+              selectedAddressId={selectedAddressId}
+              setSelectedAddressId={setSelectedAddressId}
+            />
+          </Col>
+        </Row>
+      </motion.div>
+
+      <Modal show={showAlert} centered>
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <Modal.Body className="text-center p-5">
-            <div className="mb-4">
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 10, -10, 0]
-                }}
-                transition={{ 
-                  duration: 0.8,
-                  ease: "easeInOut"
-                }}
-              >
-                <span style={{ fontSize: "3rem" }}>🎉</span>
-              </motion.div>
-            </div>
-            <h4 className="fw-bold text-success mb-3">Order Confirmed!</h4>
-            <p className="text-muted">Redirecting to payment...</p>
+          <Modal.Body className="text-center p-4">
+            <p className="fs-5 fw-bold text-success mb-3">🎉 Order placed successfully!</p>
           </Modal.Body>
         </motion.div>
       </Modal>
-    </CheckoutContainer>
+    </Container>
   );
 }
 
