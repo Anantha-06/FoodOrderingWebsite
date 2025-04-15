@@ -1,33 +1,173 @@
-import Card from "react-bootstrap/Card";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
-import "../../App.css";
+import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 
-function RestaurantCard(props) {
+const CardLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+
+const CardContainer = styled.div`
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  }
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 aspect ratio */
+  overflow: hidden;
+`;
+
+const CardImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+
+  ${CardContainer}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const Badge = styled.span`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: ${props => props.theme === 'veg' ? '#4CAF50' : '#F44336'};
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const CardContent = styled.div`
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CardTitle = styled.h3`
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: #2d3748;
+`;
+
+const MetaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  color: #718096;
+`;
+
+const Rating = styled.div`
+  display: flex;
+  align-items: center;
+  background: #f7fafc;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  margin-right: 0.8rem;
+`;
+
+const RatingIcon = styled(FaStar)`
+  color: #f6ad55;
+  margin-right: 0.3rem;
+`;
+
+const RatingText = styled.span`
+  font-weight: 600;
+  color: #2d3748;
+`;
+
+const DeliveryInfo = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #718096;
+`;
+
+const InfoIcon = styled.span`
+  margin-right: 0.3rem;
+  display: flex;
+  align-items: center;
+`;
+
+const Divider = styled.span`
+  margin: 0 0.5rem;
+  color: #e2e8f0;
+`;
+
+const CuisineTags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+`;
+
+const Tag = styled.span`
+  background: #edf2f7;
+  color: #4a5568;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+`;
+
+function RestaurantCard({ id, image, title, rating, cuisine, deliveryTime, distance, isVeg, status }) {
+  const isOpen = status === "Open";
+  const CardWrapper = isOpen ? CardLink : 'div';
+
   return (
-    <Link
-      className="restaurant-card-link text-decoration-none text-reset text-center d-flex"
-      to={`/user/restaurant/${props.id}`}
-    >
-      <Card className="restaurant-card-container border border-0 rounded-5 my-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <div className="restaurant-card-image-container">
-          <Card.Img
-            variant="top"
-            src={props.image}
-            className="restaurant-card-image rounded-4"
-          />
-        </div>
-        <Card.Body className="d-flex flex-column flex-nowrap justify-content-center align-items-center">
-          <Card.Title className="restaurant-card-title fw-bold">{props.title}</Card.Title>
-          <div className="restaurant-card-rating d-flex flex-nowrap gap-3 justify-content-center">
-            <Card.Text>{props.rating}</Card.Text>
-            <Card.Img
-              src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742377549/Food%20Order%20Website/crk2gldxuwtl8rqp5afi.png"
-              className="restaurant-rating-icon"
-            />
-          </div>
-        </Card.Body>
-      </Card>
-    </Link>
+    <CardWrapper to={isOpen ? `/user/restaurant/${id}` : undefined} style={{ cursor: isOpen ? "pointer" : "not-allowed" }}>
+      <CardContainer style={{ opacity: isOpen ? 1 : 0.5 }}>
+        <ImageContainer>
+          <CardImage src={image} alt={title} />
+          <Badge>
+          {!isOpen && (
+            <Tag style={{ background: "#e53e3e", color: "white", marginTop: "1rem", textAlign: "center", width: "fit-content" }}>
+              Closed
+            </Tag>
+          )}
+          </Badge>
+        </ImageContainer>
+
+        <CardContent>
+          <CardTitle>{title}</CardTitle>
+
+          <MetaContainer >
+            <Rating>
+              <RatingIcon />
+              <RatingText>{rating}</RatingText>
+            </Rating>
+
+         
+          </MetaContainer>
+
+         
+        </CardContent>
+      </CardContainer>
+    </CardWrapper>
   );
 }
 

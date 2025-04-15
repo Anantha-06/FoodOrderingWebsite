@@ -10,6 +10,7 @@ function UpdateRestaurant() {
     phone: "",
     rating: "",
     image: null,
+    isOpen: "",
   });
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,14 +21,18 @@ function UpdateRestaurant() {
     const fetchRestaurantProfile = async () => {
       try {
         const response = await axiosInstance.get("/restaurant/profile");
+        const { name, email, phone, rating, image, isOpen } = response.data.restaurant;
+
         setRestaurant(response.data.restaurant);
         setFormData({
-          name: response.data.restaurant.name || "",
-          email: response.data.restaurant.email || "",
-          phone: response.data.restaurant.phone || "",
-          rating: response.data.restaurant.rating || "",
+          name: name || "",
+          email: email || "",
+          phone: phone || "",
+          rating: rating || "",
+          isOpen: isOpen ?? true,
+          image: null,
         });
-        setImagePreview(response.data.restaurant.image || "");
+        setImagePreview(image || "");
       } catch (err) {
         setError("Failed to load restaurant details");
       } finally {
@@ -39,7 +44,9 @@ function UpdateRestaurant() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const newValue = name === "isOpen" ? value === "true" : value;
+    setFormData({ ...formData, [name]: newValue });
   };
 
   const handleImageChange = (e) => {
@@ -60,6 +67,7 @@ function UpdateRestaurant() {
     updateData.append("email", formData.email);
     updateData.append("phone", formData.phone);
     updateData.append("rating", formData.rating);
+    updateData.append("isOpen", formData.isOpen);
     if (formData.image) {
       updateData.append("image", formData.image);
     }
@@ -145,6 +153,14 @@ function UpdateRestaurant() {
             step="0.1"
             required
           />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Is Open</Form.Label>
+          <Form.Select name="isOpen" value={formData.isOpen} onChange={handleChange}>
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3">

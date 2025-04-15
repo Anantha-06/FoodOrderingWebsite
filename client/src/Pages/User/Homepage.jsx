@@ -13,8 +13,8 @@ function Homepage() {
 
   if (isLoading) {
     <div className="d-flex justify-content-center align-items-center vh-100">
-    <div className="loader"></div>
-  </div>
+      <div className="loader"></div>
+    </div>;
   }
 
   if (error) {
