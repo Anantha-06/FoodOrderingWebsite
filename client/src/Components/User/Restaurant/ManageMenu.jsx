@@ -196,7 +196,7 @@ function ManageMenu() {
         {menuItems.length === 0 ? (
           <div className="text-center py-5">
             <h4 className="text-muted mb-3">No menu items found</h4>
-            <Button variant="primary">Add Your First Menu Item</Button>
+          
           </div>
         ) : (
           <MenuTable striped bordered hover responsive>
