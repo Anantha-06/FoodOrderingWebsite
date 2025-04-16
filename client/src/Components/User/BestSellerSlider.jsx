@@ -147,17 +147,18 @@ const ArrowButton = styled.button`
   }
 
   &.next {
-    right: -20px;
+    right: 10px; /* instead of -20px */
   }
 
   &.prev {
-    left: -20px;
+    left: 10px; /* instead of -20px */
   }
 
   @media (max-width: 768px) {
     display: none;
   }
 `;
+
 
 const LoadingContainer = styled.div`
   display: flex;
