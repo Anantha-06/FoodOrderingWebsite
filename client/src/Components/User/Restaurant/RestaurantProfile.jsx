@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner, Alert, Image, Card, Badge, Table,Row,Col,Button } from "react-bootstrap";
+import { Container, Spinner, Alert, Image, Card, Badge, Table, Row, Col, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import axiosInstance from "../../../Axios/axiosInstance.js";
-import { FaEnvelope, FaPhone, FaStar, FaClock, FaUtensils, FaEdit } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaStar, FaClock, FaUtensils, FaEdit, FaUser } from "react-icons/fa";
 
 // Styled Components
 const ProfileContainer = styled(Container)`
@@ -62,10 +62,19 @@ const StatusBadge = styled(Badge)`
   font-weight: 500;
 `;
 
+const ReviewCard = styled(Card)`
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+`;
+
 function RestaurantProfile() {
   const [restaurant, setRestaurant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [reviews, setReviews] = useState(null);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [reviewsError, setReviewsError] = useState("");
 
   useEffect(() => {
     const fetchRestaurantProfile = async () => {
@@ -83,6 +92,25 @@ function RestaurantProfile() {
 
     fetchRestaurantProfile();
   }, []);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      if (!restaurant) return;
+      
+      try {
+        setReviewsLoading(true);
+        const response = await axiosInstance.get(`/review/${restaurant._id}/all`);
+        setReviews(response.data);
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+        setReviewsError("Failed to fetch reviews. Please try again.");
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [restaurant]);
 
   if (loading) {
     return (
@@ -146,7 +174,10 @@ function RestaurantProfile() {
             </StatusBadge>
             <StatusBadge bg="warning" text="dark">
               <FaStar className="me-1" />
-              {restaurant.rating || "No ratings yet"}
+              {reviews?.averageRating?.toFixed(1) || restaurant.rating || "No ratings yet"}
+              {reviews?.totalReviews && (
+                <small className="text-muted ms-1">({reviews.totalReviews})</small>
+              )}
             </StatusBadge>
           </div>
         </RestaurantHeader>
@@ -205,7 +236,12 @@ function RestaurantProfile() {
                       <td><FaStar size={20} /></td>
                       <td>
                         <strong>Rating</strong>
-                        <div>{restaurant.rating || "Not rated yet"}</div>
+                        <div>
+                          {reviews?.averageRating?.toFixed(1) || "Not rated yet"}
+                          {reviews?.totalReviews && (
+                            <small className="text-muted ms-1">({reviews.totalReviews} reviews)</small>
+                          )}
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -277,6 +313,66 @@ function RestaurantProfile() {
               <Alert variant="info" className="text-center">
                 No menu items found. Add items to your menu to get started.
               </Alert>
+            )}
+          </Card.Body>
+        </Card>
+
+        {/* Reviews Section */}
+        <Card className="mb-4">
+          <Card.Header className="bg-white d-flex justify-content-between align-items-center">
+            <h5 className="mb-0">
+              Customer Reviews
+              {reviews?.totalReviews && (
+                <Badge bg="secondary" className="ms-2">
+                  {reviews.totalReviews}
+                </Badge>
+              )}
+            </h5>
+            {reviewsLoading && <Spinner animation="border" size="sm" />}
+          </Card.Header>
+          <Card.Body>
+            {reviewsError && (
+              <Alert variant="danger" className="text-center">
+                {reviewsError}
+              </Alert>
+            )}
+
+            {reviewsLoading && !reviews && (
+              <div className="text-center py-4">
+                <Spinner animation="border" />
+              </div>
+            )}
+
+            {!reviewsLoading && reviews?.reviews?.length > 0 ? (
+              <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+                {reviews.reviews.map((review) => (
+                  <ReviewCard key={review._id} className="mb-3">
+                    <Card.Body>
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <div className="d-flex align-items-center">
+                          <FaUser className="me-2 text-muted" />
+                          <strong>
+                            {review.user?.name || "Anonymous User"}
+                          </strong>
+                        </div>
+                        <Badge bg="warning" text="dark">
+                          {review.rating} <FaStar size={12} />
+                        </Badge>
+                      </div>
+                      <p className="mb-2">{review.comment}</p>
+                      <small className="text-muted">
+                        Posted on: {new Date(review.createdAt).toLocaleDateString()}
+                      </small>
+                    </Card.Body>
+                  </ReviewCard>
+                ))}
+              </div>
+            ) : (
+              !reviewsLoading && (
+                <Alert variant="info" className="text-center">
+                  No reviews yet. Be the first to review!
+                </Alert>
+              )
             )}
           </Card.Body>
         </Card>
