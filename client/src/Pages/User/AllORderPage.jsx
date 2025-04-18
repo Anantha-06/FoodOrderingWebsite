@@ -214,10 +214,6 @@ function AllOrderPage() {
                             <span className="fw-medium">Name:</span> 
                             {order.restaurant?.name || "Restaurant information not available"}
                           </p>
-                          <p className="mb-1">
-                            <span className="fw-medium">Location:</span> 
-                            {order.restaurant?.city || "Location not specified"}
-                          </p>
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -232,7 +228,6 @@ function AllOrderPage() {
                               <p className="mb-1">
                                 {order.deliveryAddress.city}, {order.deliveryAddress.state}
                               </p>
-                              <p className="mb-1">Pincode: {order.deliveryAddress.pincode}</p>
                             </>
                           ) : (
                             <p className="text-muted">Delivery address not available</p>
