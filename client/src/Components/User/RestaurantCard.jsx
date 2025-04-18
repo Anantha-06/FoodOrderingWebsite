@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import useFetch from "../../Hooks/UseFetch.jsx"; // Adjust the path as needed
 
 const CardLink = styled(Link)`
   text-decoration: none;
@@ -101,31 +102,6 @@ const RatingText = styled.span`
   color: #2d3748;
 `;
 
-const DeliveryInfo = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-  color: #718096;
-`;
-
-const InfoIcon = styled.span`
-  margin-right: 0.3rem;
-  display: flex;
-  align-items: center;
-`;
-
-const Divider = styled.span`
-  margin: 0 0.5rem;
-  color: #e2e8f0;
-`;
-
-const CuisineTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
-`;
-
 const Tag = styled.span`
   background: #edf2f7;
   color: #4a5568;
@@ -134,37 +110,42 @@ const Tag = styled.span`
   font-size: 0.8rem;
 `;
 
-function RestaurantCard({ id, image, title, rating, cuisine, deliveryTime, distance, isVeg, status }) {
+function RestaurantCard({ id, image, title, cuisine, deliveryTime, distance, isVeg, status }) {
+  const [reviewsData, isLoading, error] = useFetch(`/review/${id}/all`);
   const isOpen = status === "Open";
   const CardWrapper = isOpen ? CardLink : 'div';
+
+  const averageRating = reviewsData?.averageRating || 0;
+  const totalReviews = reviewsData?.totalReviews || 0;
 
   return (
     <CardWrapper to={isOpen ? `/user/restaurant/${id}` : undefined} style={{ cursor: isOpen ? "pointer" : "not-allowed" }}>
       <CardContainer style={{ opacity: isOpen ? 1 : 0.5 }}>
         <ImageContainer>
           <CardImage src={image} alt={title} />
-          <Badge>
           {!isOpen && (
-            <Tag style={{ background: "#e53e3e", color: "white", marginTop: "1rem", textAlign: "center", width: "fit-content" }}>
-              Closed
-            </Tag>
+            <Badge>
+              <Tag style={{ background: "#e53e3e", color: "white", marginTop: "1rem", textAlign: "center", width: "fit-content" }}>
+                Closed
+              </Tag>
+            </Badge>
           )}
-          </Badge>
         </ImageContainer>
 
         <CardContent>
           <CardTitle>{title}</CardTitle>
 
-          <MetaContainer >
+          <MetaContainer>
             <Rating>
               <RatingIcon />
-              <RatingText>{rating}</RatingText>
+              <RatingText>{averageRating.toFixed(1)}</RatingText>
+              {totalReviews > 0 && (
+                <span style={{ marginLeft: '0.5rem', color: '#718096', fontSize: '0.8rem' }}>
+                  ({totalReviews} reviews)
+                </span>
+              )}
             </Rating>
-
-         
           </MetaContainer>
-
-         
         </CardContent>
       </CardContainer>
     </CardWrapper>

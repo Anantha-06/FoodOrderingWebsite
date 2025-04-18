@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Table, Container, Button, Accordion, Card, Badge } from "react-bootstrap";
+import { Table, Container, Button, Accordion, Card, Badge, Modal, Form, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 import useFetch from "../../Hooks/UseFetch.jsx";
 import axiosInstance from "../../Axios/axiosInstance.js";
-import { FiShoppingBag, FiTruck, FiHome, FiDollarSign, FiXCircle } from "react-icons/fi";
+import { FiShoppingBag, FiTruck, FiHome, FiDollarSign, FiXCircle, FiStar } from "react-icons/fi";
 import "../../App.css";
 import Loading from "../../Components/User/Loading.jsx";
 
@@ -12,6 +12,14 @@ function AllOrderPage() {
   const [orders, setOrders] = useState([]);
   const [updatingOrderId, setUpdatingOrderId] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [currentReview, setCurrentReview] = useState({
+    restaurantId: "",
+    orderId: "",
+    rating: 0,
+    comment: ""
+  });
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
   useEffect(() => {
     if (data?.orders) {
@@ -46,12 +54,59 @@ function AllOrderPage() {
     setActiveKey(activeKey === orderId ? null : orderId);
   };
 
+  const handleOpenReviewModal = (order) => {
+    setCurrentReview({
+      restaurantId: order.restaurant._id,
+      orderId: order._id,
+      rating: 0,
+      comment: ""
+    });
+    setShowReviewModal(true);
+  };
+
+  const handleCloseReviewModal = () => {
+    setShowReviewModal(false);
+  };
+
+  const handleRatingChange = (rating) => {
+    setCurrentReview({ ...currentReview, rating });
+  };
+
+  const handleCommentChange = (e) => {
+    setCurrentReview({ ...currentReview, comment: e.target.value });
+  };
+
+  const handleSubmitReview = async () => {
+    try {
+      setIsSubmittingReview(true);
+      const { restaurantId, orderId, rating, comment } = currentReview;
+      
+      await axiosInstance.post(`/review/${restaurantId}/orders/${orderId}/create`, {
+        rating,
+        comment
+      });
+
+      // Optionally update the order to show it's been reviewed
+      const updatedOrders = orders.map(order => 
+        order._id === orderId ? { ...order, hasReview: true } : order
+      );
+      setOrders(updatedOrders);
+
+      handleCloseReviewModal();
+    } catch (err) {
+      console.error("Failed to submit review:", err.response?.data || err.message);
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
+
   const getStatusBadge = (status) => {
     const statusMap = {
       confirmed: { bg: "success", icon: "✓" },
       pending: { bg: "warning", icon: "⏳" },
       cancelled: { bg: "danger", icon: "✕" },
       "out for delivery": { bg: "info", icon: "🚚" },
+      delivered: { bg: "primary", icon: "✓" },
     };
     
     const statusConfig = statusMap[status] || { bg: "secondary", icon: "" };
@@ -255,7 +310,23 @@ function AllOrderPage() {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-6 d-flex align-items-end justify-content-end mt-3 mt-md-0">
+                      <div className="col-md-6 d-flex align-items-end justify-content-end mt-3 mt-md-0 gap-2">
+                        {order.status === "delivered" && !order.hasReview && (
+                          <motion.div
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                          >
+                            <Button
+                              variant="outline-primary"
+                              onClick={() => handleOpenReviewModal(order)}
+                              className="rounded-pill px-4 d-flex align-items-center gap-2"
+                            >
+                              <FiStar size={18} />
+                              Add Review
+                            </Button>
+                          </motion.div>
+                        )}
                         <motion.div
                           whileHover={{ scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
@@ -289,6 +360,62 @@ function AllOrderPage() {
           </motion.div>
         ))}
       </Accordion>
+
+      {/* Review Modal */}
+      <Modal show={showReviewModal} onHide={handleCloseReviewModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Your Review</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Rating</Form.Label>
+              <div className="d-flex gap-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Button
+                    key={star}
+                    variant={currentReview.rating >= star ? "warning" : "outline-secondary"}
+                    onClick={() => handleRatingChange(star)}
+                    className="p-0 d-flex align-items-center justify-content-center"
+                    style={{ width: 40, height: 40 }}
+                  >
+                    <FiStar size={20} />
+                  </Button>
+                ))}
+              </div>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Comment</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={currentReview.comment}
+                onChange={handleCommentChange}
+                placeholder="Share your experience with this restaurant..."
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseReviewModal}>
+            Cancel
+          </Button>
+          <Button 
+            variant="primary" 
+            onClick={handleSubmitReview}
+            disabled={currentReview.rating === 0 || isSubmittingReview}
+          >
+            {isSubmittingReview ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Submitting...
+              </>
+            ) : (
+              "Submit Review"
+            )}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

@@ -303,7 +303,7 @@ function UpdateRestaurant() {
                 />
               </Form.Group>
             </Col>
-            <Col md={6}>
+            {/* <Col md={6}>
               <Form.Group>
                 <Form.Label className="d-flex align-items-center gap-2">
                   <FiStar /> Rating
@@ -320,7 +320,7 @@ function UpdateRestaurant() {
                   required
                 />
               </Form.Group>
-            </Col>
+            </Col> */}
           </Row>
 
           <Row className="mb-4">

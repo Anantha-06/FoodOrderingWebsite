@@ -9,6 +9,7 @@ import { orderRouter } from './orderRouter.js'
 import { paymentRouter } from './paymentRouter.js'
 import { restaurantRouter } from './restaurantRouter.js'
 import { subscribeRouter } from './subscribeRouter.js'
+import { reviewRoutes } from './reviewRoutes.js'
 
 
 const router = express.Router()
@@ -23,6 +24,7 @@ router.use("/order",orderRouter)
 router.use("/payment",paymentRouter)
 router.use("/restaurant",restaurantRouter)
 router.use("/subscribe",subscribeRouter)
+router.use("/review",reviewRoutes)
 
 
 export const apiRouter = router
