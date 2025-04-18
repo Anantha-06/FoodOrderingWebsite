@@ -56,7 +56,7 @@ const HeaderContainer = styled.div`
 const ReviewHeader = styled.h4`
   font-size: 1.5rem;
   font-weight: 700;
-  color: ${theme.colors.primary};
+  color: ${theme.colors.textDark};
   display: flex;
   align-items: center;
   gap: ${theme.spacing.sm};
@@ -73,7 +73,7 @@ const ReviewHeader = styled.h4`
 `;
 
 const WriteReviewButton = styled.button`
-  background-color: ${theme.colors.primary};
+  background-color: ${theme.colors.textDark};
   color: white;
   border: none;
   padding: ${theme.spacing.sm} ${theme.spacing.md};
@@ -217,7 +217,7 @@ function ReviewList({ reviews = [], onWriteReview }) {
         <ReviewHeader>Customer Reviews</ReviewHeader>
         <WriteReviewButton onClick={handleWriteReview}>
           <FaPen size={14} />
-          Write a Review
+          Rate Your Order
         </WriteReviewButton>
       </HeaderContainer>
       
@@ -227,7 +227,7 @@ function ReviewList({ reviews = [], onWriteReview }) {
             <p>No reviews yet. Be the first to review!</p>
             <WriteReviewButton onClick={handleWriteReview}>
               <FaPen size={14} />
-              Write a Review
+              Rate Your Order
             </WriteReviewButton>
           </EmptyState>
         ) : (

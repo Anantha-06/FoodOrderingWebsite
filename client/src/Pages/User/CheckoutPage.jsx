@@ -20,7 +20,7 @@ const CheckoutCard = styled.div`
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 2rem;
   margin-bottom: 1.5rem;
-  width:100%;
+  width: 100%;
 `;
 
 const PrimaryButton = styled(Button).attrs({
@@ -33,12 +33,12 @@ const PrimaryButton = styled(Button).attrs({
   letter-spacing: 0.5px;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
-  
+
   &:disabled {
     opacity: 0.7;
     transform: none !important;
@@ -51,7 +51,7 @@ const SectionTitle = styled.h2`
   margin-bottom: 1.5rem;
   position: relative;
   padding-bottom: 0.5rem;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -77,6 +77,13 @@ function CheckoutPage() {
   const handleCheckout = async () => {
     setError("");
 
+    const token = localStorage.getItem("userToken"); // Assuming you store userToken in localStorage
+
+    if (!token) {
+      setError("🚨 You must be logged in to place an order.");
+      return;
+    }
+
     if (!cartId || !selectedAddressId || !restaurantId) {
       setError("🚨 Please select an address and ensure your cart is not empty.");
       return;
@@ -91,7 +98,12 @@ function CheckoutPage() {
     };
 
     try {
-      const response = await axiosInstance.post("/order/update", requestBody);
+      const response = await axiosInstance.post("/order/update", requestBody, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (response.status === 200 || response.status === 201) {
         setShowAlert(true);
       } else {
@@ -128,23 +140,21 @@ function CheckoutPage() {
       </motion.div>
 
       <Row>
-        {/* Left Column - Cart Items */}
         <Col lg={8} md={12} className="mb-4">
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
             <CheckoutCard>
               <h3 className="fw-bold mb-4">Your Cart</h3>
-              <CartItemCard 
-                setCartId={setCartId} 
-                setRestaurantId={setRestaurantId} 
+              <CartItemCard
+                setCartId={setCartId}
+                setRestaurantId={setRestaurantId}
               />
             </CheckoutCard>
           </motion.div>
 
-          {/* Address Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,7 +170,6 @@ function CheckoutPage() {
           </motion.div>
         </Col>
 
-        {/* Right Column - Order Summary */}
         <Col lg={4} md={12}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -168,11 +177,11 @@ function CheckoutPage() {
             transition={{ delay: 0.4 }}
           >
             <CheckoutCard>
-              <h3 className="fw-bold mb-4">Order Summary</h3>
-              
-              <CouponCard 
-                selectedCoupon={selectedCoupon} 
-                setSelectedCoupon={setSelectedCoupon} 
+           
+
+              <CouponCard
+                selectedCoupon={selectedCoupon}
+                setSelectedCoupon={setSelectedCoupon}
               />
 
               <div className="mt-4 pt-3 border-top">
@@ -183,8 +192,8 @@ function CheckoutPage() {
                 )}
 
                 <div className="d-grid gap-2">
-                  <motion.div 
-                    whileHover={{ scale: 1.02 }} 
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <PrimaryButton
@@ -214,7 +223,6 @@ function CheckoutPage() {
         </Col>
       </Row>
 
-      {/* Success Modal */}
       <Modal show={showAlert} centered backdrop="static">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -224,11 +232,11 @@ function CheckoutPage() {
           <Modal.Body className="text-center p-5">
             <div className="mb-4">
               <motion.div
-                animate={{ 
+                animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 10, -10, 0]
                 }}
-                transition={{ 
+                transition={{
                   duration: 0.8,
                   ease: "easeInOut"
                 }}
