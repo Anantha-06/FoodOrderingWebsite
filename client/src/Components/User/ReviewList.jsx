@@ -34,7 +34,7 @@ const theme = {
 };
 
 const ReviewContainer = styled(motion.div)`
- background: linear-gradient(135deg, #ffc107 0%,rgb(219, 217, 213) 100%);
+background: linear-gradient(135deg, #FFEEA8 0%, #FFC107 50%, #EDEDED 100%);
   padding: ${theme.spacing.lg};
   border-radius: ${theme.borderRadius.lg};
   box-shadow: ${theme.shadows.md};

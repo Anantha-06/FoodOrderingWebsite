@@ -17,9 +17,9 @@ function RestaurantPage() {
   const totalReviews = reviewData?.totalReviews || 0;
 
   return (
-    <Container fluid className="py-4">
+    <Container  className="py-4">
       <motion.div
-        className="d-flex flex-column flex-md-row justify-content-around align-items-center shadow-lg bg-body-tertiary rounded-4 my-5 p-4 restaurant-card"
+        className="d-flex flex-column flex-md-row justify-content-around align-items-center  rounded-4 my-5 p-4 restaurant-card"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

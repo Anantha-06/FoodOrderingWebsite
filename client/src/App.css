@@ -461,7 +461,7 @@ button {
   }
 }
 
-.restaurant-card{ background: linear-gradient(135deg, #ffc107 0%,rgb(219, 217, 213) 100%);}
+.restaurant-card{background: linear-gradient(135deg, #FFEEA8 0%, #FFC107 50%, #EDEDED 100%);}
 
 @media (max-width: 768px) {
   .carousel-item {
