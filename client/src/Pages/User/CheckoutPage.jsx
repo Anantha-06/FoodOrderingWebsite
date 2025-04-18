@@ -80,7 +80,7 @@ function CheckoutPage() {
 
     const token = Cookies.get("authToken"); 
     if (!token) {
-      setError("🚨 You must be logged in to place an order.");
+      setError("💀 You must be logged in to place an order.");
       return;
     }
 
