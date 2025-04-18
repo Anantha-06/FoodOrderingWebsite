@@ -461,6 +461,8 @@ button {
   }
 }
 
+.restaurant-card{ background: linear-gradient(135deg, #ffc107 0%,rgb(219, 217, 213) 100%);}
+
 @media (max-width: 768px) {
   .carousel-item {
     padding: 10px;
