@@ -1,8 +1,15 @@
-html,
+/* Reset and Base Styles */
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
 body {
-  height: auto;
   margin: 0;
   min-width: 400px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(135deg, #fffefc, #ffbc1e, #fffffe, #ffcb0d);
   background-size: 400% 400%;
   animation: gradientBackground 8s ease infinite;
@@ -20,20 +27,32 @@ body {
   }
 }
 
+/* Main Layout */
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
 }
 
 .page-content {
   flex: 1;
+  width: 100%;
+  padding-top: 20px; /* Add some space below header */
+  scroll-margin-top: 80px; /* Prevent content from being hidden under fixed header */
 }
 
+/* Scroll Behavior Fix */
+.scroll-container {
+  overflow-anchor: none; /* Prevent browser scroll anchoring */
+}
+
+/* Header/Footer Styles */
 .footer-container {
   width: 100%;
 }
 
+/* Images and Media */
 .restaurant-card-rating {
   width: 35px;
   height: 35px;
@@ -43,27 +62,33 @@ body {
   width: 25px;
   height: 100%;
 }
+
 .thumbnail-image-2 {
   width: 23px;
   height: 100%;
 }
+
 .navBar-logimg {
   width: 100%;
   height: 40px;
 }
+
 .socialMedia-img {
   width: 25px;
   height: 25px;
 }
+
 .footer-logimg {
   width: 320px;
   height: 40px;
 }
+
 .footericon {
   width: 20px;
   height: 20px;
 }
 
+/* Carousels */
 .carousel-image {
   width: 100%;
   height: auto;
@@ -80,51 +105,75 @@ body {
   width: 290px;
   height: 290px;
 }
+
+/* Restaurant Cards */
+.restaurant-card {
+  background: linear-gradient(135deg, #FFEEA8 0%, #FFC107 50%, #EDEDED 100%);
+}
+
 .restaurantCard-image {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
-.loginImage {
-  height: 970px;
-  width: 550px;
-}
-.inputBox-width {
-  width: 350px;
-}
-.loginBackground {
-  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-}
-.signup-Background {
-  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
-}
+
 .restaurant-image {
   width: 250px;
   height: 250px;
 }
+
 .menuItemimage {
   width: 190px;
   height: 190px;
 }
+
+/* Login/Signup */
+.loginImage {
+  height: 970px;
+  width: 550px;
+}
+
+.inputBox-width {
+  width: 350px;
+}
+
+.loginBackground {
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+.signup-Background {
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+}
+
+/* Text Effects */
 .secondHEader {
   text-shadow: 5px 2px 5px #ffc400;
 }
+
+/* Profile Page */
 .profilepage-image {
   width: 150px;
   height: 150px;
+  object-fit: cover;
+  border: 4px solid #ffc107;
 }
+
+/* Layout Helpers */
 .tabHeight {
   min-height: 400px;
 }
+
 .allPage-height {
   min-height: 700px;
 }
 
+/* Ratings */
 .rating-icon {
   height: 18px;
   width: 18px;
 }
 
+/* Image Containers */
 .image-container {
   width: 100%;
   overflow: hidden;
@@ -134,9 +183,10 @@ body {
 
 .page-review {
   height: 25px;
-  height: 25px;
+  width: 25px;
 }
 
+/* Bestseller Items */
 .bestseller-image-wrapper {
   overflow: hidden;
   border-radius: 50%;
@@ -160,6 +210,7 @@ body {
   transform: scale(1.2);
 }
 
+/* Restaurant Card Animations */
 .restaurant-card-container {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -191,6 +242,7 @@ body {
   font-size: 1.25rem;
 }
 
+/* Zoom Effects */
 .zoom-container {
   transition: transform 0.3s ease;
 }
@@ -204,6 +256,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Positioning */
 .position-relative {
   position: relative;
 }
@@ -217,11 +270,12 @@ button {
   position: relative;
 }
 
-
+/* Cart */
 .checkoutCartImage {
   width: 50px;
   height: 50px;
 }
+
 .cartbutton-checkout {
   width: 60px;
   height: auto;
@@ -231,6 +285,7 @@ button {
   font-size: 12px;
 }
 
+/* Login Background */
 .login-background {
   position: relative;
   overflow: hidden;
@@ -238,7 +293,7 @@ button {
   animation: gradientAnimation 6s infinite alternate;
 }
 
-/* HTML: <div class="loader"></div> */
+/* Loader Animation */
 .loader {
   width: 80px;
   height: 40px;
@@ -294,10 +349,7 @@ button {
   }
 }
 
-
-/*payment*/
-
-
+/* Payment Animation */
 .paymentd {
   width: 80px;
   height: 80px;
@@ -321,6 +373,7 @@ button {
   background-size: 15px 15px,6px 6px;
   animation: l4 3s infinite;
 }
+
 @keyframes l4 {
   0%     {-webkit-mask:conic-gradient(#0000 0     ,#000 0)}
   16.67% {-webkit-mask:conic-gradient(#0000 60deg ,#000 0)}
@@ -330,8 +383,8 @@ button {
   83.33% {-webkit-mask:conic-gradient(#0000 300deg,#000 0)}
   100%   {-webkit-mask:conic-gradient(#0000 360deg,#000 0)}
 }
-/*Popup*/
 
+/* Popup Notifications */
 .popup {
   position: fixed;
   top: 20px;
@@ -375,6 +428,7 @@ button {
   }
 }
 
+/* Order Cards */
 .order-card {
   background-color: #fdfdfd;
   transition: box-shadow 0.3s ease;
@@ -389,14 +443,7 @@ button {
   color: white;
 }
 
-.profilepage-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border: 4px solid #ffc107;
-}
-
-/* All Order Page */
+/* Orders Page */
 .orders-accordion .accordion-button {
   padding: 0;
 }
@@ -428,7 +475,12 @@ button {
   vertical-align: middle;
 }
 
+/* Responsive Adjustments */
 @media (max-width: 768px) {
+  .carousel-item {
+    padding: 10px;
+  }
+  
   .order-items-table thead {
     display: none;
   }
@@ -459,12 +511,28 @@ button {
   .order-items-table td[data-label="Image"]::before {
     display: none;
   }
+  
+  /* Adjust header/footer spacing on mobile */
+  .page-content {
+    padding-top: 15px;
+    scroll-margin-top: 60px;
+  }
 }
 
-.restaurant-card{background: linear-gradient(135deg, #FFEEA8 0%, #FFC107 50%, #EDEDED 100%);}
+/* Scrollbar Styling (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
-@media (max-width: 768px) {
-  .carousel-item {
-    padding: 10px;
-  }
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc107;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffab00;
 }
