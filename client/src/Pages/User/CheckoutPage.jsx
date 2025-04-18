@@ -7,6 +7,7 @@ import CartItemCard from "../../Components/User/CartItemCard.jsx";
 import CouponCard from "../../Components/User/CouponCard.jsx";
 import ShowAddress from "../../Components/User/ShowAddress.jsx";
 import styled from "styled-components";
+import Cookies from "js-cookie";
 
 // Styled components
 const CheckoutContainer = styled(Container)`
@@ -77,8 +78,7 @@ function CheckoutPage() {
   const handleCheckout = async () => {
     setError("");
 
-    const token = localStorage.getItem("userToken"); // Assuming you store userToken in localStorage
-
+    const token = Cookies.get("authToken"); 
     if (!token) {
       setError("🚨 You must be logged in to place an order.");
       return;
