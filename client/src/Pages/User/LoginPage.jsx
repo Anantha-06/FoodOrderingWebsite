@@ -30,7 +30,7 @@ const FormInput = styled(Form.Control)`
   padding: 1rem;
   border: 1px solid #e0e0e0;
   transition: all 0.3s ease;
-  
+
   &:focus {
     border-color: #f39c12;
     box-shadow: 0 0 0 0.25rem rgba(243, 156, 18, 0.25);
@@ -46,12 +46,12 @@ const SubmitButton = styled(Button)`
   background: linear-gradient(90deg, #f39c12, #e74c3c);
   border: none;
   transition: all 0.3s ease;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
-  
+
   &:disabled {
     opacity: 0.7;
     transform: none !important;
@@ -69,7 +69,7 @@ const AuthLink = styled.a`
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease;
-  
+
   &:hover {
     color: #e74c3c;
     text-decoration: underline;
@@ -111,7 +111,13 @@ function LoginPage() {
       const { token } = response.data;
 
       if (token) {
-        Cookies.set("authToken", token, { expires: 7, secure: true });
+        // Set authToken cookie for 1 hour
+        Cookies.set("authToken", token, {
+          expires: 1 / 24,
+          secure: true,
+          sameSite: "Strict",
+        });
+
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
@@ -119,7 +125,10 @@ function LoginPage() {
         }, 1500);
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Invalid email or password. Please try again.");
+      setError(
+        error.response?.data?.message ||
+          "Invalid email or password. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -138,10 +147,10 @@ function LoginPage() {
             src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1742932376/DALL_E_2025-03-26_01.19.39_-_A_minimalistic_portrait_of_a_gourmet_food_item_featuring_an_elegantly_plated_dish_with_vibrant_colors._The_dish_is_stylishly_arranged_on_a_white_plat_eaagli.webp"
             alt="Food Illustration"
             style={{
-              height: '100vh',
-              width: 'auto',
-              maxWidth: '100%',
-              objectFit: 'cover'
+              height: "100vh",
+              width: "auto",
+              maxWidth: "100%",
+              objectFit: "cover",
             }}
           />
         </Col>
@@ -165,7 +174,9 @@ function LoginPage() {
                 <h2 className="mt-3 fw-bold" style={{ color: "#2c3e50" }}>
                   Welcome Back
                 </h2>
-                <p className="text-muted">Sign in to continue to your account</p>
+                <p className="text-muted">
+                  Sign in to continue to your account
+                </p>
               </div>
 
               {error && (
@@ -203,7 +214,10 @@ function LoginPage() {
                   />
                 </Form.Group>
 
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <SubmitButton
                     type="submit"
                     className="w-100 mb-3"
@@ -211,7 +225,10 @@ function LoginPage() {
                   >
                     {loading ? (
                       <>
-                        <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                        ></span>
                         Signing In...
                       </>
                     ) : (
@@ -222,7 +239,9 @@ function LoginPage() {
 
                 <div className="d-flex justify-content-between mt-4">
                   <AuthLink href="/user/signup">Create Account</AuthLink>
-                  <AuthLink href="/user/update-password">Forgot Password?</AuthLink>
+                  <AuthLink href="/user/update-password">
+                    Forgot Password?
+                  </AuthLink>
                 </div>
               </Form>
             </LoginCard>
@@ -245,9 +264,9 @@ function LoginPage() {
             style={{ maxWidth: "400px" }}
           >
             <motion.div
-              animate={{ 
+              animate={{
                 scale: [1, 1.1, 1],
-                rotate: [0, 10, -10, 0]
+                rotate: [0, 10, -10, 0],
               }}
               transition={{ duration: 0.8 }}
             >

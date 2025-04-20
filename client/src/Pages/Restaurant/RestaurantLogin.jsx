@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Form, Modal, Spinner, Alert, InputGroup } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Modal,
+  Spinner,
+  Alert,
+  InputGroup,
+} from "react-bootstrap";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import axiosInstance from "../../Axios/axiosInstance.js";
@@ -35,7 +46,7 @@ const FormInput = styled(Form.Control)`
   padding: 1rem;
   border: 1px solid #e0e0e0;
   transition: all 0.3s ease;
-  
+
   &:focus {
     border-color: #f39c12;
     box-shadow: 0 0 0 0.25rem rgba(243, 156, 18, 0.25);
@@ -51,12 +62,12 @@ const LoginButton = styled(Button)`
   background: linear-gradient(90deg, #f39c12, #e74c3c);
   border: none;
   transition: all 0.3s ease;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
-  
+
   &:disabled {
     opacity: 0.7;
     transform: none !important;
@@ -90,12 +101,12 @@ function RestaurantLogin() {
   };
 
   const validateForm = () => {
-    if (!formData.email.includes('@')) {
-      setError('Please enter a valid email address');
+    if (!formData.email.includes("@")) {
+      setError("Please enter a valid email address");
       return false;
     }
     if (formData.password.length < 4) {
-      setError('Password must be at least 6 characters');
+      setError("Password must be at least 6 characters");
       return false;
     }
     return true;
@@ -104,18 +115,18 @@ function RestaurantLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    
+
     if (!validateForm()) return;
-    
+
     setLoading(true);
 
     try {
       const response = await axiosInstance.post("/restaurant/login", formData);
-      
-      Cookies.set("restaurantToken", response.data.token, { 
-        expires: 7, 
+
+      Cookies.set("restaurantToken", response.data.token, {
+        expires: 1/24,
         secure: process.env.NODE_ENV === "production",
-        sameSite: 'strict'
+        sameSite: "strict",
       });
 
       setShowSuccess(true);
@@ -129,7 +140,9 @@ function RestaurantLogin() {
         if (error.response.status === 403) {
           setError("Access denied. Please check your credentials.");
         } else {
-          setError(error.response?.data?.message || "Login failed. Please try again.");
+          setError(
+            error.response?.data?.message || "Login failed. Please try again."
+          );
         }
       } else {
         setError("Network error. Please check your connection.");
@@ -163,7 +176,9 @@ function RestaurantLogin() {
                     className="mb-3"
                   />
                   <h2 className="fw-bold">Restaurant Login</h2>
-                  <p className="text-muted">Sign in to manage your restaurant</p>
+                  <p className="text-muted">
+                    Sign in to manage your restaurant
+                  </p>
                 </div>
 
                 {error && (
@@ -201,16 +216,19 @@ function RestaurantLogin() {
                         placeholder="Enter your password"
                         required
                       />
-                      <InputGroup.Text 
-                        style={{ cursor: 'pointer' }} 
+                      <InputGroup.Text
+                        style={{ cursor: "pointer" }}
                         onClick={() => setShowPassword(!showPassword)}
                       >
-                        {showPassword ? '👁️' : '👁️‍🗨️'}
+                        {showPassword ? "👁️" : "👁️‍🗨️"}
                       </InputGroup.Text>
                     </InputGroup>
                   </Form.Group>
 
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
                     <LoginButton
                       type="submit"
                       className="w-100 mb-3"
@@ -235,7 +253,10 @@ function RestaurantLogin() {
                   </motion.div>
 
                   <div className="text-center">
-                    <Link to="/restaurant/signup" className="text-decoration-none">
+                    <Link
+                      to="/restaurant/signup"
+                      className="text-decoration-none"
+                    >
                       Don't have an account? <strong>Sign Up</strong>
                     </Link>
                   </div>
@@ -253,10 +274,10 @@ function RestaurantLogin() {
               src="https://res.cloudinary.com/dzmymp0yf/image/upload/v1740756879/Food%20Order%20Website/eyqxjirzit2trvcv5sv4.png"
               alt="Restaurant Login Illustration"
               style={{
-                height: '100vh',
-                width: 'auto',
-                maxWidth: '100%',
-                objectFit: 'cover'
+                height: "100vh",
+                width: "auto",
+                maxWidth: "100%",
+                objectFit: "cover",
               }}
             />
           </Col>
@@ -271,9 +292,9 @@ function RestaurantLogin() {
         >
           <Modal.Body className="text-center p-5">
             <motion.div
-              animate={{ 
+              animate={{
                 scale: [1, 1.1, 1],
-                rotate: [0, 10, -10, 0]
+                rotate: [0, 10, -10, 0],
               }}
               transition={{ duration: 0.8 }}
             >
